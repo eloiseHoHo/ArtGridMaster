@@ -660,19 +660,19 @@ export default function SimpleImageEditor() {
                         <div className="grid grid-cols-3 gap-2">
                           <button 
                             className={`p-2 rounded border text-center text-sm ${lineStyle === 'normal' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setLineStyle('normal')}
+                            onClick={() => handleLineStyleChange('normal')}
                           >
                             Normal
                           </button>
                           <button 
                             className={`p-2 rounded border text-center text-sm ${lineStyle === 'detailed' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setLineStyle('detailed')}
+                            onClick={() => handleLineStyleChange('detailed')}
                           >
                             Detailed
                           </button>
                           <button 
                             className={`p-2 rounded border text-center text-sm ${lineStyle === 'minimal' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setLineStyle('minimal')}
+                            onClick={() => handleLineStyleChange('minimal')}
                           >
                             Minimal
                           </button>
@@ -691,7 +691,7 @@ export default function SimpleImageEditor() {
                           max={100} 
                           step={1}
                           value={[sketchIntensity]} 
-                          onValueChange={(values) => setSketchIntensity(values[0])}
+                          onValueChange={handleSketchIntensityChange}
                         />
                         <div className="flex justify-between text-xs text-gray-500">
                           <span>Subtle</span>
@@ -704,13 +704,13 @@ export default function SimpleImageEditor() {
                         <div className="grid grid-cols-2 gap-2">
                           <button 
                             className={`p-2 rounded border text-center text-sm ${pencilType === 'graphite' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setPencilType('graphite')}
+                            onClick={() => handlePencilTypeChange('graphite')}
                           >
                             Graphite
                           </button>
                           <button 
                             className={`p-2 rounded border text-center text-sm ${pencilType === 'charcoal' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setPencilType('charcoal')}
+                            onClick={() => handlePencilTypeChange('charcoal')}
                           >
                             Charcoal
                           </button>
@@ -727,7 +727,7 @@ export default function SimpleImageEditor() {
                           max={100} 
                           step={1}
                           value={[shadingLevel]} 
-                          onValueChange={(values) => setShadingLevel(values[0])}
+                          onValueChange={handleShadingLevelChange}
                         />
                         <div className="flex justify-between text-xs text-gray-500">
                           <span>Light</span>
