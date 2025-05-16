@@ -184,30 +184,42 @@ export default function SimpleImageEditor() {
       // Apply contrast adjustment based on style
       let contrastFactor = 1;
       let brightnessFactor = 0;
+      let thresholdValue = lineThreshold;
       
       switch (lineStyle) {
         case 'detailed':
-          contrastFactor = 1.5;
+          contrastFactor = 1.8;
+          brightnessFactor = 15;
+          thresholdValue = Math.min(lineThreshold, 120); // Lower threshold for detailed mode
           break;
         case 'minimal':
-          contrastFactor = 0.7;
-          brightnessFactor = 30;
+          contrastFactor = 0.8;
+          brightnessFactor = 40;
+          thresholdValue = Math.max(lineThreshold, 150); // Higher threshold for minimal mode
           break;
         default: // normal
-          contrastFactor = 1.2;
+          contrastFactor = 1.4;
+          brightnessFactor = 20;
           break;
       }
       
       // Apply threshold
       for (let i = 0; i < data.length; i += 4) {
-        // Apply contrast
+        // Apply contrast and brightness
         data[i] = Math.min(255, Math.max(0, 
           (data[i] - 128) * contrastFactor + 128 + brightnessFactor));
         
-        // Apply threshold
-        data[i] = data[i] < lineThreshold ? 0 : 255;
+        // Apply adaptive threshold - use different thresholds for different brightness regions
+        // This creates more detailed line art
+        let adaptiveThreshold = thresholdValue;
+        if (data[i] > 200) adaptiveThreshold *= 1.1; // Increase threshold for bright areas
+        if (data[i] < 60) adaptiveThreshold *= 0.9;  // Decrease threshold for dark areas
         
-        // Invert colors (black lines on white)
+        // Apply threshold with edge detection enhancement
+        const isEdge = i > 4 && Math.abs(data[i] - data[i-4]) > 20; // Simple edge detection
+        data[i] = (data[i] < adaptiveThreshold || isEdge) ? 0 : 255;
+        
+        // Invert colors for line art (black lines on white)
         data[i] = 255 - data[i];
         
         // Copy to all channels
@@ -283,41 +295,94 @@ export default function SimpleImageEditor() {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       
-      // Set params based on pencil type
+      // Set params based on pencil type with improved parameters
       const contrast = pencilType === 'charcoal' 
-        ? 1.2 + (shadingLevel / 50) 
-        : 1.1 + (shadingLevel / 80);
+        ? 1.0 + (shadingLevel / 100) // Less contrast for charcoal to avoid excessive darkness
+        : 0.9 + (shadingLevel / 120); // Even lighter for graphite
       
       const brightness = pencilType === 'charcoal' 
-        ? 0.8 - (shadingLevel / 50) 
-        : 0.9;
+        ? 1.2 - (shadingLevel / 150) // Higher base brightness for charcoal
+        : 1.3 - (shadingLevel / 200); // Even higher for graphite
       
-      // Apply sketch effect
+      // Edge detection parameters
+      const edgeThreshold = 15;
+      const edgeIntensity = pencilType === 'charcoal' ? 0.4 : 0.3;
+      
+      // Apply sketch effect with improved algorithm
       for (let i = 0; i < data.length; i += 4) {
-        // Convert to grayscale
-        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        // Convert to grayscale with weighted RGB for better perceptual accuracy
+        const avg = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
         
-        // Apply contrast and brightness
+        // Check for edges (simple edge detection for enhanced detail)
+        let edgeFactor = 0;
+        if (i > 4 && i < data.length - 4) {
+          const prevPixel = (data[i-4] * 0.299 + data[i-3] * 0.587 + data[i-2] * 0.114);
+          const edgeDiff = Math.abs(avg - prevPixel);
+          if (edgeDiff > edgeThreshold) {
+            edgeFactor = edgeIntensity;
+          }
+        }
+        
+        // Apply contrast and brightness with improved formula
         let gray = avg / 255;
-        gray = Math.pow(gray, 1 / contrast); // Contrast
-        gray = gray * brightness; // Brightness
         
-        // Apply intensity
-        const intensityFactor = sketchIntensity / 50;
-        gray = gray < 0.5 
-          ? gray * intensityFactor 
-          : 1 - (1 - gray) * intensityFactor;
+        // Modify contrast curve based on brightness for more natural results
+        if (gray > 0.7) {
+          // Keep highlights lighter
+          gray = Math.pow(gray, 0.8 / contrast);
+        } else if (gray < 0.3) {
+          // Keep shadows from getting too dark
+          gray = Math.pow(gray, 1.1 / contrast);
+        } else {
+          // Standard contrast adjustment for midtones
+          gray = Math.pow(gray, 1 / contrast);
+        }
+        
+        // Apply brightness adjustment
+        gray = gray * brightness;
+        
+        // Apply intensity with more nuanced curve
+        const intensityFactor = 0.7 + (sketchIntensity / 100);
+        
+        // Different intensity curves for different tonal ranges
+        if (gray < 0.3) {
+          // Lighter shadows
+          gray = gray * (intensityFactor * 0.8);
+        } else if (gray > 0.7) {
+          // Preserve some highlights
+          gray = 1 - (1 - gray) * (intensityFactor * 0.6);
+        } else {
+          // Standard intensity for midtones
+          gray = gray < 0.5 
+            ? gray * intensityFactor 
+            : 1 - (1 - gray) * intensityFactor;
+        }
+        
+        // Apply edge enhancement to preserve details
+        if (edgeFactor > 0) {
+          gray = gray * (1 - edgeFactor);
+        }
         
         // Convert back to 0-255
         let val = Math.min(255, Math.max(0, Math.round(gray * 255)));
         
-        // Add noise for texture
-        const noise = (Math.random() - 0.5) * 
-          (pencilType === 'charcoal' ? 15 : 5) * (shadingLevel / 50);
+        // Add noise for texture with more controlled patterns
+        let noise = 0;
+        if (pencilType === 'charcoal') {
+          // Charcoal has more varied texture
+          noise = (Math.random() - 0.5) * 12 * (shadingLevel / 100);
+          // More texture in midtones, less in highlights and shadows
+          if (val > 200 || val < 50) noise *= 0.5;
+        } else {
+          // Graphite has more uniform, subtle texture
+          noise = (Math.random() - 0.5) * 5 * (shadingLevel / 120);
+          // Add slight directional pattern for graphite
+          if ((i/4) % 8 === 0) noise *= 1.5;
+        }
         
-        val = Math.min(255, Math.max(0, val + noise));
+        val = Math.min(255, Math.max(25, val + noise));
         
-        // Set pixel values
+        // Set pixel values (ensuring minimum brightness to avoid pure black)
         data[i] = data[i + 1] = data[i + 2] = val;
       }
       
