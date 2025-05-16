@@ -352,61 +352,68 @@ export default function SimpleImageEditor() {
   // Create direct handlers for immediate updates when user changes settings
   const handleGridSizeChange = useCallback((values: number[]) => {
     setGridSize(values[0]);
-    if (uploadedImage && !isProcessing && activeTab === 'grid') {
-      setIsProcessing(true);
-      // Use requestAnimationFrame to ensure UI updates before processing
-      requestAnimationFrame(() => applyGridTransform());
+    if (uploadedImage && activeTab === 'grid') {
+      // Skip setting isProcessing to true to avoid loading indicator for real-time updates
+      requestAnimationFrame(() => {
+        applyGridTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  }, [uploadedImage, activeTab, applyGridTransform]);
   
   const handleGridOpacityChange = useCallback((values: number[]) => {
     setGridOpacity(values[0]);
-    if (uploadedImage && !isProcessing && activeTab === 'grid') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applyGridTransform());
+    if (uploadedImage && activeTab === 'grid') {
+      requestAnimationFrame(() => {
+        applyGridTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  }, [uploadedImage, activeTab, applyGridTransform]);
   
   const handleGridColorChange = useCallback((color: string) => {
     setGridColor(color);
-    if (uploadedImage && !isProcessing && activeTab === 'grid') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applyGridTransform());
+    if (uploadedImage && activeTab === 'grid') {
+      requestAnimationFrame(() => {
+        applyGridTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  }, [uploadedImage, activeTab, applyGridTransform]);
   
   const handleGridStyleChange = useCallback((style: string) => {
     setGridStyle(style);
-    if (uploadedImage && !isProcessing && activeTab === 'grid') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applyGridTransform());
+    if (uploadedImage && activeTab === 'grid') {
+      requestAnimationFrame(() => {
+        applyGridTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  }, [uploadedImage, activeTab, applyGridTransform]);
   
   // Line art handlers
   const handleLineThresholdChange = useCallback((values: number[]) => {
     setLineThreshold(values[0]);
-    if (uploadedImage && !isProcessing && activeTab === 'lineart') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applyLineArtTransform());
+    if (uploadedImage && activeTab === 'lineart') {
+      requestAnimationFrame(() => {
+        applyLineArtTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applyLineArtTransform]);
+  }, [uploadedImage, activeTab, applyLineArtTransform]);
   
   const handleLineThicknessChange = useCallback((values: number[]) => {
     setLineThickness(values[0]);
-    if (uploadedImage && !isProcessing && activeTab === 'lineart') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applyLineArtTransform());
+    if (uploadedImage && activeTab === 'lineart') {
+      requestAnimationFrame(() => {
+        applyLineArtTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applyLineArtTransform]);
+  }, [uploadedImage, activeTab, applyLineArtTransform]);
   
   const handleLineStyleChange = useCallback((style: string) => {
     setLineStyle(style);
-    if (uploadedImage && !isProcessing && activeTab === 'lineart') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applyLineArtTransform());
+    if (uploadedImage && activeTab === 'lineart') {
+      requestAnimationFrame(() => {
+        applyLineArtTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applyLineArtTransform]);
+  }, [uploadedImage, activeTab, applyLineArtTransform]);
   
   // Sketch handlers
   const handleSketchIntensityChange = useCallback((values: number[]) => {
