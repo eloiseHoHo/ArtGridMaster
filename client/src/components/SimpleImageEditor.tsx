@@ -1,60 +1,68 @@
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Upload, Image, Info, ArrowRight, Check } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import { Upload, Image as ImageIcon, ArrowRight, Check } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 
-export default function HeroSection() {
-  const [activeTab, setActiveTab] = useState<"grid" | "lineart" | "sketch">("grid");
+export default function SimpleImageEditor() {
+  const [activeTab, setActiveTab] = useState<string>("grid");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [transformedImage, setTransformedImage] = useState<string | null>(null);
-  const [isTransforming, setIsTransforming] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const hiddenCanvasRef = useRef<HTMLCanvasElement | null>(null);
   
   // Grid settings
   const [gridSize, setGridSize] = useState(20);
   const [gridOpacity, setGridOpacity] = useState(70);
   const [gridColor, setGridColor] = useState("#000000");
-  const [gridStyle, setGridStyle] = useState<"lines" | "dots" | "dashed">("lines");
+  const [gridStyle, setGridStyle] = useState("lines");
   
   // Line art settings
   const [lineThreshold, setLineThreshold] = useState(128);
   const [lineThickness, setLineThickness] = useState(1);
-  const [lineStyle, setLineStyle] = useState<"normal" | "detailed" | "minimal">("normal");
+  const [lineStyle, setLineStyle] = useState("normal");
   
   // Sketch settings
   const [sketchIntensity, setSketchIntensity] = useState(50);
-  const [pencilType, setPencilType] = useState<"graphite" | "charcoal">("graphite");
+  const [pencilType, setPencilType] = useState("graphite");
   const [shadingLevel, setShadingLevel] = useState(50);
-
-  // Create a reference to a canvas element for transformations
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   
+  // Create a hidden canvas for processing
   useEffect(() => {
-    // Create a canvas element for image processing
     const canvas = document.createElement('canvas');
-    canvasRef.current = canvas;
+    canvas.style.display = 'none';
+    document.body.appendChild(canvas);
     
-    // Clean up
+    // Store the canvas reference
+    hiddenCanvasRef.current = canvas;
+    
     return () => {
-      canvasRef.current = null;
+      if (canvas && canvas.parentNode) {
+        document.body.removeChild(canvas);
+      }
     };
   }, []);
   
-  // Dropzone setup
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  // Handle file drop
+  const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       const reader = new FileReader();
-      reader.onload = () => {
-        setUploadedImage(reader.result as string);
-        setTransformedImage(null); // Reset transformed image when new image is uploaded
+      
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          setUploadedImage(e.target.result as string);
+          setTransformedImage(null);
+        }
       };
+      
       reader.readAsDataURL(file);
     }
-  }, []);
+  };
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -65,277 +73,282 @@ export default function HeroSection() {
     maxFiles: 1
   });
   
-  // Image transformation functions
-  const applyGridTransform = useCallback((imageSource: string): Promise<string> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        if (!canvasElement) return resolve(imageSource);
-        
-        const ctx = canvasElement.getContext('2d');
-        if (!ctx) return resolve(imageSource);
-        
-        // Set canvas dimensions to match image
-        canvasElement.width = img.width;
-        canvasElement.height = img.height;
-        
-        // Draw original image
-        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        ctx.drawImage(img, 0, 0);
-        
-        // Draw grid overlay
-        ctx.strokeStyle = gridColor;
-        ctx.lineWidth = 1;
-        ctx.globalAlpha = gridOpacity / 100;
-        
-        if (gridStyle === "lines" || gridStyle === "dashed") {
-          if (gridStyle === "dashed") {
-            ctx.setLineDash([5, 5]);
-          } else {
-            ctx.setLineDash([]);
-          }
-          
-          // Draw vertical lines
-          for (let x = 0; x < canvasElement.width; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, canvasElement.height);
-            ctx.stroke();
-          }
-          
-          // Draw horizontal lines
-          for (let y = 0; y < canvasElement.height; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(canvasElement.width, y);
-            ctx.stroke();
-          }
-        } else if (gridStyle === "dots") {
-          ctx.fillStyle = gridColor;
-          
-          for (let x = 0; x < canvasElement.width; x += gridSize) {
-            for (let y = 0; y < canvasElement.height; y += gridSize) {
-              ctx.beginPath();
-              ctx.arc(x, y, 1, 0, Math.PI * 2);
-              ctx.fill();
-            }
-          }
-        }
-        
-        // Reset global alpha
-        ctx.globalAlpha = 1;
-        
-        // Return transformed image as data URL
-        resolve(canvasElement.toDataURL('image/png'));
-      };
-      
-      img.src = imageSource;
-    });
-  }, [canvasElement, gridColor, gridOpacity, gridSize, gridStyle]);
-  
-  const applyLineArtTransform = useCallback((imageSource: string): Promise<string> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        if (!canvasElement) return resolve(imageSource);
-        
-        const ctx = canvasElement.getContext('2d');
-        if (!ctx) return resolve(imageSource);
-        
-        // Set canvas dimensions to match image
-        canvasElement.width = img.width;
-        canvasElement.height = img.height;
-        
-        // Draw original image
-        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        ctx.drawImage(img, 0, 0);
-        
-        // Get image data
-        const imageData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        const data = imageData.data;
-        
-        // Convert to grayscale first
-        for (let i = 0; i < data.length; i += 4) {
-          const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-          data[i] = data[i + 1] = data[i + 2] = avg;
-        }
-        
-        // Apply threshold based on line style
-        let contrastFactor = 1;
-        let brightnessFactor = 0;
-        
-        switch (lineStyle) {
-          case 'detailed':
-            contrastFactor = 1.2;
-            brightnessFactor = 0;
-            break;
-          case 'minimal':
-            contrastFactor = 0.8;
-            brightnessFactor = 30;
-            break;
-          default: // normal
-            contrastFactor = 1;
-            brightnessFactor = 0;
-            break;
-        }
-        
-        // Apply edge detection (simple threshold with contrast/brightness adjustment)
-        for (let i = 0; i < data.length; i += 4) {
-          // Apply contrast and brightness adjustment
-          data[i] = Math.min(255, Math.max(0, (data[i] - 128) * contrastFactor + 128 + brightnessFactor));
-          
-          // Apply threshold
-          data[i] = data[i] < lineThreshold ? 0 : 255;
-          
-          // Invert for line art (black lines on white background)
-          data[i] = 255 - data[i];
-          
-          // Copy to other channels
-          data[i + 1] = data[i + 2] = data[i];
-        }
-        
-        // Apply line thickness (simple dilation)
-        if (lineThickness > 1) {
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = canvasElement.width;
-          tempCanvas.height = canvasElement.height;
-          const tempCtx = tempCanvas.getContext('2d');
-          
-          if (tempCtx) {
-            // Put the processed image data
-            ctx.putImageData(imageData, 0, 0);
-            
-            // Draw to temp canvas with slight blur for thickness
-            tempCtx.filter = `blur(${lineThickness}px)`;
-            tempCtx.drawImage(canvasElement, 0, 0);
-            
-            // Draw back to main canvas
-            ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-            ctx.drawImage(tempCanvas, 0, 0);
-            
-            // Apply threshold again to sharpen edges
-            const finalData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
-            const finalPixels = finalData.data;
-            
-            for (let i = 0; i < finalPixels.length; i += 4) {
-              finalPixels[i] = finalPixels[i] < 128 ? 0 : 255;
-              finalPixels[i + 1] = finalPixels[i + 2] = finalPixels[i];
-            }
-            
-            ctx.putImageData(finalData, 0, 0);
-          }
-        } else {
-          // Put the processed image data directly
-          ctx.putImageData(imageData, 0, 0);
-        }
-        
-        // Return transformed image as data URL
-        resolve(canvasElement.toDataURL('image/png'));
-      };
-      
-      img.src = imageSource;
-    });
-  }, [canvasElement, lineThreshold, lineThickness, lineStyle]);
-  
-  const applySketchTransform = useCallback((imageSource: string): Promise<string> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        if (!canvasElement) return resolve(imageSource);
-        
-        const ctx = canvasElement.getContext('2d');
-        if (!ctx) return resolve(imageSource);
-        
-        // Set canvas dimensions to match image
-        canvasElement.width = img.width;
-        canvasElement.height = img.height;
-        
-        // Draw original image
-        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        ctx.drawImage(img, 0, 0);
-        
-        // Get image data
-        const imageData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        const data = imageData.data;
-        
-        // Convert to grayscale with adjustments based on pencil type and intensity
-        let contrast = pencilType === 'charcoal' ? 1.2 + shadingLevel / 50 : 1.1 + shadingLevel / 80;
-        let brightness = pencilType === 'charcoal' ? 0.8 - shadingLevel / 50 : 0.9;
-        
-        // Apply sketch effect (simulating dodging and burning)
-        for (let i = 0; i < data.length; i += 4) {
-          // Convert to grayscale
-          const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-          
-          // Apply contrast and brightness
-          let gray = avg / 255;
-          gray = Math.pow(gray, 1 / contrast); // Contrast adjustment
-          gray = gray * brightness; // Brightness adjustment
-          
-          // Apply intensity
-          const intensityFactor = sketchIntensity / 50;
-          gray = gray < 0.5 ? gray * intensityFactor : 1 - (1 - gray) * intensityFactor;
-          
-          // Convert back to 0-255 range
-          const val = Math.min(255, Math.max(0, Math.round(gray * 255)));
-          
-          // Apply pencil texture effect
-          let noise = 0;
-          if (pencilType === 'charcoal') {
-            // More grainy texture for charcoal
-            noise = (Math.random() - 0.5) * 10 * (shadingLevel / 50);
-          } else {
-            // Smoother texture for graphite
-            noise = (Math.random() - 0.5) * 5 * (shadingLevel / 50);
-          }
-          
-          const pixelValue = Math.min(255, Math.max(0, val + noise));
-          data[i] = data[i + 1] = data[i + 2] = pixelValue;
-        }
-        
-        // Put processed image data back
-        ctx.putImageData(imageData, 0, 0);
-        
-        // Return transformed image as data URL
-        resolve(canvasElement.toDataURL('image/png'));
-      };
-      
-      img.src = imageSource;
-    });
-  }, [canvasElement, pencilType, shadingLevel, sketchIntensity]);
-  
-  // Transform function
-  const handleTransform = useCallback(async () => {
-    if (!uploadedImage) return;
+  // Apply grid transformation
+  const applyGridTransform = () => {
+    if (!uploadedImage || !hiddenCanvasRef.current) return;
     
-    setIsTransforming(true);
+    setIsProcessing(true);
     
-    try {
-      let result;
+    const img = new Image();
+    img.onload = () => {
+      const canvas = hiddenCanvasRef.current!;
+      const ctx = canvas.getContext('2d');
       
-      // Apply the appropriate transformation based on the active tab
-      switch (activeTab) {
-        case 'grid':
-          result = await applyGridTransform(uploadedImage);
-          break;
-        case 'lineart':
-          result = await applyLineArtTransform(uploadedImage);
-          break;
-        case 'sketch':
-          result = await applySketchTransform(uploadedImage);
-          break;
-        default:
-          result = uploadedImage;
+      if (!ctx) {
+        setIsProcessing(false);
+        return;
       }
       
-      setTransformedImage(result);
-    } catch (error) {
-      console.error('Error during transformation:', error);
-    } finally {
-      setIsTransforming(false);
+      // Set canvas size
+      canvas.width = img.width;
+      canvas.height = img.height;
+      
+      // Draw original image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      
+      // Draw grid overlay
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = gridOpacity / 100;
+      
+      if (gridStyle === 'lines' || gridStyle === 'dashed') {
+        if (gridStyle === 'dashed') {
+          ctx.setLineDash([5, 5]);
+        } else {
+          ctx.setLineDash([]);
+        }
+        
+        // Draw vertical lines
+        for (let x = 0; x < canvas.width; x += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+          ctx.stroke();
+        }
+        
+        // Draw horizontal lines
+        for (let y = 0; y < canvas.height; y += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
+        }
+      } else if (gridStyle === 'dots') {
+        ctx.fillStyle = gridColor;
+        
+        for (let x = 0; x < canvas.width; x += gridSize) {
+          for (let y = 0; y < canvas.height; y += gridSize) {
+            ctx.beginPath();
+            ctx.arc(x, y, 1, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+      
+      // Reset alpha
+      ctx.globalAlpha = 1;
+      
+      // Get result
+      setTransformedImage(canvas.toDataURL('image/png'));
+      setIsProcessing(false);
+    };
+    
+    img.src = uploadedImage;
+  };
+  
+  // Apply line art transformation
+  const applyLineArtTransform = () => {
+    if (!uploadedImage || !hiddenCanvasRef.current) return;
+    
+    setIsProcessing(true);
+    
+    const img = new Image();
+    img.onload = () => {
+      const canvas = hiddenCanvasRef.current!;
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) {
+        setIsProcessing(false);
+        return;
+      }
+      
+      // Set canvas size
+      canvas.width = img.width;
+      canvas.height = img.height;
+      
+      // Draw original image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      
+      // Get image data
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      
+      // Convert to grayscale
+      for (let i = 0; i < data.length; i += 4) {
+        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        data[i] = data[i + 1] = data[i + 2] = avg;
+      }
+      
+      // Apply contrast adjustment based on style
+      let contrastFactor = 1;
+      let brightnessFactor = 0;
+      
+      switch (lineStyle) {
+        case 'detailed':
+          contrastFactor = 1.5;
+          break;
+        case 'minimal':
+          contrastFactor = 0.7;
+          brightnessFactor = 30;
+          break;
+        default: // normal
+          contrastFactor = 1.2;
+          break;
+      }
+      
+      // Apply threshold
+      for (let i = 0; i < data.length; i += 4) {
+        // Apply contrast
+        data[i] = Math.min(255, Math.max(0, 
+          (data[i] - 128) * contrastFactor + 128 + brightnessFactor));
+        
+        // Apply threshold
+        data[i] = data[i] < lineThreshold ? 0 : 255;
+        
+        // Invert colors (black lines on white)
+        data[i] = 255 - data[i];
+        
+        // Copy to all channels
+        data[i + 1] = data[i + 2] = data[i];
+      }
+      
+      // Apply image data
+      ctx.putImageData(imageData, 0, 0);
+      
+      // Apply thickness if needed
+      if (lineThickness > 1) {
+        // Create temporary canvas
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        
+        if (tempCtx) {
+          // Draw with blur
+          tempCtx.filter = `blur(${lineThickness}px)`;
+          tempCtx.drawImage(canvas, 0, 0);
+          
+          // Draw back
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(tempCanvas, 0, 0);
+          
+          // Threshold again
+          const finalData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const finalPixels = finalData.data;
+          
+          for (let i = 0; i < finalPixels.length; i += 4) {
+            finalPixels[i] = finalPixels[i] < 128 ? 0 : 255;
+            finalPixels[i + 1] = finalPixels[i + 2] = finalPixels[i];
+          }
+          
+          ctx.putImageData(finalData, 0, 0);
+        }
+      }
+      
+      // Get result
+      setTransformedImage(canvas.toDataURL('image/png'));
+      setIsProcessing(false);
+    };
+    
+    img.src = uploadedImage;
+  };
+  
+  // Apply sketch transformation
+  const applySketchTransform = () => {
+    if (!uploadedImage || !hiddenCanvasRef.current) return;
+    
+    setIsProcessing(true);
+    
+    const img = new Image();
+    img.onload = () => {
+      const canvas = hiddenCanvasRef.current!;
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) {
+        setIsProcessing(false);
+        return;
+      }
+      
+      // Set canvas size
+      canvas.width = img.width;
+      canvas.height = img.height;
+      
+      // Draw original image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      
+      // Get image data
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      
+      // Set params based on pencil type
+      const contrast = pencilType === 'charcoal' 
+        ? 1.2 + (shadingLevel / 50) 
+        : 1.1 + (shadingLevel / 80);
+      
+      const brightness = pencilType === 'charcoal' 
+        ? 0.8 - (shadingLevel / 50) 
+        : 0.9;
+      
+      // Apply sketch effect
+      for (let i = 0; i < data.length; i += 4) {
+        // Convert to grayscale
+        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        
+        // Apply contrast and brightness
+        let gray = avg / 255;
+        gray = Math.pow(gray, 1 / contrast); // Contrast
+        gray = gray * brightness; // Brightness
+        
+        // Apply intensity
+        const intensityFactor = sketchIntensity / 50;
+        gray = gray < 0.5 
+          ? gray * intensityFactor 
+          : 1 - (1 - gray) * intensityFactor;
+        
+        // Convert back to 0-255
+        let val = Math.min(255, Math.max(0, Math.round(gray * 255)));
+        
+        // Add noise for texture
+        const noise = (Math.random() - 0.5) * 
+          (pencilType === 'charcoal' ? 15 : 5) * (shadingLevel / 50);
+        
+        val = Math.min(255, Math.max(0, val + noise));
+        
+        // Set pixel values
+        data[i] = data[i + 1] = data[i + 2] = val;
+      }
+      
+      // Apply image data
+      ctx.putImageData(imageData, 0, 0);
+      
+      // Get result
+      setTransformedImage(canvas.toDataURL('image/png'));
+      setIsProcessing(false);
+    };
+    
+    img.src = uploadedImage;
+  };
+  
+  // Handle transform button click
+  const handleTransform = () => {
+    if (isProcessing) return;
+    
+    switch (activeTab) {
+      case 'grid':
+        applyGridTransform();
+        break;
+      case 'lineart':
+        applyLineArtTransform();
+        break;
+      case 'sketch':
+        applySketchTransform();
+        break;
     }
-  }, [activeTab, uploadedImage, applyGridTransform, applyLineArtTransform, applySketchTransform]);
-
+  };
+  
   return (
     <section className="bg-gradient-to-br from-primary to-primary-700 text-white py-12 sm:py-16 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -361,7 +374,7 @@ export default function HeroSection() {
                   `}
                 >
                   <input {...getInputProps()} />
-                  <Image className="h-16 w-16 text-gray-400 mb-4" />
+                  <ImageIcon className="h-16 w-16 text-gray-400 mb-4" />
                   <h3 className="text-lg font-medium text-gray-700 mb-2">Upload your image</h3>
                   <p className="text-gray-500 mb-4">
                     {isDragActive
@@ -383,7 +396,7 @@ export default function HeroSection() {
                       alt="Preview" 
                       className="w-full h-full object-contain"
                     />
-                    {isTransforming && (
+                    {isProcessing && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
                       </div>
@@ -401,10 +414,9 @@ export default function HeroSection() {
                     </Button>
                     {transformedImage && (
                       <Button onClick={() => {
-                        // Download the transformed image
                         const link = document.createElement("a");
                         link.href = transformedImage;
-                        link.download = `transformed-image-${activeTab}.png`;
+                        link.download = `gridart-${activeTab}.png`;
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
@@ -426,7 +438,7 @@ export default function HeroSection() {
                   <Tabs 
                     defaultValue="grid" 
                     value={activeTab} 
-                    onValueChange={(value) => setActiveTab(value as "grid" | "lineart" | "sketch")}
+                    onValueChange={setActiveTab}
                     className="mb-6"
                   >
                     <TabsList className="grid grid-cols-3 mb-6">
@@ -637,9 +649,9 @@ export default function HeroSection() {
                   <Button 
                     className="w-full mt-4" 
                     onClick={handleTransform}
-                    disabled={isTransforming || !uploadedImage}
+                    disabled={isProcessing}
                   >
-                    {isTransforming ? 'Processing...' : 'Apply Transformation'}
+                    {isProcessing ? 'Processing...' : 'Apply Transformation'}
                   </Button>
                 </>
               )}

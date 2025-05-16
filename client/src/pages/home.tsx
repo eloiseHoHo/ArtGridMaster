@@ -1,4 +1,4 @@
-import HeroSection from "@/components/HeroSection";
+import SimpleImageEditor from "@/components/SimpleImageEditor";
 import FeatureSection from "@/components/FeatureSection";
 import ArtistsGallery from "@/components/ArtistsGallery";
 import Testimonials from "@/components/Testimonials";
@@ -26,7 +26,7 @@ export default function Home() {
       </Helmet>
       
       <main>
-        <HeroSection />
+        <SimpleImageEditor />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* SEO optimized section for main keyword "Photo Grid" */}
           <div className="mb-16">
