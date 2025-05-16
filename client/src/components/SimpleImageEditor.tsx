@@ -368,7 +368,7 @@ export default function SimpleImageEditor() {
     img.src = uploadedImage;
   };
   
-  // Apply sketch transformation
+  // Apply sketch transformation using RoughJS for hand-drawn artistic effect
   const applySketchTransform = () => {
     if (!uploadedImage || !hiddenCanvasRef.current) return;
     
@@ -388,107 +388,283 @@ export default function SimpleImageEditor() {
       canvas.width = img.width;
       canvas.height = img.height;
       
-      // Draw original image
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
+      // Step 1: Create detection canvas for edge and tone analysis
+      const detectCanvas = document.createElement('canvas');
+      detectCanvas.width = canvas.width;
+      detectCanvas.height = canvas.height;
+      const detectCtx = detectCanvas.getContext('2d');
       
-      // Get image data
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      
-      // Set params based on pencil type with improved parameters
-      const contrast = pencilType === 'charcoal' 
-        ? 1.0 + (shadingLevel / 100) // Less contrast for charcoal to avoid excessive darkness
-        : 0.9 + (shadingLevel / 120); // Even lighter for graphite
-      
-      const brightness = pencilType === 'charcoal' 
-        ? 1.2 - (shadingLevel / 150) // Higher base brightness for charcoal
-        : 1.3 - (shadingLevel / 200); // Even higher for graphite
-      
-      // Edge detection parameters
-      const edgeThreshold = 15;
-      const edgeIntensity = pencilType === 'charcoal' ? 0.4 : 0.3;
-      
-      // Apply sketch effect with improved algorithm
-      for (let i = 0; i < data.length; i += 4) {
-        // Convert to grayscale with weighted RGB for better perceptual accuracy
-        const avg = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
-        
-        // Check for edges (simple edge detection for enhanced detail)
-        let edgeFactor = 0;
-        if (i > 4 && i < data.length - 4) {
-          const prevPixel = (data[i-4] * 0.299 + data[i-3] * 0.587 + data[i-2] * 0.114);
-          const edgeDiff = Math.abs(avg - prevPixel);
-          if (edgeDiff > edgeThreshold) {
-            edgeFactor = edgeIntensity;
-          }
-        }
-        
-        // Apply contrast and brightness with improved formula
-        let gray = avg / 255;
-        
-        // Modify contrast curve based on brightness for more natural results
-        if (gray > 0.7) {
-          // Keep highlights lighter
-          gray = Math.pow(gray, 0.8 / contrast);
-        } else if (gray < 0.3) {
-          // Keep shadows from getting too dark
-          gray = Math.pow(gray, 1.1 / contrast);
-        } else {
-          // Standard contrast adjustment for midtones
-          gray = Math.pow(gray, 1 / contrast);
-        }
-        
-        // Apply brightness adjustment
-        gray = gray * brightness;
-        
-        // Apply intensity with more nuanced curve
-        const intensityFactor = 0.7 + (sketchIntensity / 100);
-        
-        // Different intensity curves for different tonal ranges
-        if (gray < 0.3) {
-          // Lighter shadows
-          gray = gray * (intensityFactor * 0.8);
-        } else if (gray > 0.7) {
-          // Preserve some highlights
-          gray = 1 - (1 - gray) * (intensityFactor * 0.6);
-        } else {
-          // Standard intensity for midtones
-          gray = gray < 0.5 
-            ? gray * intensityFactor 
-            : 1 - (1 - gray) * intensityFactor;
-        }
-        
-        // Apply edge enhancement to preserve details
-        if (edgeFactor > 0) {
-          gray = gray * (1 - edgeFactor);
-        }
-        
-        // Convert back to 0-255
-        let val = Math.min(255, Math.max(0, Math.round(gray * 255)));
-        
-        // Add noise for texture with more controlled patterns
-        let noise = 0;
-        if (pencilType === 'charcoal') {
-          // Charcoal has more varied texture
-          noise = (Math.random() - 0.5) * 12 * (shadingLevel / 100);
-          // More texture in midtones, less in highlights and shadows
-          if (val > 200 || val < 50) noise *= 0.5;
-        } else {
-          // Graphite has more uniform, subtle texture
-          noise = (Math.random() - 0.5) * 5 * (shadingLevel / 120);
-          // Add slight directional pattern for graphite
-          if ((i/4) % 8 === 0) noise *= 1.5;
-        }
-        
-        val = Math.min(255, Math.max(25, val + noise));
-        
-        // Set pixel values (ensuring minimum brightness to avoid pure black)
-        data[i] = data[i + 1] = data[i + 2] = val;
+      if (!detectCtx) {
+        setIsProcessing(false);
+        return;
       }
       
-      // Apply image data
-      ctx.putImageData(imageData, 0, 0);
+      // Draw original image to detection canvas
+      detectCtx.drawImage(img, 0, 0);
+      
+      // Get image data for analysis
+      const imageData = detectCtx.getImageData(0, 0, detectCanvas.width, detectCanvas.height);
+      const data = imageData.data;
+      
+      // Convert to grayscale with weighted RGB for better perception
+      for (let i = 0; i < data.length; i += 4) {
+        const avg = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
+        data[i] = data[i + 1] = data[i + 2] = avg;
+      }
+      
+      // Set parameters based on pencil type
+      const contrast = pencilType === 'charcoal' 
+        ? 1.0 + (shadingLevel / 100) 
+        : 0.9 + (shadingLevel / 120);
+      
+      const brightness = pencilType === 'charcoal' 
+        ? 1.2 - (shadingLevel / 150) 
+        : 1.3 - (shadingLevel / 200);
+      
+      // Apply contrast and brightness for better edge detection
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = Math.min(255, Math.max(0, 
+          (data[i] - 128) * contrast + 128 + (brightness * 10)));
+        data[i + 1] = data[i + 2] = data[i];
+      }
+      
+      // Put adjusted data back for edge detection
+      detectCtx.putImageData(imageData, 0, 0);
+      
+      // Step 2: Create RoughJS sketch on main canvas
+      
+      // Clear the main canvas
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Create RoughJS generator
+      const rc = rough.canvas(canvas);
+      
+      // Set up pencil style based on settings
+      const pencilColor = pencilType === 'charcoal' ? '#101010' : '#303030';
+      const sketchRoughness = pencilType === 'charcoal' ? 1.8 : 1.2;
+      const strokeWidthBase = pencilType === 'charcoal' ? 1.5 : 1.0;
+      const strokeMultiplier = sketchIntensity / 50; // Convert 0-100 to 0-2 range
+      
+      // Set step size for scanning the image
+      // Higher resolution (smaller step) for more detailed images
+      const detailLevel = Math.max(2, Math.min(8, Math.floor(canvas.width / 500)));
+      
+      // Calculate hatching density based on intensity and shadingLevel
+      const hatchDensity = (sketchIntensity / 100) * (shadingLevel / 50);
+      
+      // Track areas for hatching based on tone
+      const darkAreas = [];
+      const midtoneAreas = [];
+      const lightAreas = [];
+      
+      // Simplify image into tonal regions (dark, midtone, light)
+      const tileSize = Math.max(5, Math.floor(canvas.width / 100));
+      
+      for (let y = 0; y < canvas.height; y += tileSize) {
+        for (let x = 0; x < canvas.width; x += tileSize) {
+          // Sample this region to get average tone
+          const tileWidth = Math.min(tileSize, canvas.width - x);
+          const tileHeight = Math.min(tileSize, canvas.height - y);
+          
+          const tileData = detectCtx.getImageData(x, y, tileWidth, tileHeight).data;
+          let tileSum = 0;
+          let pixelCount = 0;
+          
+          // Calculate average brightness for this tile
+          for (let i = 0; i < tileData.length; i += 4) {
+            tileSum += tileData[i];
+            pixelCount++;
+          }
+          
+          const avgTone = tileSum / pixelCount;
+          
+          // Categorize by tone
+          if (avgTone < 85) {
+            darkAreas.push({ x, y, width: tileWidth, height: tileHeight });
+          } else if (avgTone < 170) {
+            midtoneAreas.push({ x, y, width: tileWidth, height: tileHeight });
+          } else {
+            lightAreas.push({ x, y, width: tileWidth, height: tileHeight });
+          }
+        }
+      }
+      
+      // Find edges for detailed outline drawing
+      const edges = [];
+      const edgeThreshold = 30;
+      
+      for (let y = detailLevel; y < canvas.height - detailLevel; y += detailLevel) {
+        for (let x = detailLevel; x < canvas.width - detailLevel; x += detailLevel) {
+          // Get current pixel and surrounding pixels
+          const currentPixel = detectCtx.getImageData(x, y, 1, 1).data[0];
+          const rightPixel = detectCtx.getImageData(x + detailLevel, y, 1, 1).data[0];
+          const bottomPixel = detectCtx.getImageData(x, y + detailLevel, 1, 1).data[0];
+          
+          // Check for edges (significant difference in brightness)
+          if (Math.abs(currentPixel - rightPixel) > edgeThreshold || 
+              Math.abs(currentPixel - bottomPixel) > edgeThreshold) {
+            edges.push([x, y]);
+          }
+        }
+      }
+      
+      // Sketch contour lines based on edges with RoughJS
+      edges.forEach(([x, y], i) => {
+        // Only draw a portion of edges for better performance and more natural look
+        if (i % Math.max(1, Math.floor(edges.length / 2000)) === 0) {
+          
+          // Find a nearby edge to connect to
+          let nearestEdge = null;
+          let minDistance = detailLevel * 3;
+          
+          for (let j = 0; j < edges.length; j++) {
+            if (i !== j) {
+              const [nx, ny] = edges[j];
+              const distance = Math.sqrt(Math.pow(x - nx, 2) + Math.pow(y - ny, 2));
+              
+              if (distance < minDistance) {
+                minDistance = distance;
+                nearestEdge = [nx, ny];
+              }
+            }
+          }
+          
+          // Draw the line connecting edges
+          if (nearestEdge) {
+            const strokeWidth = strokeWidthBase * strokeMultiplier * (0.5 + Math.random() * 0.5);
+            const opacity = 0.7 + (Math.random() * 0.3);
+            
+            rc.line(x, y, nearestEdge[0], nearestEdge[1], {
+              stroke: pencilColor,
+              strokeWidth: strokeWidth,
+              roughness: sketchRoughness * (0.8 + Math.random() * 0.4),
+              bowing: 1 + Math.random(),
+              opacity: opacity
+            });
+          } else {
+            // Draw a small line in a random direction
+            const angleRad = Math.random() * Math.PI * 2;
+            const length = detailLevel * (0.5 + Math.random() * 1.5);
+            const endX = x + Math.cos(angleRad) * length;
+            const endY = y + Math.sin(angleRad) * length;
+            
+            rc.line(x, y, endX, endY, {
+              stroke: pencilColor,
+              strokeWidth: strokeWidthBase * strokeMultiplier * 0.8,
+              roughness: sketchRoughness,
+              opacity: 0.6
+            });
+          }
+        }
+      });
+      
+      // Draw hatching in dark areas (densest)
+      const darkHatchingCount = Math.floor(darkAreas.length * hatchDensity * 0.3);
+      for (let i = 0; i < darkHatchingCount; i++) {
+        const area = darkAreas[Math.floor(Math.random() * darkAreas.length)];
+        const x = area.x + Math.random() * area.width;
+        const y = area.y + Math.random() * area.height;
+        
+        // For dark areas, do cross-hatching
+        const len = tileSize * (0.8 + Math.random() * 0.4);
+        
+        // Direction 1
+        rc.line(
+          x, y,
+          x + len * Math.cos(Math.PI/4), y + len * Math.sin(Math.PI/4),
+          {
+            stroke: pencilColor,
+            strokeWidth: strokeWidthBase * strokeMultiplier * 1.2,
+            roughness: sketchRoughness * 0.8,
+            opacity: 0.8
+          }
+        );
+        
+        // Direction 2 (perpendicular)
+        rc.line(
+          x, y,
+          x + len * Math.cos(-Math.PI/4), y + len * Math.sin(-Math.PI/4),
+          {
+            stroke: pencilColor,
+            strokeWidth: strokeWidthBase * strokeMultiplier * 1.1,
+            roughness: sketchRoughness * 0.8,
+            opacity: 0.7
+          }
+        );
+      }
+      
+      // Draw hatching in midtone areas (less dense)
+      const midHatchingCount = Math.floor(midtoneAreas.length * hatchDensity * 0.2);
+      for (let i = 0; i < midHatchingCount; i++) {
+        const area = midtoneAreas[Math.floor(Math.random() * midtoneAreas.length)];
+        const x = area.x + Math.random() * area.width;
+        const y = area.y + Math.random() * area.height;
+        
+        // For midtones, do single-direction hatching
+        const len = tileSize * (0.7 + Math.random() * 0.3);
+        const angle = Math.PI/4; // 45 degrees
+        
+        rc.line(
+          x, y,
+          x + len * Math.cos(angle), y + len * Math.sin(angle),
+          {
+            stroke: pencilColor,
+            strokeWidth: strokeWidthBase * strokeMultiplier * 0.9,
+            roughness: sketchRoughness,
+            opacity: 0.5
+          }
+        );
+      }
+      
+      // Draw minimal hatching in light areas
+      const lightHatchingCount = Math.floor(lightAreas.length * hatchDensity * 0.05);
+      for (let i = 0; i < lightHatchingCount; i++) {
+        const area = lightAreas[Math.floor(Math.random() * lightAreas.length)];
+        const x = area.x + Math.random() * area.width;
+        const y = area.y + Math.random() * area.height;
+        
+        // For light areas, do sparse, light strokes
+        const len = tileSize * (0.5 + Math.random() * 0.3);
+        const angle = Math.random() * Math.PI; // Random angle
+        
+        rc.line(
+          x, y,
+          x + len * Math.cos(angle), y + len * Math.sin(angle),
+          {
+            stroke: pencilColor,
+            strokeWidth: strokeWidthBase * strokeMultiplier * 0.7,
+            roughness: sketchRoughness * 1.2,
+            opacity: 0.3
+          }
+        );
+      }
+      
+      // If it's charcoal, add some smudging effect with transparent rectangles
+      if (pencilType === 'charcoal' && shadingLevel > 30) {
+        const smudgeCount = Math.floor((darkAreas.length + midtoneAreas.length) * 0.1 * (shadingLevel / 100));
+        
+        for (let i = 0; i < smudgeCount; i++) {
+          // Pick from dark or midtone areas for smudging
+          const areaPool = [...darkAreas, ...midtoneAreas];
+          const area = areaPool[Math.floor(Math.random() * areaPool.length)];
+          
+          const x = area.x + Math.random() * area.width;
+          const y = area.y + Math.random() * area.height;
+          const smudgeWidth = tileSize * (1 + Math.random() * 2);
+          const smudgeHeight = tileSize * (0.2 + Math.random() * 0.5);
+          
+          // Draw smudge as a rough rectangle
+          rc.rectangle(x, y, smudgeWidth, smudgeHeight, {
+            fill: pencilColor,
+            fillStyle: 'solid',
+            stroke: 'none',
+            roughness: 3,
+            fillWeight: 0.1,
+            opacity: 0.1 + (Math.random() * 0.1)
+          });
+        }
+      }
       
       // Get result
       setTransformedImage(canvas.toDataURL('image/png'));
