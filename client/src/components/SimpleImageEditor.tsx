@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Upload, Image as ImageIcon, ArrowRight, Check } from "lucide-react";
 import { useDropzone } from "react-dropzone";
+import rough from 'roughjs/bundled/rough.esm';
 
 export default function SimpleImageEditor() {
   const [activeTab, setActiveTab] = useState<string>("grid");
@@ -147,7 +148,7 @@ export default function SimpleImageEditor() {
     img.src = uploadedImage;
   };
   
-  // Apply line art transformation
+  // Apply line art transformation using RoughJS for hand-drawn effect
   const applyLineArtTransform = () => {
     if (!uploadedImage || !hiddenCanvasRef.current) return;
     
@@ -167,17 +168,27 @@ export default function SimpleImageEditor() {
       canvas.width = img.width;
       canvas.height = img.height;
       
-      // Draw original image
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
+      // Step 1: Prepare detection canvas for edge finding
+      const detectCanvas = document.createElement('canvas');
+      detectCanvas.width = img.width;
+      detectCanvas.height = img.height;
+      const detectCtx = detectCanvas.getContext('2d');
       
-      // Get image data
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      if (!detectCtx) {
+        setIsProcessing(false);
+        return;
+      }
+      
+      // Draw original image to detection canvas
+      detectCtx.drawImage(img, 0, 0);
+      
+      // Get image data for processing
+      const imageData = detectCtx.getImageData(0, 0, detectCanvas.width, detectCanvas.height);
       const data = imageData.data;
       
-      // Convert to grayscale
+      // Convert to grayscale with weighted RGB for better perception
       for (let i = 0; i < data.length; i += 4) {
-        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        const avg = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
         data[i] = data[i + 1] = data[i + 2] = avg;
       }
       
@@ -190,12 +201,12 @@ export default function SimpleImageEditor() {
         case 'detailed':
           contrastFactor = 1.8;
           brightnessFactor = 15;
-          thresholdValue = Math.min(lineThreshold, 120); // Lower threshold for detailed mode
+          thresholdValue = Math.min(lineThreshold, 120);
           break;
         case 'minimal':
           contrastFactor = 0.8;
           brightnessFactor = 40;
-          thresholdValue = Math.max(lineThreshold, 150); // Higher threshold for minimal mode
+          thresholdValue = Math.max(lineThreshold, 150);
           break;
         default: // normal
           contrastFactor = 1.4;
@@ -203,61 +214,151 @@ export default function SimpleImageEditor() {
           break;
       }
       
-      // Apply threshold
+      // Apply threshold to create a binary image for edge detection
       for (let i = 0; i < data.length; i += 4) {
         // Apply contrast and brightness
         data[i] = Math.min(255, Math.max(0, 
           (data[i] - 128) * contrastFactor + 128 + brightnessFactor));
         
-        // Apply adaptive threshold - use different thresholds for different brightness regions
-        // This creates more detailed line art
+        // Apply adaptive threshold
         let adaptiveThreshold = thresholdValue;
-        if (data[i] > 200) adaptiveThreshold *= 1.1; // Increase threshold for bright areas
-        if (data[i] < 60) adaptiveThreshold *= 0.9;  // Decrease threshold for dark areas
+        if (data[i] > 200) adaptiveThreshold *= 1.1;
+        if (data[i] < 60) adaptiveThreshold *= 0.9;
         
-        // Apply threshold with edge detection enhancement
-        const isEdge = i > 4 && Math.abs(data[i] - data[i-4]) > 20; // Simple edge detection
-        data[i] = (data[i] < adaptiveThreshold || isEdge) ? 0 : 255;
-        
-        // Invert colors for line art (black lines on white)
-        data[i] = 255 - data[i];
+        // Apply threshold
+        data[i] = data[i] < adaptiveThreshold ? 0 : 255;
         
         // Copy to all channels
         data[i + 1] = data[i + 2] = data[i];
       }
       
-      // Apply image data
-      ctx.putImageData(imageData, 0, 0);
+      // Put processed data back to detection canvas
+      detectCtx.putImageData(imageData, 0, 0);
       
-      // Apply thickness if needed
-      if (lineThickness > 1) {
-        // Create temporary canvas
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        const tempCtx = tempCanvas.getContext('2d');
-        
-        if (tempCtx) {
-          // Draw with blur
-          tempCtx.filter = `blur(${lineThickness}px)`;
-          tempCtx.drawImage(canvas, 0, 0);
+      // Step 2: Use RoughJS to create hand-drawn line art
+      
+      // Clear the main canvas
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Create RoughJS generator
+      const rc = rough.canvas(canvas);
+      
+      // Parameters adjustment based on line style
+      const roughness = lineStyle === 'detailed' ? 0.5 : 
+                      lineStyle === 'minimal' ? 1.5 : 1.0;
+                      
+      const bowing = lineStyle === 'detailed' ? 0.5 : 
+                    lineStyle === 'minimal' ? 1.5 : 1.0;
+      
+      // Calculate step size based on image size and desired detail level
+      // Smaller values mean more detail but slower processing
+      const baseStep = Math.max(2, Math.min(10, Math.floor(canvas.width / 400)));
+      const stepX = baseStep;
+      const stepY = baseStep;
+      
+      // Points array to store detected edge points
+      const edgePoints = [];
+      
+      // Edge detection - find transitions between black and white
+      for (let y = 0; y < canvas.height - stepY; y += stepY) {
+        for (let x = 0; x < canvas.width - stepX; x += stepX) {
+          // Sample current pixel
+          const pixelData = detectCtx.getImageData(x, y, 1, 1).data;
           
-          // Draw back
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(tempCanvas, 0, 0);
+          // Sample pixels in different directions
+          const rightPixel = detectCtx.getImageData(x + stepX, y, 1, 1).data;
+          const downPixel = detectCtx.getImageData(x, y + stepY, 1, 1).data;
           
-          // Threshold again
-          const finalData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const finalPixels = finalData.data;
+          // Check for edges (transitions between black and white)
+          const isCurrentDark = pixelData[0] < 128;
+          const isRightDark = rightPixel[0] < 128;
+          const isDownDark = downPixel[0] < 128;
           
-          for (let i = 0; i < finalPixels.length; i += 4) {
-            finalPixels[i] = finalPixels[i] < 128 ? 0 : 255;
-            finalPixels[i + 1] = finalPixels[i + 2] = finalPixels[i];
+          // If we found an edge in either direction
+          if ((isCurrentDark !== isRightDark) || (isCurrentDark !== isDownDark)) {
+            edgePoints.push([x, y]);
           }
-          
-          ctx.putImageData(finalData, 0, 0);
         }
       }
+      
+      // For hand-drawn effect, we'll convert edge points to strokes
+      const strokes = [];
+      const maxPoints = 5000; // Limit points to prevent performance issues
+      
+      // If we have too many points, sample them
+      const sampleRate = Math.max(1, Math.floor(edgePoints.length / maxPoints));
+      
+      // Group nearby points into strokes
+      let currentStroke = [];
+      let lastPoint = null;
+      
+      for (let i = 0; i < edgePoints.length; i += sampleRate) {
+        const point = edgePoints[i];
+        
+        if (lastPoint) {
+          // Calculate distance between points
+          const dist = Math.sqrt(
+            Math.pow(point[0] - lastPoint[0], 2) + 
+            Math.pow(point[1] - lastPoint[1], 2)
+          );
+          
+          // If points are close enough, add to current stroke
+          if (dist < stepX * 3) {
+            currentStroke.push(point);
+          } else {
+            // Start a new stroke if this point is far from the last one
+            if (currentStroke.length > 1) {
+              strokes.push([...currentStroke]);
+            }
+            currentStroke = [point];
+          }
+        } else {
+          currentStroke.push(point);
+        }
+        
+        lastPoint = point;
+      }
+      
+      // Add the last stroke
+      if (currentStroke.length > 1) {
+        strokes.push([...currentStroke]);
+      }
+      
+      // Draw strokes with RoughJS
+      strokes.forEach(stroke => {
+        // For very short strokes, draw as points
+        if (stroke.length < 3) {
+          const [x, y] = stroke[0];
+          rc.circle(x, y, lineThickness * 2, {
+            fill: '#000',
+            fillStyle: 'solid',
+            roughness: roughness
+          });
+          return;
+        }
+        
+        // For longer strokes, draw as connected path
+        // We'll simplify by connecting every other point
+        const simplifiedStroke = stroke.filter((_, i) => i % 2 === 0 || i === stroke.length - 1);
+        
+        // Build path points
+        const pathData = [];
+        for (let i = 0; i < simplifiedStroke.length - 1; i++) {
+          const [x1, y1] = simplifiedStroke[i];
+          const [x2, y2] = simplifiedStroke[i + 1];
+          
+          // Vary thickness slightly for more natural look
+          const strokeWidth = lineThickness * (0.8 + Math.random() * 0.4);
+          
+          // Draw line segment
+          rc.line(x1, y1, x2, y2, {
+            roughness: roughness * (0.9 + Math.random() * 0.2),
+            strokeWidth: strokeWidth,
+            bowing: bowing * (0.9 + Math.random() * 0.2)
+          });
+        }
+      });
       
       // Get result
       setTransformedImage(canvas.toDataURL('image/png'));
