@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
@@ -333,8 +333,8 @@ export default function SimpleImageEditor() {
   };
   
   // Handle transform button click
-  const handleTransform = () => {
-    if (isProcessing) return;
+  const handleTransform = useCallback(() => {
+    if (isProcessing || !uploadedImage) return;
     
     switch (activeTab) {
       case 'grid':
@@ -347,7 +347,37 @@ export default function SimpleImageEditor() {
         applySketchTransform();
         break;
     }
-  };
+  }, [activeTab, isProcessing, uploadedImage, applyGridTransform, applyLineArtTransform, applySketchTransform]);
+  
+  // Apply transformations whenever settings change (real-time feedback)
+  useEffect(() => {
+    if (uploadedImage && !isProcessing) {
+      // Add a small delay to prevent excessive processing while user is adjusting sliders
+      const timeoutId = setTimeout(() => {
+        handleTransform();
+      }, 300);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [
+    uploadedImage,
+    handleTransform,
+    activeTab,
+    // Grid settings
+    gridSize,
+    gridOpacity,
+    gridColor,
+    gridStyle,
+    // Line art settings
+    lineThreshold,
+    lineThickness,
+    lineStyle,
+    // Sketch settings
+    sketchIntensity,
+    pencilType,
+    shadingLevel,
+    isProcessing
+  ]);
   
   return (
     <section className="bg-gradient-to-br from-primary to-primary-700 text-white py-12 sm:py-16 md:py-20">
@@ -646,13 +676,19 @@ export default function SimpleImageEditor() {
                     </TabsContent>
                   </Tabs>
                   
-                  <Button 
-                    className="w-full mt-4" 
-                    onClick={handleTransform}
-                    disabled={isProcessing}
-                  >
-                    {isProcessing ? 'Processing...' : 'Apply Transformation'}
-                  </Button>
+                  {/* Transformations happen automatically, but we keep the button as an option */}
+                  <div className="flex items-center justify-between mt-4">
+                    <p className="text-sm text-gray-500">
+                      {isProcessing ? 'Processing...' : 'Adjustments apply automatically'}
+                    </p>
+                    <Button 
+                      onClick={handleTransform}
+                      disabled={isProcessing}
+                      size="sm"
+                    >
+                      Apply Manually
+                    </Button>
+                  </div>
                 </>
               )}
               
