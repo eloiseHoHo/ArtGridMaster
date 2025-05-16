@@ -349,35 +349,96 @@ export default function SimpleImageEditor() {
     }
   }, [activeTab, isProcessing, uploadedImage, applyGridTransform, applyLineArtTransform, applySketchTransform]);
   
-  // Apply transformations whenever settings change (real-time feedback)
+  // Create direct handlers for immediate updates when user changes settings
+  const handleGridSizeChange = useCallback((values: number[]) => {
+    setGridSize(values[0]);
+    if (uploadedImage && !isProcessing && activeTab === 'grid') {
+      setIsProcessing(true);
+      // Use requestAnimationFrame to ensure UI updates before processing
+      requestAnimationFrame(() => applyGridTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  
+  const handleGridOpacityChange = useCallback((values: number[]) => {
+    setGridOpacity(values[0]);
+    if (uploadedImage && !isProcessing && activeTab === 'grid') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applyGridTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  
+  const handleGridColorChange = useCallback((color: string) => {
+    setGridColor(color);
+    if (uploadedImage && !isProcessing && activeTab === 'grid') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applyGridTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  
+  const handleGridStyleChange = useCallback((style: string) => {
+    setGridStyle(style);
+    if (uploadedImage && !isProcessing && activeTab === 'grid') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applyGridTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applyGridTransform]);
+  
+  // Line art handlers
+  const handleLineThresholdChange = useCallback((values: number[]) => {
+    setLineThreshold(values[0]);
+    if (uploadedImage && !isProcessing && activeTab === 'lineart') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applyLineArtTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applyLineArtTransform]);
+  
+  const handleLineThicknessChange = useCallback((values: number[]) => {
+    setLineThickness(values[0]);
+    if (uploadedImage && !isProcessing && activeTab === 'lineart') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applyLineArtTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applyLineArtTransform]);
+  
+  const handleLineStyleChange = useCallback((style: string) => {
+    setLineStyle(style);
+    if (uploadedImage && !isProcessing && activeTab === 'lineart') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applyLineArtTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applyLineArtTransform]);
+  
+  // Sketch handlers
+  const handleSketchIntensityChange = useCallback((values: number[]) => {
+    setSketchIntensity(values[0]);
+    if (uploadedImage && !isProcessing && activeTab === 'sketch') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applySketchTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applySketchTransform]);
+  
+  const handlePencilTypeChange = useCallback((type: string) => {
+    setPencilType(type);
+    if (uploadedImage && !isProcessing && activeTab === 'sketch') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applySketchTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applySketchTransform]);
+  
+  const handleShadingLevelChange = useCallback((values: number[]) => {
+    setShadingLevel(values[0]);
+    if (uploadedImage && !isProcessing && activeTab === 'sketch') {
+      setIsProcessing(true);
+      requestAnimationFrame(() => applySketchTransform());
+    }
+  }, [uploadedImage, isProcessing, activeTab, applySketchTransform]);
+  
+  // Initial transformation when tab changes
   useEffect(() => {
     if (uploadedImage && !isProcessing) {
-      // Add a small delay to prevent excessive processing while user is adjusting sliders
-      const timeoutId = setTimeout(() => {
-        handleTransform();
-      }, 300);
-      
-      return () => clearTimeout(timeoutId);
+      handleTransform();
     }
-  }, [
-    uploadedImage,
-    handleTransform,
-    activeTab,
-    // Grid settings
-    gridSize,
-    gridOpacity,
-    gridColor,
-    gridStyle,
-    // Line art settings
-    lineThreshold,
-    lineThickness,
-    lineStyle,
-    // Sketch settings
-    sketchIntensity,
-    pencilType,
-    shadingLevel,
-    isProcessing
-  ]);
+  }, [activeTab, uploadedImage, isProcessing, handleTransform]);
   
   return (
     <section className="bg-gradient-to-br from-primary to-primary-700 text-white py-12 sm:py-16 md:py-20">
@@ -488,7 +549,7 @@ export default function SimpleImageEditor() {
                           max={50} 
                           step={1}
                           value={[gridSize]} 
-                          onValueChange={(values) => setGridSize(values[0])}
+                          onValueChange={handleGridSizeChange}
                         />
                       </div>
                       
@@ -502,7 +563,7 @@ export default function SimpleImageEditor() {
                           max={100} 
                           step={1}
                           value={[gridOpacity]} 
-                          onValueChange={(values) => setGridOpacity(values[0])}
+                          onValueChange={handleGridOpacityChange}
                         />
                       </div>
                       
@@ -511,22 +572,22 @@ export default function SimpleImageEditor() {
                         <div className="flex space-x-2">
                           <button 
                             className={`w-8 h-8 rounded-full bg-black ${gridColor === '#000000' ? 'ring-2 ring-primary ring-offset-2' : ''}`}
-                            onClick={() => setGridColor('#000000')}
+                            onClick={() => handleGridColorChange('#000000')}
                             aria-label="Black grid color"
                           ></button>
                           <button 
                             className={`w-8 h-8 rounded-full bg-blue-500 ${gridColor === '#3b82f6' ? 'ring-2 ring-primary ring-offset-2' : ''}`}
-                            onClick={() => setGridColor('#3b82f6')}
+                            onClick={() => handleGridColorChange('#3b82f6')}
                             aria-label="Blue grid color"
                           ></button>
                           <button 
                             className={`w-8 h-8 rounded-full bg-red-500 ${gridColor === '#ef4444' ? 'ring-2 ring-primary ring-offset-2' : ''}`}
-                            onClick={() => setGridColor('#ef4444')}
+                            onClick={() => handleGridColorChange('#ef4444')}
                             aria-label="Red grid color"
                           ></button>
                           <button 
                             className={`w-8 h-8 rounded-full bg-green-500 ${gridColor === '#22c55e' ? 'ring-2 ring-primary ring-offset-2' : ''}`}
-                            onClick={() => setGridColor('#22c55e')}
+                            onClick={() => handleGridColorChange('#22c55e')}
                             aria-label="Green grid color"
                           ></button>
                         </div>
@@ -537,19 +598,19 @@ export default function SimpleImageEditor() {
                         <div className="grid grid-cols-3 gap-2">
                           <button 
                             className={`p-2 rounded border text-center text-sm ${gridStyle === 'lines' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setGridStyle('lines')}
+                            onClick={() => handleGridStyleChange('lines')}
                           >
                             Lines
                           </button>
                           <button 
                             className={`p-2 rounded border text-center text-sm ${gridStyle === 'dots' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setGridStyle('dots')}
+                            onClick={() => handleGridStyleChange('dots')}
                           >
                             Dots
                           </button>
                           <button 
                             className={`p-2 rounded border text-center text-sm ${gridStyle === 'dashed' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
-                            onClick={() => setGridStyle('dashed')}
+                            onClick={() => handleGridStyleChange('dashed')}
                           >
                             Dashed
                           </button>
@@ -568,7 +629,7 @@ export default function SimpleImageEditor() {
                           max={200} 
                           step={1}
                           value={[lineThreshold]} 
-                          onValueChange={(values) => setLineThreshold(values[0])}
+                          onValueChange={handleLineThresholdChange}
                         />
                         <div className="flex justify-between text-xs text-gray-500">
                           <span>More Details</span>
@@ -586,7 +647,7 @@ export default function SimpleImageEditor() {
                           max={3} 
                           step={0.1}
                           value={[lineThickness]} 
-                          onValueChange={(values) => setLineThickness(values[0])}
+                          onValueChange={handleLineThicknessChange}
                         />
                         <div className="flex justify-between text-xs text-gray-500">
                           <span>Thin</span>
