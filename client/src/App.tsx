@@ -5,6 +5,9 @@ import Home from "@/pages/home";
 import Transform from "@/pages/transform";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog/BlogPost";
+import Categories from "@/pages/categories";
+import PortraitPhotoGrid from "@/pages/categories/portrait-photo-grid";
+import WomenPortraitPhotoGrid from "@/pages/categories/portrait-photo-grid/women-portrait-photo-grid";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -15,6 +18,9 @@ function Router() {
       <Route path="/transform/:id" component={Transform} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/categories" component={Categories} />
+      <Route path="/categories/portrait-photo-grid" component={PortraitPhotoGrid} />
+      <Route path="/categories/portrait-photo-grid/women-portrait-photo-grid" component={WomenPortraitPhotoGrid} />
       <Route component={NotFound} />
     </Switch>
   );
