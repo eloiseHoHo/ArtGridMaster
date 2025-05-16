@@ -418,27 +418,30 @@ export default function SimpleImageEditor() {
   // Sketch handlers
   const handleSketchIntensityChange = useCallback((values: number[]) => {
     setSketchIntensity(values[0]);
-    if (uploadedImage && !isProcessing && activeTab === 'sketch') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applySketchTransform());
+    if (uploadedImage && activeTab === 'sketch') {
+      requestAnimationFrame(() => {
+        applySketchTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applySketchTransform]);
+  }, [uploadedImage, activeTab, applySketchTransform]);
   
   const handlePencilTypeChange = useCallback((type: string) => {
     setPencilType(type);
-    if (uploadedImage && !isProcessing && activeTab === 'sketch') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applySketchTransform());
+    if (uploadedImage && activeTab === 'sketch') {
+      requestAnimationFrame(() => {
+        applySketchTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applySketchTransform]);
+  }, [uploadedImage, activeTab, applySketchTransform]);
   
   const handleShadingLevelChange = useCallback((values: number[]) => {
     setShadingLevel(values[0]);
-    if (uploadedImage && !isProcessing && activeTab === 'sketch') {
-      setIsProcessing(true);
-      requestAnimationFrame(() => applySketchTransform());
+    if (uploadedImage && activeTab === 'sketch') {
+      requestAnimationFrame(() => {
+        applySketchTransform();
+      });
     }
-  }, [uploadedImage, isProcessing, activeTab, applySketchTransform]);
+  }, [uploadedImage, activeTab, applySketchTransform]);
   
   // Initial transformation when tab changes
   useEffect(() => {
