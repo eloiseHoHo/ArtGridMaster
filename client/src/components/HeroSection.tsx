@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Upload, Image, Info, ArrowRight, Check } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
@@ -19,8 +19,32 @@ export default function HeroSection() {
   const [gridColor, setGridColor] = useState("#000000");
   const [gridStyle, setGridStyle] = useState<"lines" | "dots" | "dashed">("lines");
   
+  // Line art settings
+  const [lineThreshold, setLineThreshold] = useState(128);
+  const [lineThickness, setLineThickness] = useState(1);
+  const [lineStyle, setLineStyle] = useState<"normal" | "detailed" | "minimal">("normal");
+  
+  // Sketch settings
+  const [sketchIntensity, setSketchIntensity] = useState(50);
+  const [pencilType, setPencilType] = useState<"graphite" | "charcoal">("graphite");
+  const [shadingLevel, setShadingLevel] = useState(50);
+
+  // Create canvas elements for transformations
+  const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(null);
+  
+  useEffect(() => {
+    // Create a canvas element for image processing
+    const canvas = document.createElement('canvas');
+    setCanvasElement(canvas);
+    
+    // Clean up
+    return () => {
+      setCanvasElement(null);
+    };
+  }, []);
+  
   // Dropzone setup
-  const onDrop = (acceptedFiles: File[]) => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       const reader = new FileReader();
@@ -30,7 +54,7 @@ export default function HeroSection() {
       };
       reader.readAsDataURL(file);
     }
-  };
+  }, []);
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -41,19 +65,276 @@ export default function HeroSection() {
     maxFiles: 1
   });
   
-  // Mock transform function (in production this would call the backend API)
-  const handleTransform = () => {
+  // Image transformation functions
+  const applyGridTransform = useCallback((imageSource: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        if (!canvasElement) return resolve(imageSource);
+        
+        const ctx = canvasElement.getContext('2d');
+        if (!ctx) return resolve(imageSource);
+        
+        // Set canvas dimensions to match image
+        canvasElement.width = img.width;
+        canvasElement.height = img.height;
+        
+        // Draw original image
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        ctx.drawImage(img, 0, 0);
+        
+        // Draw grid overlay
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = gridOpacity / 100;
+        
+        if (gridStyle === "lines" || gridStyle === "dashed") {
+          if (gridStyle === "dashed") {
+            ctx.setLineDash([5, 5]);
+          } else {
+            ctx.setLineDash([]);
+          }
+          
+          // Draw vertical lines
+          for (let x = 0; x < canvasElement.width; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvasElement.height);
+            ctx.stroke();
+          }
+          
+          // Draw horizontal lines
+          for (let y = 0; y < canvasElement.height; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvasElement.width, y);
+            ctx.stroke();
+          }
+        } else if (gridStyle === "dots") {
+          ctx.fillStyle = gridColor;
+          
+          for (let x = 0; x < canvasElement.width; x += gridSize) {
+            for (let y = 0; y < canvasElement.height; y += gridSize) {
+              ctx.beginPath();
+              ctx.arc(x, y, 1, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        }
+        
+        // Reset global alpha
+        ctx.globalAlpha = 1;
+        
+        // Return transformed image as data URL
+        resolve(canvasElement.toDataURL('image/png'));
+      };
+      
+      img.src = imageSource;
+    });
+  }, [canvasElement, gridColor, gridOpacity, gridSize, gridStyle]);
+  
+  const applyLineArtTransform = useCallback((imageSource: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        if (!canvasElement) return resolve(imageSource);
+        
+        const ctx = canvasElement.getContext('2d');
+        if (!ctx) return resolve(imageSource);
+        
+        // Set canvas dimensions to match image
+        canvasElement.width = img.width;
+        canvasElement.height = img.height;
+        
+        // Draw original image
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        ctx.drawImage(img, 0, 0);
+        
+        // Get image data
+        const imageData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        const data = imageData.data;
+        
+        // Convert to grayscale first
+        for (let i = 0; i < data.length; i += 4) {
+          const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+          data[i] = data[i + 1] = data[i + 2] = avg;
+        }
+        
+        // Apply threshold based on line style
+        let contrastFactor = 1;
+        let brightnessFactor = 0;
+        
+        switch (lineStyle) {
+          case 'detailed':
+            contrastFactor = 1.2;
+            brightnessFactor = 0;
+            break;
+          case 'minimal':
+            contrastFactor = 0.8;
+            brightnessFactor = 30;
+            break;
+          default: // normal
+            contrastFactor = 1;
+            brightnessFactor = 0;
+            break;
+        }
+        
+        // Apply edge detection (simple threshold with contrast/brightness adjustment)
+        for (let i = 0; i < data.length; i += 4) {
+          // Apply contrast and brightness adjustment
+          data[i] = Math.min(255, Math.max(0, (data[i] - 128) * contrastFactor + 128 + brightnessFactor));
+          
+          // Apply threshold
+          data[i] = data[i] < lineThreshold ? 0 : 255;
+          
+          // Invert for line art (black lines on white background)
+          data[i] = 255 - data[i];
+          
+          // Copy to other channels
+          data[i + 1] = data[i + 2] = data[i];
+        }
+        
+        // Apply line thickness (simple dilation)
+        if (lineThickness > 1) {
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = canvasElement.width;
+          tempCanvas.height = canvasElement.height;
+          const tempCtx = tempCanvas.getContext('2d');
+          
+          if (tempCtx) {
+            // Put the processed image data
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Draw to temp canvas with slight blur for thickness
+            tempCtx.filter = `blur(${lineThickness}px)`;
+            tempCtx.drawImage(canvasElement, 0, 0);
+            
+            // Draw back to main canvas
+            ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            ctx.drawImage(tempCanvas, 0, 0);
+            
+            // Apply threshold again to sharpen edges
+            const finalData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
+            const finalPixels = finalData.data;
+            
+            for (let i = 0; i < finalPixels.length; i += 4) {
+              finalPixels[i] = finalPixels[i] < 128 ? 0 : 255;
+              finalPixels[i + 1] = finalPixels[i + 2] = finalPixels[i];
+            }
+            
+            ctx.putImageData(finalData, 0, 0);
+          }
+        } else {
+          // Put the processed image data directly
+          ctx.putImageData(imageData, 0, 0);
+        }
+        
+        // Return transformed image as data URL
+        resolve(canvasElement.toDataURL('image/png'));
+      };
+      
+      img.src = imageSource;
+    });
+  }, [canvasElement, lineThreshold, lineThickness, lineStyle]);
+  
+  const applySketchTransform = useCallback((imageSource: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        if (!canvasElement) return resolve(imageSource);
+        
+        const ctx = canvasElement.getContext('2d');
+        if (!ctx) return resolve(imageSource);
+        
+        // Set canvas dimensions to match image
+        canvasElement.width = img.width;
+        canvasElement.height = img.height;
+        
+        // Draw original image
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        ctx.drawImage(img, 0, 0);
+        
+        // Get image data
+        const imageData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        const data = imageData.data;
+        
+        // Convert to grayscale with adjustments based on pencil type and intensity
+        let contrast = pencilType === 'charcoal' ? 1.2 + shadingLevel / 50 : 1.1 + shadingLevel / 80;
+        let brightness = pencilType === 'charcoal' ? 0.8 - shadingLevel / 50 : 0.9;
+        
+        // Apply sketch effect (simulating dodging and burning)
+        for (let i = 0; i < data.length; i += 4) {
+          // Convert to grayscale
+          const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+          
+          // Apply contrast and brightness
+          let gray = avg / 255;
+          gray = Math.pow(gray, 1 / contrast); // Contrast adjustment
+          gray = gray * brightness; // Brightness adjustment
+          
+          // Apply intensity
+          const intensityFactor = sketchIntensity / 50;
+          gray = gray < 0.5 ? gray * intensityFactor : 1 - (1 - gray) * intensityFactor;
+          
+          // Convert back to 0-255 range
+          const val = Math.min(255, Math.max(0, Math.round(gray * 255)));
+          
+          // Apply pencil texture effect
+          let noise = 0;
+          if (pencilType === 'charcoal') {
+            // More grainy texture for charcoal
+            noise = (Math.random() - 0.5) * 10 * (shadingLevel / 50);
+          } else {
+            // Smoother texture for graphite
+            noise = (Math.random() - 0.5) * 5 * (shadingLevel / 50);
+          }
+          
+          const pixelValue = Math.min(255, Math.max(0, val + noise));
+          data[i] = data[i + 1] = data[i + 2] = pixelValue;
+        }
+        
+        // Put processed image data back
+        ctx.putImageData(imageData, 0, 0);
+        
+        // Return transformed image as data URL
+        resolve(canvasElement.toDataURL('image/png'));
+      };
+      
+      img.src = imageSource;
+    });
+  }, [canvasElement, pencilType, shadingLevel, sketchIntensity]);
+  
+  // Transform function
+  const handleTransform = useCallback(async () => {
     if (!uploadedImage) return;
     
     setIsTransforming(true);
     
-    // Simulate API call with setTimeout
-    setTimeout(() => {
-      // In a real app, this would be an API call to transform the image
-      setTransformedImage(uploadedImage);
+    try {
+      let result;
+      
+      // Apply the appropriate transformation based on the active tab
+      switch (activeTab) {
+        case 'grid':
+          result = await applyGridTransform(uploadedImage);
+          break;
+        case 'lineart':
+          result = await applyLineArtTransform(uploadedImage);
+          break;
+        case 'sketch':
+          result = await applySketchTransform(uploadedImage);
+          break;
+        default:
+          result = uploadedImage;
+      }
+      
+      setTransformedImage(result);
+    } catch (error) {
+      console.error('Error during transformation:', error);
+    } finally {
       setIsTransforming(false);
-    }, 1500);
-  };
+    }
+  }, [activeTab, uploadedImage, applyGridTransform, applyLineArtTransform, applySketchTransform]);
 
   return (
     <section className="bg-gradient-to-br from-primary to-primary-700 text-white py-12 sm:py-16 md:py-20">
@@ -81,18 +362,18 @@ export default function HeroSection() {
                 >
                   <input {...getInputProps()} />
                   <Image className="h-16 w-16 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-700 mb-2">上传您的图片</h3>
+                  <h3 className="text-lg font-medium text-gray-700 mb-2">Upload your image</h3>
                   <p className="text-gray-500 mb-4">
                     {isDragActive
-                      ? "拖放图片到这里..."
-                      : "拖放图片到这里，或点击选择文件"
+                      ? "Drop the image here..."
+                      : "Drag and drop an image, or click to browse"
                     }
                   </p>
                   <Button>
                     <Upload className="mr-2 h-4 w-4" />
-                    选择图片
+                    Select Image
                   </Button>
-                  <p className="text-xs text-gray-500 mt-4">支持的格式: JPG, PNG (最大 10MB)</p>
+                  <p className="text-xs text-gray-500 mt-4">Supported formats: JPG, PNG (Max 10MB)</p>
                 </div>
               ) : (
                 <div className="h-80 flex flex-col">
@@ -102,20 +383,6 @@ export default function HeroSection() {
                       alt="Preview" 
                       className="w-full h-full object-contain"
                     />
-                    {transformedImage && activeTab === "grid" && (
-                      <div 
-                        className="grid-overlay absolute inset-0"
-                        style={{
-                          backgroundSize: `${gridSize}px ${gridSize}px`,
-                          opacity: gridOpacity / 100,
-                          backgroundImage: gridStyle === "lines" 
-                            ? `linear-gradient(to right, ${gridColor} 1px, transparent 1px), linear-gradient(to bottom, ${gridColor} 1px, transparent 1px)`
-                            : gridStyle === "dots"
-                              ? `radial-gradient(${gridColor} 1px, transparent 1px)`
-                              : `linear-gradient(to right, ${gridColor} 1px, transparent 1px), linear-gradient(to bottom, ${gridColor} 1px, transparent 1px)`
-                        }}
-                      ></div>
-                    )}
                     {isTransforming && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
@@ -130,11 +397,11 @@ export default function HeroSection() {
                         setTransformedImage(null);
                       }}
                     >
-                      重新上传
+                      Upload New Image
                     </Button>
                     {transformedImage && (
                       <Button onClick={() => {
-                        // In a real app, this would download the transformed image
+                        // Download the transformed image
                         const link = document.createElement("a");
                         link.href = transformedImage;
                         link.download = `transformed-image-${activeTab}.png`;
@@ -142,7 +409,7 @@ export default function HeroSection() {
                         link.click();
                         document.body.removeChild(link);
                       }}>
-                        下载图片
+                        Download Image
                       </Button>
                     )}
                   </div>
@@ -152,7 +419,7 @@ export default function HeroSection() {
             
             {/* Transform Controls Section */}
             <div className="p-6 bg-gray-50">
-              <h3 className="text-xl font-semibold mb-4">图片转换设置</h3>
+              <h3 className="text-xl font-semibold mb-4">Transformation Settings</h3>
               
               {uploadedImage && (
                 <>
@@ -163,15 +430,15 @@ export default function HeroSection() {
                     className="mb-6"
                   >
                     <TabsList className="grid grid-cols-3 mb-6">
-                      <TabsTrigger value="grid">网格转换</TabsTrigger>
-                      <TabsTrigger value="lineart">线稿转换</TabsTrigger>
-                      <TabsTrigger value="sketch">素描转换</TabsTrigger>
+                      <TabsTrigger value="grid">Grid</TabsTrigger>
+                      <TabsTrigger value="lineart">Line Art</TabsTrigger>
+                      <TabsTrigger value="sketch">Sketch</TabsTrigger>
                     </TabsList>
                     
                     <TabsContent value="grid" className="space-y-4">
                       <div>
                         <div className="flex justify-between mb-2">
-                          <Label>网格大小</Label>
+                          <Label>Grid Size</Label>
                           <span className="text-sm text-primary">{gridSize}px</span>
                         </div>
                         <Slider 
@@ -185,7 +452,7 @@ export default function HeroSection() {
                       
                       <div>
                         <div className="flex justify-between mb-2">
-                          <Label>不透明度</Label>
+                          <Label>Opacity</Label>
                           <span className="text-sm text-primary">{gridOpacity}%</span>
                         </div>
                         <Slider 
@@ -198,7 +465,7 @@ export default function HeroSection() {
                       </div>
                       
                       <div>
-                        <Label className="block mb-2">网格颜色</Label>
+                        <Label className="block mb-2">Grid Color</Label>
                         <div className="flex space-x-2">
                           <button 
                             className={`w-8 h-8 rounded-full bg-black ${gridColor === '#000000' ? 'ring-2 ring-primary ring-offset-2' : ''}`}
@@ -224,45 +491,145 @@ export default function HeroSection() {
                       </div>
                       
                       <div>
-                        <Label className="block mb-2">网格样式</Label>
+                        <Label className="block mb-2">Grid Style</Label>
                         <div className="grid grid-cols-3 gap-2">
                           <button 
                             className={`p-2 rounded border text-center text-sm ${gridStyle === 'lines' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
                             onClick={() => setGridStyle('lines')}
                           >
-                            线条
+                            Lines
                           </button>
                           <button 
                             className={`p-2 rounded border text-center text-sm ${gridStyle === 'dots' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
                             onClick={() => setGridStyle('dots')}
                           >
-                            点状
+                            Dots
                           </button>
                           <button 
                             className={`p-2 rounded border text-center text-sm ${gridStyle === 'dashed' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
                             onClick={() => setGridStyle('dashed')}
                           >
-                            虚线
+                            Dashed
                           </button>
                         </div>
                       </div>
                     </TabsContent>
                     
-                    <TabsContent value="lineart">
-                      <div className="flex flex-col items-center justify-center py-10">
-                        <p className="text-gray-600 mb-4 text-center">线稿功能准备中，敬请期待</p>
-                        <Button variant="outline" className="mt-2" disabled>
-                          线稿功能即将推出
-                        </Button>
+                    <TabsContent value="lineart" className="space-y-4">
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <Label>Detail Threshold</Label>
+                          <span className="text-sm text-primary">{lineThreshold}</span>
+                        </div>
+                        <Slider 
+                          min={50} 
+                          max={200} 
+                          step={1}
+                          value={[lineThreshold]} 
+                          onValueChange={(values) => setLineThreshold(values[0])}
+                        />
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <span>More Details</span>
+                          <span>Less Details</span>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <Label>Line Thickness</Label>
+                          <span className="text-sm text-primary">{lineThickness.toFixed(1)}</span>
+                        </div>
+                        <Slider 
+                          min={0.5} 
+                          max={3} 
+                          step={0.1}
+                          value={[lineThickness]} 
+                          onValueChange={(values) => setLineThickness(values[0])}
+                        />
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <span>Thin</span>
+                          <span>Thick</span>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label className="block mb-2">Line Art Style</Label>
+                        <div className="grid grid-cols-3 gap-2">
+                          <button 
+                            className={`p-2 rounded border text-center text-sm ${lineStyle === 'normal' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
+                            onClick={() => setLineStyle('normal')}
+                          >
+                            Normal
+                          </button>
+                          <button 
+                            className={`p-2 rounded border text-center text-sm ${lineStyle === 'detailed' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
+                            onClick={() => setLineStyle('detailed')}
+                          >
+                            Detailed
+                          </button>
+                          <button 
+                            className={`p-2 rounded border text-center text-sm ${lineStyle === 'minimal' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
+                            onClick={() => setLineStyle('minimal')}
+                          >
+                            Minimal
+                          </button>
+                        </div>
                       </div>
                     </TabsContent>
                     
-                    <TabsContent value="sketch">
-                      <div className="flex flex-col items-center justify-center py-10">
-                        <p className="text-gray-600 mb-4 text-center">素描功能准备中，敬请期待</p>
-                        <Button variant="outline" className="mt-2" disabled>
-                          素描功能即将推出
-                        </Button>
+                    <TabsContent value="sketch" className="space-y-4">
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <Label>Sketch Intensity</Label>
+                          <span className="text-sm text-primary">{sketchIntensity}%</span>
+                        </div>
+                        <Slider 
+                          min={10} 
+                          max={100} 
+                          step={1}
+                          value={[sketchIntensity]} 
+                          onValueChange={(values) => setSketchIntensity(values[0])}
+                        />
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <span>Subtle</span>
+                          <span>Intense</span>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label className="block mb-2">Pencil Type</Label>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button 
+                            className={`p-2 rounded border text-center text-sm ${pencilType === 'graphite' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
+                            onClick={() => setPencilType('graphite')}
+                          >
+                            Graphite
+                          </button>
+                          <button 
+                            className={`p-2 rounded border text-center text-sm ${pencilType === 'charcoal' ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}
+                            onClick={() => setPencilType('charcoal')}
+                          >
+                            Charcoal
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <Label>Shading Level</Label>
+                          <span className="text-sm text-primary">{shadingLevel}%</span>
+                        </div>
+                        <Slider 
+                          min={0} 
+                          max={100} 
+                          step={1}
+                          value={[shadingLevel]} 
+                          onValueChange={(values) => setShadingLevel(values[0])}
+                        />
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <span>Light</span>
+                          <span>Heavy</span>
+                        </div>
                       </div>
                     </TabsContent>
                   </Tabs>
@@ -272,7 +639,7 @@ export default function HeroSection() {
                     onClick={handleTransform}
                     disabled={isTransforming || !uploadedImage}
                   >
-                    {isTransforming ? '处理中...' : '应用转换'}
+                    {isTransforming ? 'Processing...' : 'Apply Transformation'}
                   </Button>
                 </>
               )}
@@ -281,27 +648,27 @@ export default function HeroSection() {
                 <Card className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
                   <div className="flex flex-col items-center text-center p-4">
                     <Check className="h-12 w-12 text-emerald-500 mb-4" />
-                    <h4 className="text-lg font-medium mb-2">免费在线使用</h4>
-                    <p className="text-gray-600 mb-4">上传图片并立即应用变换效果，无需注册或安装任何软件</p>
+                    <h4 className="text-lg font-medium mb-2">Free to Use Online</h4>
+                    <p className="text-gray-600 mb-4">Upload an image and apply transformations instantly, no sign-up or installation required</p>
                     <ul className="text-left space-y-2 w-full mb-4">
                       <li className="flex items-start">
                         <Check className="h-5 w-5 text-emerald-500 mr-2 flex-shrink-0 mt-0.5" />
-                        <span>为您的绘画创建精确的网格参考</span>
+                        <span>Create precise grid references for your artwork</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="h-5 w-5 text-emerald-500 mr-2 flex-shrink-0 mt-0.5" />
-                        <span>自定义网格大小、颜色和不透明度</span>
+                        <span>Convert photos to line art with adjustable styles</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="h-5 w-5 text-emerald-500 mr-2 flex-shrink-0 mt-0.5" />
-                        <span>立即下载转换后的图片</span>
+                        <span>Transform images into sketch-style drawings</span>
                       </li>
                     </ul>
                     <Button
                       onClick={() => document.querySelector('input[type="file"]')?.click()}
                       className="mt-2"
                     >
-                      立即上传图片 <ArrowRight className="ml-2 h-4 w-4" />
+                      Upload an Image Now <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
                 </Card>
