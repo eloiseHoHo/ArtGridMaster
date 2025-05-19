@@ -148,7 +148,7 @@ export default function SimpleImageEditor() {
     img.src = uploadedImage;
   };
   
-  // Apply line art transformation using Sobel edge detection and RoughJS for natural hand-drawn effect
+  // Apply line art transformation using enhanced Sobel edge detection and RoughJS for professional hand-drawn effect
   const applyLineArtTransform = () => {
     if (!uploadedImage || !hiddenCanvasRef.current) return;
     
@@ -191,24 +191,35 @@ export default function SimpleImageEditor() {
       // Convert to grayscale with weighted RGB for better perception
       const grayPixels = new Uint8Array(width * height);
       for (let i = 0; i < data.length; i += 4) {
-        // Use better weighted average for more accurate grayscale conversion
+        // Use standard weights for more accurate grayscale conversion (ITU-R BT.601)
         const avg = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
         data[i] = data[i + 1] = data[i + 2] = avg;
         grayPixels[i / 4] = avg;
       }
       
-      // Apply blur to reduce noise (based on line style)
-      const blurRadius = lineStyle === 'detailed' ? 1 : 
-                        lineStyle === 'minimal' ? 3 : 2;
+      // Determine blur level based on line style
+      let blurRadius = 0;
+      switch (lineStyle) {
+        case 'detailed':
+          blurRadius = 1; // Minimal blur for detailed edges
+          break;
+        case 'minimal':
+          blurRadius = 3; // More blur for smoother, less detailed edges
+          break;
+        default: // normal
+          blurRadius = 2; // Standard blur
+      }
       
-      // Apply Gaussian blur approximation (multi-pass box blur)
+      // Apply Gaussian blur approximation to reduce noise
       const blurredPixels = new Uint8Array(width * height);
+      
+      // First initialize with original grayscale
+      blurredPixels.set(grayPixels);
+      
+      // Apply multi-pass box blur for better Gaussian approximation
       if (blurRadius > 0) {
-        // First pass - just copy
-        blurredPixels.set(grayPixels);
-        
-        // Box blur passes (horizontal and vertical)
-        for (let pass = 0; pass < 2; pass++) { // 2 passes for better approximation
+        // Two-pass separable blur (horizontal + vertical) is more efficient
+        for (let pass = 0; pass < 2; pass++) { // Multiple passes for better approximation
           const tempPixels = new Uint8Array(width * height);
           
           // Horizontal blur
@@ -228,7 +239,7 @@ export default function SimpleImageEditor() {
             }
           }
           
-          // Vertical blur (using temp results)
+          // Vertical blur (using horizontal blur results)
           for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
               let sum = 0;
@@ -245,235 +256,324 @@ export default function SimpleImageEditor() {
             }
           }
         }
-      } else {
-        // No blur, just copy
-        blurredPixels.set(grayPixels);
       }
       
       // Adjust contrast based on style
-      let contrastFactor = lineStyle === 'detailed' ? 1.4 : 
-                          lineStyle === 'minimal' ? 0.8 : 1.1;
-                          
-      const adjustedPixels = new Uint8Array(width * height);
-      for (let i = 0; i < width * height; i++) {
-        // Apply contrast
-        let value = blurredPixels[i];
-        value = Math.min(255, Math.max(0, (value - 128) * contrastFactor + 128));
-        adjustedPixels[i] = value;
+      let contrastFactor = 1.0;
+      
+      switch (lineStyle) {
+        case 'detailed':
+          contrastFactor = 1.6; // Higher contrast for more defined edges
+          break;
+        case 'minimal':
+          contrastFactor = 0.8; // Lower contrast for fewer edges
+          break;
+        default: // normal
+          contrastFactor = 1.2; // Moderate contrast
       }
       
-      // Apply Sobel edge detection
-      const edgeData = ctx.createImageData(width, height);
+      // Create a new image buffer for edge detection
+      const edgeData = new ImageData(width, height);
       const edgePixels = edgeData.data;
       
-      // Calculate appropriate threshold based on lineThreshold (user control)
-      // Range adjustments for better sensitivity
-      const edgeThreshold = Math.pow(lineThreshold / 128, 1.5) * 100;
+      // Fill with white background
+      for (let i = 0; i < edgePixels.length; i += 4) {
+        edgePixels[i] = edgePixels[i + 1] = edgePixels[i + 2] = 255;
+        edgePixels[i + 3] = 255;
+      }
       
-      // Sobel kernels for edge detection
+      // Adjust threshold to line style and user control
+      // scale lineThreshold (0-255) to a reasonable edge detection range
+      const baseThreshold = lineStyle === 'detailed' ? 15 : 
+                           lineStyle === 'minimal' ? 35 : 25;
+      
+      // Allow user control to adjust the threshold around the base value
+      // Map lineThreshold (0-255) to a multiplier (0.5-1.5)
+      const thresholdMultiplier = 0.5 + (lineThreshold / 255);
+      const edgeThreshold = baseThreshold * thresholdMultiplier;
+      
+      // Create enhanced Sobel operator
       for (let y = 1; y < height - 1; y++) {
         for (let x = 1; x < width - 1; x++) {
-          // Sobel operators
+          // Apply contrast to pixel before edge detection
+          const centerPixel = blurredPixels[y * width + x];
+          const adjustedPixel = Math.min(255, Math.max(0, 
+            (centerPixel - 128) * contrastFactor + 128));
+          
+          // Store adjusted value back for Sobel
+          blurredPixels[y * width + x] = adjustedPixel;
+          
+          // Standard Sobel operators for horizontal and vertical gradients
           const gx = 
-            -1 * adjustedPixels[(y-1) * width + (x-1)] +
-             0 * adjustedPixels[(y-1) * width + (x  )] +
-             1 * adjustedPixels[(y-1) * width + (x+1)] +
-            -2 * adjustedPixels[(y  ) * width + (x-1)] +
-             0 * adjustedPixels[(y  ) * width + (x  )] +
-             2 * adjustedPixels[(y  ) * width + (x+1)] +
-            -1 * adjustedPixels[(y+1) * width + (x-1)] +
-             0 * adjustedPixels[(y+1) * width + (x  )] +
-             1 * adjustedPixels[(y+1) * width + (x+1)];
-          
+            -1 * blurredPixels[(y-1) * width + (x-1)] +
+             0 * blurredPixels[(y-1) * width + (x  )] +
+             1 * blurredPixels[(y-1) * width + (x+1)] +
+            -2 * blurredPixels[(y  ) * width + (x-1)] +
+             0 * blurredPixels[(y  ) * width + (x  )] +
+             2 * blurredPixels[(y  ) * width + (x+1)] +
+            -1 * blurredPixels[(y+1) * width + (x-1)] +
+             0 * blurredPixels[(y+1) * width + (x  )] +
+             1 * blurredPixels[(y+1) * width + (x+1)];
+             
           const gy = 
-            -1 * adjustedPixels[(y-1) * width + (x-1)] +
-            -2 * adjustedPixels[(y-1) * width + (x  )] +
-            -1 * adjustedPixels[(y-1) * width + (x+1)] +
-             0 * adjustedPixels[(y  ) * width + (x-1)] +
-             0 * adjustedPixels[(y  ) * width + (x  )] +
-             0 * adjustedPixels[(y  ) * width + (x+1)] +
-             1 * adjustedPixels[(y+1) * width + (x-1)] +
-             2 * adjustedPixels[(y+1) * width + (x  )] +
-             1 * adjustedPixels[(y+1) * width + (x+1)];
+            -1 * blurredPixels[(y-1) * width + (x-1)] +
+            -2 * blurredPixels[(y-1) * width + (x  )] +
+            -1 * blurredPixels[(y-1) * width + (x+1)] +
+             0 * blurredPixels[(y  ) * width + (x-1)] +
+             0 * blurredPixels[(y  ) * width + (x  )] +
+             0 * blurredPixels[(y  ) * width + (x+1)] +
+             1 * blurredPixels[(y+1) * width + (x-1)] +
+             2 * blurredPixels[(y+1) * width + (x  )] +
+             1 * blurredPixels[(y+1) * width + (x+1)];
           
-          // Calculate gradient magnitude
+          // Calculate gradient magnitude and direction
           const magnitude = Math.sqrt(gx * gx + gy * gy);
-          
-          // Calculate edge direction (angle)
           const angle = Math.atan2(gy, gx);
           
-          // Apply thresholding
-          const pixelIndex = (y * width + x) * 4;
-          
-          // Invert the edge detection result for line art (edges are white on black)
+          // Apply threshold to determine if this is an edge
           const isEdge = magnitude > edgeThreshold;
-          const pixelValue = isEdge ? 0 : 255; // 0 = black (edge), 255 = white (background)
           
-          // Set pixel values
-          edgePixels[pixelIndex] = pixelValue;
-          edgePixels[pixelIndex + 1] = pixelValue;
-          edgePixels[pixelIndex + 2] = pixelValue;
-          edgePixels[pixelIndex + 3] = 255; // Full alpha
+          // Apply variable line thickness based on user control
+          const effectiveThickness = Math.max(1, Math.round(lineThickness));
           
-          // Store edge points for Rough.js enhancement
           if (isEdge) {
-            // For detailed style, we use angle information to better connect edge pixels
-            const edgeInfo = { 
-              x, 
-              y, 
-              magnitude, 
-              angle: Math.floor((angle + Math.PI) / (Math.PI / 4)) % 8 // Quantize angle to 8 directions
-            };
+            // Apply line thickness by setting neighboring pixels
+            for (let ly = -Math.floor(effectiveThickness/2); ly <= Math.floor(effectiveThickness/2); ly++) {
+              for (let lx = -Math.floor(effectiveThickness/2); lx <= Math.floor(effectiveThickness/2); lx++) {
+                const nx = x + lx;
+                const ny = y + ly;
+                
+                // Ensure we're within bounds and calculate pixel index
+                if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                  const idx = (ny * width + nx) * 4;
+                  // Draw edge as black
+                  edgePixels[idx] = edgePixels[idx + 1] = edgePixels[idx + 2] = 0;
+                  edgePixels[idx + 3] = 255; // Full opacity
+                }
+              }
+            }
           }
         }
       }
       
-      // Apply fill for border pixels
-      for (let i = 0; i < width; i++) {
-        for (let j of [0, height - 1]) {
-          const idx = (j * width + i) * 4;
-          edgePixels[idx] = edgePixels[idx + 1] = edgePixels[idx + 2] = 255;
-          edgePixels[idx + 3] = 255;
-        }
-      }
+      // Step 2: Create RoughJS artistic enhancement on a separate canvas
+      // Create a canvas for RoughJS drawing
+      const roughCanvas = document.createElement('canvas');
+      roughCanvas.width = width;
+      roughCanvas.height = height;
+      const roughCtx = roughCanvas.getContext('2d');
       
-      for (let i = 0; i < height; i++) {
-        for (let j of [0, width - 1]) {
-          const idx = (i * width + j) * 4;
-          edgePixels[idx] = edgePixels[idx + 1] = edgePixels[idx + 2] = 255;
-          edgePixels[idx + 3] = 255;
-        }
-      }
-
-      // Draw the edge data to a temporary canvas for further processing
-      const edgeCanvas = document.createElement('canvas');
-      edgeCanvas.width = width;
-      edgeCanvas.height = height;
-      const edgeCtx = edgeCanvas.getContext('2d');
-      
-      if (!edgeCtx) {
+      if (!roughCtx) {
+        // If RoughJS context fails, at least return the edge detection result
+        ctx.putImageData(edgeData, 0, 0);
+        setTransformedImage(canvas.toDataURL('image/png'));
         setIsProcessing(false);
         return;
       }
       
-      edgeCtx.putImageData(edgeData, 0, 0);
+      // Prepare a white background
+      roughCtx.fillStyle = '#ffffff';
+      roughCtx.fillRect(0, 0, width, height);
       
-      // Step 2: Enhance with RoughJS for hand-drawn effect
-      // Clear the main canvas
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Draw the edge detection result onto the RoughJS canvas
+      roughCtx.putImageData(edgeData, 0, 0);
       
       // Create RoughJS generator
       const rc = rough.canvas(canvas);
       
-      // Parameters adjustment based on line style
-      const roughness = lineStyle === 'detailed' ? 0.5 : 
-                      lineStyle === 'minimal' ? 1.5 : 1.0;
-                      
-      const bowing = lineStyle === 'detailed' ? 0.5 : 
-                    lineStyle === 'minimal' ? 1.5 : 1.0;
+      // Set RoughJS parameters based on line style
+      const roughness = lineStyle === 'detailed' ? 0.4 : 
+                        lineStyle === 'minimal' ? 1.5 : 0.8;
+                        
+      const bowing = lineStyle === 'detailed' ? 0.3 : 
+                     lineStyle === 'minimal' ? 1.2 : 0.6;
       
-      // Detect edge points from the Sobel-processed image
+      // Clear the main canvas for final output
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Find edge pixels to convert to RoughJS strokes
       const edgePoints = [];
-      const stepSize = lineStyle === 'detailed' ? 1 : 
-                     lineStyle === 'minimal' ? 3 : 2;
+      const stepSize = Math.max(1, Math.min(3, Math.ceil(width / 500))); // Adaptive step size
       
-      // Find edge points (black pixels)
+      // Scan the edge-detected image for edge pixels (black pixels)
       for (let y = 0; y < height; y += stepSize) {
         for (let x = 0; x < width; x += stepSize) {
-          const pixelData = edgeCtx.getImageData(x, y, 1, 1).data;
-          if (pixelData[0] < 128) { // If it's a dark pixel (edge)
+          const idx = (y * width + x) * 4;
+          if (edgePixels[idx] < 50) { // If it's a dark pixel (edge)
             edgePoints.push([x, y]);
           }
         }
       }
       
-      // Connect edge points into strokes
-      const strokes = [];
-      const maxPoints = 3000; // Limit points for performance
-      
-      // If we have too many points, sample them
-      const sampleRate = Math.max(1, Math.floor(edgePoints.length / maxPoints));
-      
-      // Group nearby points into strokes
-      let currentStroke = [];
-      let lastPoint = null;
-      
-      for (let i = 0; i < edgePoints.length; i += sampleRate) {
-        const point = edgePoints[i];
+      // Only proceed with RoughJS if we have a reasonable number of edge points
+      if (edgePoints.length > 0) {
+        // Group edge points into continuous strokes for more natural drawing
+        const strokes = [];
+        const maxConnectDistance = stepSize * 2.5;
         
-        if (lastPoint) {
-          // Calculate distance between points
-          const dist = Math.sqrt(
-            Math.pow(point[0] - lastPoint[0], 2) + 
-            Math.pow(point[1] - lastPoint[1], 2)
-          );
+        // Initialize with the first edge point
+        let currentStroke = [edgePoints[0]];
+        let remainingPoints = edgePoints.slice(1);
+        
+        // Build strokes by connecting nearby points
+        while (remainingPoints.length > 0) {
+          const currentPoint = currentStroke[currentStroke.length - 1];
           
-          // If points are close enough, add to current stroke
-          if (dist < stepSize * 3) {
-            currentStroke.push(point);
+          // Find the closest remaining point
+          let closestPointIndex = -1;
+          let closestDistance = Infinity;
+          
+          for (let i = 0; i < remainingPoints.length; i++) {
+            const point = remainingPoints[i];
+            const distance = Math.sqrt(
+              Math.pow(point[0] - currentPoint[0], 2) + 
+              Math.pow(point[1] - currentPoint[1], 2)
+            );
+            
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestPointIndex = i;
+            }
+          }
+          
+          // If we found a close enough point, add it to the current stroke
+          if (closestDistance < maxConnectDistance) {
+            currentStroke.push(remainingPoints[closestPointIndex]);
+            remainingPoints.splice(closestPointIndex, 1);
           } else {
-            // Start a new stroke if this point is far from the last one
-            if (currentStroke.length > 1) {
+            // Current stroke is complete, add it to strokes if it has enough points
+            if (currentStroke.length > 2) {
               strokes.push([...currentStroke]);
             }
-            currentStroke = [point];
+            
+            // Start a new stroke with the first remaining point
+            if (remainingPoints.length > 0) {
+              currentStroke = [remainingPoints[0]];
+              remainingPoints.splice(0, 1);
+            } else {
+              break;
+            }
           }
-        } else {
-          currentStroke.push(point);
+          
+          // Safety check for very long strokes
+          if (currentStroke.length > 100) {
+            strokes.push([...currentStroke]);
+            currentStroke = [];
+            if (remainingPoints.length > 0) {
+              currentStroke = [remainingPoints[0]];
+              remainingPoints.splice(0, 1);
+            }
+          }
         }
         
-        lastPoint = point;
+        // Add the final stroke if not empty
+        if (currentStroke.length > 2) {
+          strokes.push([...currentStroke]);
+        }
+        
+        // Apply simplified Douglas-Peucker algorithm to reduce unnecessary points
+        const simplifyStroke = (points, tolerance) => {
+          if (points.length <= 2) return points;
+          
+          // Find the point with the maximum distance
+          let maxDistance = 0;
+          let maxIndex = 0;
+          
+          const start = points[0];
+          const end = points[points.length - 1];
+          
+          for (let i = 1; i < points.length - 1; i++) {
+            const point = points[i];
+            
+            // Calculate perpendicular distance from point to line
+            const lineLength = Math.sqrt(
+              Math.pow(end[0] - start[0], 2) + 
+              Math.pow(end[1] - start[1], 2)
+            );
+            
+            if (lineLength === 0) continue;
+            
+            const distance = Math.abs(
+              (end[1] - start[1]) * point[0] - 
+              (end[0] - start[0]) * point[1] + 
+              end[0] * start[1] - 
+              end[1] * start[0]
+            ) / lineLength;
+            
+            if (distance > maxDistance) {
+              maxDistance = distance;
+              maxIndex = i;
+            }
+          }
+          
+          // If max distance is greater than tolerance, recursively simplify
+          if (maxDistance > tolerance) {
+            const left = simplifyStroke(points.slice(0, maxIndex + 1), tolerance);
+            const right = simplifyStroke(points.slice(maxIndex), tolerance);
+            
+            // Combine results (avoiding duplicate point)
+            return [...left.slice(0, -1), ...right];
+          } else {
+            // Return just the endpoints
+            return [start, end];
+          }
+        };
+        
+        // Simplify strokes - apply simplification level based on style
+        const simplifyTolerance = lineStyle === 'detailed' ? 1 : 
+                                 lineStyle === 'minimal' ? 3 : 2;
+        
+        const simplifiedStrokes = strokes.map(stroke => 
+          simplifyStroke(stroke, simplifyTolerance)
+        );
+        
+        // Draw the simplified strokes with RoughJS
+        simplifiedStrokes.forEach(stroke => {
+          // For very short strokes, just draw a point
+          if (stroke.length < 3) {
+            const [x, y] = stroke[0];
+            rc.circle(x, y, lineThickness * 1.2, {
+              fill: '#000000',
+              fillStyle: 'solid',
+              roughness: roughness * 0.8
+            });
+            return;
+          }
+          
+          // For longer strokes, use RoughJS to draw line segments with hand-drawn quality
+          for (let i = 0; i < stroke.length - 1; i++) {
+            const [x1, y1] = stroke[i];
+            const [x2, y2] = stroke[i + 1];
+            
+            // Calculate segment length
+            const segmentLength = Math.sqrt(
+              Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)
+            );
+            
+            // Skip very short segments
+            if (segmentLength < 2) continue;
+            
+            // Vary attributes slightly for more natural look
+            const strokeWidth = lineThickness * (0.85 + Math.random() * 0.3);
+            const segmentRoughness = roughness * (0.9 + Math.random() * 0.2);
+            const segmentBowing = bowing * (0.95 + Math.random() * 0.1);
+            
+            // Draw the line segment with RoughJS
+            rc.line(x1, y1, x2, y2, {
+              stroke: '#000000',
+              strokeWidth: strokeWidth,
+              roughness: segmentRoughness,
+              bowing: segmentBowing
+            });
+          }
+        });
+      } else {
+        // If no edge points were found, just use the edge data directly
+        ctx.putImageData(edgeData, 0, 0);
       }
       
-      // Add the last stroke
-      if (currentStroke.length > 1) {
-        strokes.push([...currentStroke]);
-      }
-      
-      // Draw strokes with RoughJS for hand-drawn effect
-      strokes.forEach(stroke => {
-        // For very short strokes, just draw dots
-        if (stroke.length < 3) {
-          const [x, y] = stroke[0];
-          rc.circle(x, y, lineThickness * 1.5, {
-            fill: '#000',
-            fillStyle: 'solid',
-            roughness: roughness
-          });
-          return;
-        }
-        
-        // For longer strokes, connect points with slightly variable lines
-        // Simplify by taking fewer points for smoother lines
-        const simplifyFactor = lineStyle === 'detailed' ? 1 : 
-                             lineStyle === 'minimal' ? 3 : 2;
-        
-        const simplifiedStroke = stroke.filter((_, i) => 
-          i % simplifyFactor === 0 || i === stroke.length - 1);
-        
-        // Draw each segment with slight variations for hand-drawn look
-        for (let i = 0; i < simplifiedStroke.length - 1; i++) {
-          const [x1, y1] = simplifiedStroke[i];
-          const [x2, y2] = simplifiedStroke[i + 1];
-          
-          // Vary stroke width slightly for more natural look
-          const strokeWidth = lineThickness * (0.8 + Math.random() * 0.4);
-          
-          // Add slight random variations to roughness and bowing
-          const segmentRoughness = roughness * (0.9 + Math.random() * 0.2);
-          const segmentBowing = bowing * (0.9 + Math.random() * 0.2);
-          
-          rc.line(x1, y1, x2, y2, {
-            stroke: '#000000',
-            strokeWidth: strokeWidth,
-            roughness: segmentRoughness,
-            bowing: segmentBowing
-          });
-        }
-      });
-      
-      // Get result
+      // Get the result
       setTransformedImage(canvas.toDataURL('image/png'));
       setIsProcessing(false);
     };
