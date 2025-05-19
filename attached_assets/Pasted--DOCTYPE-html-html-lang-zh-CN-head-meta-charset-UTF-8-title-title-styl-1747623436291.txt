@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>图片转线稿效果</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .image-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+    }
+    
+    .image-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 45%;
+      min-width: 300px;
+    }
+    
+    canvas {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      margin-top: 10px;
+    }
+    
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .slider-info {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    input[type="range"] {
+      width: 100%;
+    }
+    
+    button {
+      padding: 10px 15px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #2980b9;
+    }
+    
+    .download-btn {
+      background-color: #27ae60;
+    }
+    
+    .download-btn:hover {
+      background-color: #219653;
+    }
+  </style>
+</head>
+<body>
+  <h1>图片转线稿效果</h1>
+  
+  <div class="container">
+    <div class="controls">
+      <input type="file" id="imageInput" accept="image/*">
+      
+      <div class="slider-container">
+        <div class="slider-info">
+          <label for="threshold">边缘检测阈值:</label>
+          <span id="thresholdValue">20</span>
+        </div>
+        <input type="range" id="threshold" min="1" max="100" value="20">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-info">
+          <label for="lineWeight">线条粗细:</label>
+          <span id="lineWeightValue">1</span>
+        </div>
+        <input type="range" id="lineWeight" min="1" max="5" value="1" step="0.5">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-info">
+          <label for="blurLevel">模糊程度:</label>
+          <span id="blurLevelValue">1</span>
+        </div>
+        <input type="range" id="blurLevel" min="0" max="5" value="1" step="0.5">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-info">
+          <label for="invert">反转颜色:</label>
+          <span id="invertValue">否</span>
+        </div>
+        <input type="range" id="invert" min="0" max="1" value="0" step="1">
+      </div>
+      
+      <button id="processBtn">处理图片</button>
+      <button id="downloadBtn" class="download-btn" disabled>下载线稿</button>
+    </div>
+    
+    <div class="image-container">
+      <div class="image-wrap">
+        <h3>原图</h3>
+        <canvas id="originalCanvas"></canvas>
+      </div>
+      <div class="image-wrap">
+        <h3>线稿效果</h3>
+        <canvas id="lineArtCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 获取DOM元素
+    const imageInput = document.getElementById('imageInput');
+    const originalCanvas = document.getElementById('originalCanvas');
+    const lineArtCanvas = document.getElementById('lineArtCanvas');
+    const processBtn = document.getElementById('processBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const thresholdSlider = document.getElementById('threshold');
+    const thresholdValue = document.getElementById('thresholdValue');
+    const lineWeightSlider = document.getElementById('lineWeight');
+    const lineWeightValue = document.getElementById('lineWeightValue');
+    const blurLevelSlider = document.getElementById('blurLevel');
+    const blurLevelValue = document.getElementById('blurLevelValue');
+    const invertSlider = document.getElementById('invert');
+    const invertValue = document.getElementById('invertValue');
+    
+    // 原始图像对象
+    let originalImage = null;
+    
+    // 更新滑块值显示
+    thresholdSlider.addEventListener('input', () => {
+      thresholdValue.textContent = thresholdSlider.value;
+    });
+    
+    lineWeightSlider.addEventListener('input', () => {
+      lineWeightValue.textContent = lineWeightSlider.value;
+    });
+    
+    blurLevelSlider.addEventListener('input', () => {
+      blurLevelValue.textContent = blurLevelSlider.value;
+    });
+    
+    invertSlider.addEventListener('input', () => {
+      invertValue.textContent = invertSlider.value === '0' ? '否' : '是';
+    });
+    
+    // 图片上传处理
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          originalImage = new Image();
+          originalImage.onload = function() {
+            drawOriginalImage();
+            processBtn.disabled = false;
+          };
+          originalImage.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // 绘制原始图像
+    function drawOriginalImage() {
+      const ctx = originalCanvas.getContext('2d');
+      
+      // 调整画布大小以适应图像，保持宽高比
+      const maxWidth = 400;
+      const maxHeight = 400;
+      let width = originalImage.width;
+      let height = originalImage.height;
+      
+      if (width > height) {
+        if (width > maxWidth) {
+          height = height * (maxWidth / width);
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width = width * (maxHeight / height);
+          height = maxHeight;
+        }
+      }
+      
+      originalCanvas.width = width;
+      originalCanvas.height = height;
+      lineArtCanvas.width = width;
+      lineArtCanvas.height = height;
+      
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(originalImage, 0, 0, width, height);
+    }
+    
+    // 处理图像为线稿
+    processBtn.addEventListener('click', () => {
+      if (!originalImage) return;
+      
+      const threshold = parseInt(thresholdSlider.value);
+      const lineWeight = parseFloat(lineWeightSlider.value);
+      const blurLevel = parseFloat(blurLevelSlider.value);
+      const invert = invertSlider.value === '1';
+      
+      const originalCtx = originalCanvas.getContext('2d');
+      const lineArtCtx = lineArtCanvas.getContext('2d');
+      
+      const width = originalCanvas.width;
+      const height = originalCanvas.height;
+      
+      // 获取原始图像数据
+      const imageData = originalCtx.getImageData(0, 0, width, height);
+      const pixels = imageData.data;
+      
+      // 创建新图像数据用于线稿
+      const lineArtData = lineArtCtx.createImageData(width, height);
+      const linePixels = lineArtData.data;
+      
+      // 将图像转换为灰度
+      const grayPixels = new Uint8Array(width * height);
+      for (let i = 0; i < pixels.length; i += 4) {
+        const r = pixels[i];
+        const g = pixels[i + 1];
+        const b = pixels[i + 2];
+        // 转换为灰度: 0.3R + 0.59G + 0.11B
+        grayPixels[i / 4] = 0.3 * r + 0.59 * g + 0.11 * b;
+      }
+      
+      // 应用高斯模糊以减少噪声（简化版）
+      const blurredPixels = new Uint8Array(width * height);
+      if (blurLevel > 0) {
+        const blurRadius = Math.floor(blurLevel);
+        
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            let sum = 0;
+            let count = 0;
+            
+            for (let dy = -blurRadius; dy <= blurRadius; dy++) {
+              for (let dx = -blurRadius; dx <= blurRadius; dx++) {
+                const nx = x + dx;
+                const ny = y + dy;
+                
+                if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                  sum += grayPixels[ny * width + nx];
+                  count++;
+                }
+              }
+            }
+            
+            blurredPixels[y * width + x] = sum / count;
+          }
+        }
+      } else {
+        blurredPixels.set(grayPixels);
+      }
+      
+      // Sobel 边缘检测
+      for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+          // Sobel 算子
+          const gx = 
+            -1 * blurredPixels[(y-1) * width + (x-1)] +
+             0 * blurredPixels[(y-1) * width + (x  )] +
+             1 * blurredPixels[(y-1) * width + (x+1)] +
+            -2 * blurredPixels[(y  ) * width + (x-1)] +
+             0 * blurredPixels[(y  ) * width + (x  )] +
+             2 * blurredPixels[(y  ) * width + (x+1)] +
+            -1 * blurredPixels[(y+1) * width + (x-1)] +
+             0 * blurredPixels[(y+1) * width + (x  )] +
+             1 * blurredPixels[(y+1) * width + (x+1)];
+             
+          const gy = 
+            -1 * blurredPixels[(y-1) * width + (x-1)] +
+            -2 * blurredPixels[(y-1) * width + (x  )] +
+            -1 * blurredPixels[(y-1) * width + (x+1)] +
+             0 * blurredPixels[(y  ) * width + (x-1)] +
+             0 * blurredPixels[(y  ) * width + (x  )] +
+             0 * blurredPixels[(y  ) * width + (x+1)] +
+             1 * blurredPixels[(y+1) * width + (x-1)] +
+             2 * blurredPixels[(y+1) * width + (x  )] +
+             1 * blurredPixels[(y+1) * width + (x+1)];
+          
+          // 计算梯度幅值
+          const magnitude = Math.sqrt(gx * gx + gy * gy);
+          
+          // 阈值处理
+          const edgeValue = magnitude > threshold ? 0 : 255;
+          const pixelIndex = (y * width + x) * 4;
+          
+          // 应用线条粗细
+          if (magnitude > threshold) {
+            // 绘制线条
+            for (let ly = -Math.floor(lineWeight/2); ly <= Math.floor(lineWeight/2); ly++) {
+              for (let lx = -Math.floor(lineWeight/2); lx <= Math.floor(lineWeight/2); lx++) {
+                const nx = x + lx;
+                const ny = y + ly;
+                
+                if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                  const idx = (ny * width + nx) * 4;
+                  const val = invert ? 255 : 0;
+                  linePixels[idx] = val;
+                  linePixels[idx + 1] = val;
+                  linePixels[idx + 2] = val;
+                  linePixels[idx + 3] = 255;
+                }
+              }
+            }
+          } else {
+            // 背景
+            const val = invert ? 0 : 255;
+            linePixels[pixelIndex] = val;
+            linePixels[pixelIndex + 1] = val;
+            linePixels[pixelIndex + 2] = val;
+            linePixels[pixelIndex + 3] = 255;
+          }
+        }
+      }
+      
+      // 填充边缘像素
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          if (y === 0 || y === height - 1 || x === 0 || x === width - 1) {
+            const idx = (y * width + x) * 4;
+            const val = invert ? 0 : 255;
+            linePixels[idx] = val;
+            linePixels[idx + 1] = val;
+            linePixels[idx + 2] = val;
+            linePixels[idx + 3] = 255;
+          }
+        }
+      }
+      
+      // 绘制线稿
+      lineArtCtx.putImageData(lineArtData, 0, 0);
+      downloadBtn.disabled = false;
+    });
+    
+    // 下载按钮
+    downloadBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'line-art.png';
+      link.href = lineArtCanvas.toDataURL('image/png');
+      link.click();
+    });
+  </script>
+</body>
+</html>
