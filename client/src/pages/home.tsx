@@ -28,6 +28,10 @@ export default function Home() {
       
       <main>
         <SimpleImageEditor />
+        
+        {/* Example Showcase - Added before the text section to grab attention */}
+        <ExamplesShowcase />
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* SEO optimized section for main keyword "Photo Grid" */}
           <div className="mb-16">
