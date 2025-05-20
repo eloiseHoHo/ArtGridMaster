@@ -22,7 +22,7 @@ export default function Header() {
               <path d="M10 16H14V20H10V16Z"></path>
               <path d="M16 16H20V20H16V16Z"></path>
             </svg>
-            <h1 className="text-xl font-bold text-gray-900">GridArt Studio</h1>
+            <h1 className="text-xl font-bold text-gray-900">PhotoGrid.space</h1>
           </div>
         </Link>
 
@@ -39,10 +39,7 @@ export default function Header() {
               <a className="text-gray-600 hover:text-primary transition-colors">Transform</a>
             </Link>
           </nav>
-          <Button className="px-4 py-2 rounded-lg flex items-center">
-            <UserIcon className="mr-2 h-4 w-4" />
-            <span>Try Pro Version</span>
-          </Button>
+
         </div>
 
         {/* Mobile menu button */}
@@ -70,10 +67,7 @@ export default function Header() {
               <Link href="/transform/new">
                 <a className="text-gray-600 hover:text-primary transition-colors py-2">Transform</a>
               </Link>
-              <Button className="mt-2 w-full justify-center">
-                <UserIcon className="mr-2 h-4 w-4" />
-                Try Pro Version
-              </Button>
+
             </nav>
           </div>
         </div>
