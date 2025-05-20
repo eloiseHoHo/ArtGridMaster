@@ -131,12 +131,21 @@ export default function Categories() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Link href={`/categories/${category.id}`}>
-                  <Button className="w-full">
-                    Explore {category.title}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
+                {['portrait-photo-grid', 'landscape-photo-grid', 'animal-photo-grid', 'architecture-photo-grid'].includes(category.id) ? (
+                  <Link href={`/categories/${category.id}`}>
+                    <Button className="w-full">
+                      Explore {category.title}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link href={`/transform/new?type=grid&preset=${category.id}`}>
+                    <Button className="w-full">
+                      Create {category.title}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                )}
               </CardFooter>
             </Card>
           ))}
