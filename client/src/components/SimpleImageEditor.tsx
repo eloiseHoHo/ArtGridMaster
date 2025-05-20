@@ -1119,8 +1119,8 @@ export default function SimpleImageEditor() {
                         </div>
                         <Slider 
                           min={5} 
-                          max={50} 
-                          step={1}
+                          max={200} 
+                          step={5}
                           value={[gridSize]} 
                           onValueChange={handleGridSizeChange}
                         />
