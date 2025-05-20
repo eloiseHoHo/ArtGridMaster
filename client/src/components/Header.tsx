@@ -35,9 +35,6 @@ export default function Header() {
             <Link href="/blog">
               <a className="text-gray-600 hover:text-primary transition-colors">Blog</a>
             </Link>
-            <Link href="/transform/new">
-              <a className="text-gray-600 hover:text-primary transition-colors">Transform</a>
-            </Link>
           </nav>
 
         </div>
@@ -63,9 +60,6 @@ export default function Header() {
               </Link>
               <Link href="/blog">
                 <a className="text-gray-600 hover:text-primary transition-colors py-2">Blog</a>
-              </Link>
-              <Link href="/transform/new">
-                <a className="text-gray-600 hover:text-primary transition-colors py-2">Transform</a>
               </Link>
 
             </nav>
