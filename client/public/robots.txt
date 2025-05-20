@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Allow all search engine bots to index the entire site
+# We want maximum visibility for SEO
+
+Sitemap: https://photogrid.app/sitemap.xml
