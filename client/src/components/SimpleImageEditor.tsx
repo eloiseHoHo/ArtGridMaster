@@ -1072,27 +1072,40 @@ export default function SimpleImageEditor() {
             <div className="p-6 border-r border-gray-100">
               {!uploadedImage ? (
                 <div className="border-2 border-dashed rounded-xl p-6 text-center h-80 flex flex-col">
-                  {/* Image upload mode toggle */}
-                  <div className="mb-4 inline-flex rounded-md bg-gray-100 p-1 self-center">
-                    <Button 
-                      variant={isUrlMode ? "ghost" : "secondary"} 
-                      size="sm"
-                      onClick={() => {
-                        setIsUrlMode(false);
-                        setUrlError(null);
-                      }}
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      Upload File
-                    </Button>
-                    <Button 
-                      variant={isUrlMode ? "secondary" : "ghost"} 
-                      size="sm"
-                      onClick={() => setIsUrlMode(true)}
-                    >
-                      <Link className="mr-2 h-4 w-4" />
-                      Image URL
-                    </Button>
+                  {/* Image upload mode toggle - Improved visibility */}
+                  <div className="mb-4 overflow-hidden rounded-lg border border-gray-300 self-center">
+                    <div className="flex relative">
+                      {/* Background highlight for active tab */}
+                      <div 
+                        className={`absolute h-full transition-all duration-300 ease-in-out bg-primary rounded-md ${
+                          isUrlMode ? 'translate-x-full -ml-2' : 'translate-x-0'
+                        }`} 
+                        style={{width: 'calc(50% + 2px)'}}
+                      />
+                      
+                      {/* Upload button */}
+                      <Button 
+                        variant="ghost"
+                        className={`relative z-10 border-0 rounded-none py-2 px-4 ${!isUrlMode ? 'text-white font-semibold' : 'text-gray-600'}`}
+                        onClick={() => {
+                          setIsUrlMode(false);
+                          setUrlError(null);
+                        }}
+                      >
+                        <Upload className={`mr-2 h-4 w-4 ${!isUrlMode ? 'text-white' : 'text-gray-500'}`} />
+                        Upload File
+                      </Button>
+                      
+                      {/* URL button */}
+                      <Button 
+                        variant="ghost"
+                        className={`relative z-10 border-0 rounded-none py-2 px-4 ${isUrlMode ? 'text-white font-semibold' : 'text-gray-600'}`}
+                        onClick={() => setIsUrlMode(true)}
+                      >
+                        <Link className={`mr-2 h-4 w-4 ${isUrlMode ? 'text-white' : 'text-gray-500'}`} />
+                        Image URL
+                      </Button>
+                    </div>
                   </div>
 
                   {isUrlMode ? (
