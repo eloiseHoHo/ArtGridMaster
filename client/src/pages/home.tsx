@@ -1,4 +1,4 @@
-import SimpleImageEditor from "@/components/SimpleImageEditor";
+import SimpleImageEditor from "@/components/SimpleImageEditorNew";
 import FeatureSection from "@/components/FeatureSection";
 import ArtistsGallery from "@/components/ArtistsGallery";
 import Testimonials from "@/components/Testimonials";
