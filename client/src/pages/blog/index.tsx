@@ -8,6 +8,16 @@ export default function Blog() {
   // Blog posts data - in a real application, this would come from an API
   const blogPosts = [
     {
+      id: 8,
+      slug: "grid-method-for-perfect-portraits",
+      title: "How to Use Grid Method for Perfect Portraits",
+      excerpt: "Learn how to master the grid method for portrait drawing with our step-by-step guide. Achieve perfect proportions and create stunning portrait artwork easily.",
+      date: "2023-06-28",
+      readTime: "10 min read",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400",
+      category: "Tutorial"
+    },
+    {
       id: 7,
       slug: "how-to-use-grid-for-perfect-portraits",
       title: "如何使用网格法绘制完美肖像画",

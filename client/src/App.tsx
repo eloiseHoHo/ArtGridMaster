@@ -6,6 +6,8 @@ import Transform from "@/pages/transform";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog/BlogPost";
 import HowToUseGridForPerfectPortraits from "@/pages/blog/how-to-use-grid-for-perfect-portraits";
+import GridMethodForPerfectPortraits from "@/pages/blog/grid-method-for-perfect-portraits";
+import PerspectiveGridTechniquesForLandscapes from "@/pages/blog/perspective-grid-techniques-for-landscapes";
 import Categories from "@/pages/categories";
 import PortraitPhotoGrid from "@/pages/categories/portrait-photo-grid";
 import WomenPortraitPhotoGrid from "@/pages/categories/portrait-photo-grid/women-portrait-photo-grid";
@@ -19,6 +21,7 @@ function Router() {
       <Route path="/transform/:id" component={Transform} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/how-to-use-grid-for-perfect-portraits" component={HowToUseGridForPerfectPortraits} />
+      <Route path="/blog/grid-method-for-perfect-portraits" component={GridMethodForPerfectPortraits} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/categories" component={Categories} />
       <Route path="/categories/portrait-photo-grid" component={PortraitPhotoGrid} />
