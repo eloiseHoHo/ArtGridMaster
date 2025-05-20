@@ -1,18 +1,22 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Upload, Image as ImageIcon, ArrowRight, Check } from "lucide-react";
+import { Upload, Image as ImageIcon, ArrowRight, Check, Link, XCircle } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import rough from 'roughjs/bundled/rough.esm';
+import { Input } from "@/components/ui/input";
 
 export default function SimpleImageEditor() {
   const [activeTab, setActiveTab] = useState<string>("grid");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [transformedImage, setTransformedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [isUrlMode, setIsUrlMode] = useState<boolean>(false);
+  const [urlError, setUrlError] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const hiddenCanvasRef = useRef<HTMLCanvasElement | null>(null);
   
@@ -58,12 +62,87 @@ export default function SimpleImageEditor() {
         if (e.target?.result) {
           setUploadedImage(e.target.result as string);
           setTransformedImage(null);
+          setIsUrlMode(false); // Switch back to upload mode
+          setUrlError(null);
         }
       };
       
       reader.readAsDataURL(file);
     }
   };
+  
+  // Handle image import from URL
+  const handleUrlImport = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
+    
+    // Reset states
+    setUrlError(null);
+    setIsProcessing(true);
+    
+    if (!imageUrl.trim()) {
+      setUrlError("请输入有效的图片URL");
+      setIsProcessing(false);
+      return;
+    }
+    
+    try {
+      // Create a new image to test URL validity
+      const img = new Image();
+      
+      // Create a promise to handle image loading
+      const imageLoadPromise = new Promise<string>((resolve, reject) => {
+        img.onload = () => {
+          // Image loaded successfully
+          resolve(imageUrl);
+        };
+        
+        img.onerror = () => {
+          // Image failed to load
+          reject(new Error("图片加载失败，请检查URL是否有效"));
+        };
+        
+        // Set crossOrigin to allow processing images from other domains
+        img.crossOrigin = "Anonymous";
+      });
+      
+      // Set the source to start loading
+      img.src = imageUrl;
+      
+      // Wait for image to load or fail
+      await imageLoadPromise;
+      
+      // Create a canvas to draw the image and get base64 data
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      
+      if (!tempCtx) {
+        throw new Error("无法创建临时画布");
+      }
+      
+      // Set canvas size to image size
+      tempCanvas.width = img.width;
+      tempCanvas.height = img.height;
+      
+      // Draw image to canvas
+      tempCtx.drawImage(img, 0, 0);
+      
+      // Get base64 data URL
+      const dataUrl = tempCanvas.toDataURL('image/png');
+      
+      // Set the image data
+      setUploadedImage(dataUrl);
+      setTransformedImage(null);
+      
+      // Clear URL input field after successful import
+      setImageUrl("");
+      
+    } catch (error) {
+      console.error("Error loading image from URL:", error);
+      setUrlError(error instanceof Error ? error.message : "加载图片时出错");
+    } finally {
+      setIsProcessing(false);
+    }
+  }, [imageUrl]);
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -992,27 +1071,80 @@ export default function SimpleImageEditor() {
             {/* Image Upload/Preview Section */}
             <div className="p-6 border-r border-gray-100">
               {!uploadedImage ? (
-                <div 
-                  {...getRootProps()} 
-                  className={`
-                    border-2 border-dashed rounded-xl p-8 text-center h-80 flex flex-col items-center justify-center cursor-pointer
-                    ${isDragActive ? 'border-primary bg-primary/5' : 'border-gray-300 bg-gray-50 hover:bg-gray-100'}
-                  `}
-                >
-                  <input {...getInputProps()} />
-                  <ImageIcon className="h-16 w-16 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-700 mb-2">Upload your image</h3>
-                  <p className="text-gray-500 mb-4">
-                    {isDragActive
-                      ? "Drop the image here..."
-                      : "Drag and drop an image, or click to browse"
-                    }
-                  </p>
-                  <Button>
-                    <Upload className="mr-2 h-4 w-4" />
-                    Select Image
-                  </Button>
-                  <p className="text-xs text-gray-500 mt-4">Supported formats: JPG, PNG (Max 10MB)</p>
+                <div className="border-2 border-dashed rounded-xl p-6 text-center h-80 flex flex-col">
+                  {/* Image upload mode toggle */}
+                  <div className="mb-4 inline-flex rounded-md bg-gray-100 p-1 self-center">
+                    <Button 
+                      variant={isUrlMode ? "ghost" : "secondary"} 
+                      size="sm"
+                      onClick={() => {
+                        setIsUrlMode(false);
+                        setUrlError(null);
+                      }}
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      Upload File
+                    </Button>
+                    <Button 
+                      variant={isUrlMode ? "secondary" : "ghost"} 
+                      size="sm"
+                      onClick={() => setIsUrlMode(true)}
+                    >
+                      <Link className="mr-2 h-4 w-4" />
+                      Image URL
+                    </Button>
+                  </div>
+
+                  {isUrlMode ? (
+                    <div className="flex flex-col items-center justify-center flex-grow">
+                      <ImageIcon className="h-12 w-12 text-gray-400 mb-3" />
+                      <h3 className="text-lg font-medium text-gray-700 mb-3">从URL加载图片</h3>
+                      <form onSubmit={handleUrlImport} className="w-full max-w-sm space-y-3">
+                        <div className="flex items-center space-x-2">
+                          <Input
+                            type="text"
+                            placeholder="输入图片链接 (https://...)"
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            className="flex-grow"
+                          />
+                          <Button type="submit" disabled={isProcessing}>
+                            {isProcessing ? "加载中..." : "导入"}
+                          </Button>
+                        </div>
+                        {urlError && (
+                          <div className="text-red-500 text-sm flex items-center">
+                            <XCircle className="w-4 h-4 mr-1" />
+                            {urlError}
+                          </div>
+                        )}
+                      </form>
+                      <p className="text-xs text-gray-500 mt-3">提示：部分网站可能限制跨域访问，导致图片无法加载</p>
+                    </div>
+                  ) : (
+                    <div 
+                      {...getRootProps()} 
+                      className={`
+                        flex-grow flex flex-col items-center justify-center cursor-pointer rounded-lg
+                        ${isDragActive ? 'bg-primary/5' : 'hover:bg-gray-100'}
+                      `}
+                    >
+                      <input {...getInputProps()} />
+                      <ImageIcon className="h-16 w-16 text-gray-400 mb-4" />
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">上传你的图片</h3>
+                      <p className="text-gray-500 mb-4">
+                        {isDragActive
+                          ? "放在这里..."
+                          : "拖放图片到这里，或点击浏览"
+                        }
+                      </p>
+                      <Button>
+                        <Upload className="mr-2 h-4 w-4" />
+                        选择图片
+                      </Button>
+                      <p className="text-xs text-gray-500 mt-4">支持格式: JPG, PNG (最大 10MB)</p>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="h-80 flex flex-col">
