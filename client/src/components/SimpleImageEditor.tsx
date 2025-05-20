@@ -1072,39 +1072,40 @@ export default function SimpleImageEditor() {
             <div className="p-6 border-r border-gray-100">
               {!uploadedImage ? (
                 <div className="border-2 border-dashed rounded-xl p-6 text-center h-80 flex flex-col">
-                  {/* Image upload mode toggle - Improved visibility */}
-                  <div className="mb-4 overflow-hidden rounded-lg border border-gray-300 self-center">
-                    <div className="flex relative">
-                      {/* Background highlight for active tab */}
-                      <div 
-                        className={`absolute h-full transition-all duration-300 ease-in-out bg-primary rounded-md ${
-                          isUrlMode ? 'translate-x-full -ml-2' : 'translate-x-0'
-                        }`} 
-                        style={{width: 'calc(50% + 2px)'}}
-                      />
-                      
+                  {/* Image upload mode toggle - Fixed overlap issues */}
+                  <div className="mb-6 rounded-md shadow-sm self-center">
+                    {/* Simple tab design with clear active state */}
+                    <div className="flex border border-gray-300 rounded-md overflow-hidden">
                       {/* Upload button */}
-                      <Button 
-                        variant="ghost"
-                        className={`relative z-10 border-0 rounded-none py-2 px-4 ${!isUrlMode ? 'text-white font-semibold' : 'text-gray-600'}`}
+                      <button 
+                        type="button"
+                        className={`flex items-center px-4 py-2 text-sm font-medium ${
+                          !isUrlMode 
+                            ? 'bg-primary text-white border-r border-gray-300' 
+                            : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                        }`}
                         onClick={() => {
                           setIsUrlMode(false);
                           setUrlError(null);
                         }}
                       >
-                        <Upload className={`mr-2 h-4 w-4 ${!isUrlMode ? 'text-white' : 'text-gray-500'}`} />
+                        <Upload className="mr-2 h-4 w-4" />
                         Upload File
-                      </Button>
+                      </button>
                       
                       {/* URL button */}
-                      <Button 
-                        variant="ghost"
-                        className={`relative z-10 border-0 rounded-none py-2 px-4 ${isUrlMode ? 'text-white font-semibold' : 'text-gray-600'}`}
+                      <button 
+                        type="button"
+                        className={`flex items-center px-4 py-2 text-sm font-medium ${
+                          isUrlMode 
+                            ? 'bg-primary text-white' 
+                            : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                        }`}
                         onClick={() => setIsUrlMode(true)}
                       >
-                        <Link className={`mr-2 h-4 w-4 ${isUrlMode ? 'text-white' : 'text-gray-500'}`} />
+                        <Link className="mr-2 h-4 w-4" />
                         Image URL
-                      </Button>
+                      </button>
                     </div>
                   </div>
 
