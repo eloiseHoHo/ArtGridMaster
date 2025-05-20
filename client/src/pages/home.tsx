@@ -14,16 +14,16 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Photo Grid for Artists | Transform Images with GridArt Studio</title>
+        <title>Photo Grid for Artists | Transform Images with PhotoGrid.space</title>
         <meta name="description" content="Create customized Photo Grid transformations for artists. Transform your images into grid references, line art, and sketches to improve your artistic skills." />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content="Photo Grid for Artists | Transform Images with GridArt Studio" />
+        <meta property="og:title" content="Photo Grid for Artists | Transform Images with PhotoGrid.space" />
         <meta property="og:description" content="Create customized Photo Grid transformations. Transform your images into grid references, line art, and sketches to improve your artistic skills." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://gridart.studio" />
+        <meta property="og:url" content="https://www.photogrid.space" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://gridart.studio" />
+        <link rel="canonical" href="https://www.photogrid.space" />
       </Helmet>
       
       <main>
@@ -58,7 +58,7 @@ export default function Home() {
                 A <strong>photo grid</strong> is one of the most powerful techniques an artist can use to improve accuracy and proportion in their drawings and paintings. By overlaying a grid on a reference photo, artists can focus on one section at a time, making complex subjects more manageable and ensuring correct proportions.
               </p>
               <p className="text-lg">
-                At GridArt Studio, we've revolutionized the traditional <strong>photo grid</strong> method by offering digital tools that create customized grid overlays instantly. Whether you're a beginner learning to draw or a professional artist working on commissioned portraits, our <strong>photo grid</strong> transformations will enhance your artistic process.
+                At PhotoGrid.space, we've revolutionized the traditional <strong>photo grid</strong> method by offering digital tools that create customized grid overlays instantly. Whether you're a beginner learning to draw or a professional artist working on commissioned portraits, our <strong>photo grid</strong> transformations will enhance your artistic process.
               </p>
               <h3 className="text-2xl font-semibold mt-8 mb-4 text-gray-800">Benefits of Using Photo Grid Techniques</h3>
               <ul className="space-y-3">
