@@ -29,10 +29,40 @@ export default function SimpleImageEditorNew() {
   const [lineThickness, setLineThickness] = useState(1);
   const [lineStyle, setLineStyle] = useState("normal");
   
+  // 扩展线稿样式选项
+  const lineArtStyles = [
+    { value: "normal", label: "Standard" },
+    { value: "detailed", label: "Detailed" },
+    { value: "minimal", label: "Minimal" },
+    { value: "pen", label: "Pen & Ink" },
+    { value: "technical", label: "Technical Drawing" },
+    { value: "comic", label: "Comic Art" }
+  ];
+  
   // Sketch settings
   const [sketchIntensity, setSketchIntensity] = useState(50);
   const [pencilType, setPencilType] = useState("graphite");
   const [shadingLevel, setShadingLevel] = useState(50);
+  const [sketchStyle, setSketchStyle] = useState("classic");
+  
+  // 扩展素描样式选项
+  const sketchStyles = [
+    { value: "classic", label: "Classic Sketch" },
+    { value: "pencil", label: "Pencil Drawing" },
+    { value: "charcoal", label: "Charcoal" },
+    { value: "conte", label: "Conté Crayon" },
+    { value: "pastel", label: "Soft Pastel" },
+    { value: "crosshatch", label: "Cross-Hatching" }
+  ];
+  
+  // 扩展铅笔类型选项
+  const pencilTypes = [
+    { value: "graphite", label: "Graphite (HB)" },
+    { value: "graphite_soft", label: "Soft Graphite (6B)" },
+    { value: "graphite_hard", label: "Hard Graphite (2H)" },
+    { value: "charcoal", label: "Charcoal" },
+    { value: "charcoal_soft", label: "Soft Charcoal" }
+  ];
 
   // Handle file drop
   const onDrop = (acceptedFiles: File[]) => {

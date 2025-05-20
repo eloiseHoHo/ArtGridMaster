@@ -159,14 +159,34 @@ export async function generateLineArtEffect(
       // 应用不同的线稿样式
       let sobelData = new Uint8ClampedArray(data.length);
       let edgeMultiplier = 5; // 默认边缘检测倍数
+      let lineMultiplier = 1; // 线条粗细调整
+      let contrastLevel = 1; // 对比度调整
+      let invertOutput = true; // 是否反转输出（黑底白线或白底黑线）
       
       // 根据样式调整处理参数
       if (style === "detailed") {
         // 详细模式 - 较低阈值，显示更多细节
         edgeMultiplier = 3;
+        contrastLevel = 1.2;
       } else if (style === "minimal") {
         // 极简模式 - 较高阈值，只显示主要轮廓
         edgeMultiplier = 8;
+        lineMultiplier = 0.8;
+      } else if (style === "pen") {
+        // 钢笔和墨水风格 - 锐利的边缘，高对比度
+        edgeMultiplier = 6;
+        contrastLevel = 1.5;
+        lineMultiplier = 0.7;
+      } else if (style === "technical") {
+        // 技术绘图风格 - 精确的线条，中等阈值
+        edgeMultiplier = 4;
+        lineMultiplier = 0.8;
+        contrastLevel = 1.4;
+      } else if (style === "comic") {
+        // 漫画艺术风格 - 粗线条，高对比度
+        edgeMultiplier = 7;
+        lineMultiplier = 1.5;
+        contrastLevel = 1.8;
       }
       
       // 进行Sobel边缘检测
@@ -255,8 +275,9 @@ export async function generateLineArtEffect(
 export async function generateSketchEffect(
   imageUrl: string,
   intensity: number = 5,
-  pencilType: "graphite" | "charcoal" = "graphite",
-  shadingLevel: number = 50
+  pencilType: string = "graphite",
+  shadingLevel: number = 50,
+  sketchStyle: string = "classic"
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -282,49 +303,212 @@ export async function generateSketchEffect(
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       
+      // 获取样式参数
+      let contrastFactor = 1.0;
+      let toneFactor = 1.0;
+      let grainAmount = 0.0;
+      let textureStyle = "smooth";
+      let inverted = false;
+      
+      // 针对不同的素描风格应用特定的处理参数
+      switch (sketchStyle) {
+        case "classic":
+          // 经典素描 - 平衡的对比度和纹理
+          contrastFactor = 1.0;
+          grainAmount = 0.05;
+          break;
+        case "pencil":
+          // 铅笔绘图 - 更精细的线条，更少的阴影
+          contrastFactor = 0.9;
+          toneFactor = 0.8;
+          grainAmount = 0.03;
+          break;
+        case "charcoal":
+          // 木炭效果 - 高对比度，粗糙纹理
+          contrastFactor = 1.3;
+          toneFactor = 1.2;
+          grainAmount = 0.1;
+          textureStyle = "rough";
+          break;
+        case "conte":
+          // 康铉蜡笔 - 温暖的色调，中等纹理
+          contrastFactor = 1.2;
+          toneFactor = 1.1;
+          grainAmount = 0.08;
+          textureStyle = "medium";
+          break;
+        case "pastel":
+          // 软蜡笔 - 柔和的边缘，低对比度
+          contrastFactor = 0.7;
+          toneFactor = 0.9;
+          grainAmount = 0.12;
+          textureStyle = "soft";
+          break;
+        case "crosshatch":
+          // 交叉阴影 - 高对比度，特殊纹理
+          contrastFactor = 1.4;
+          toneFactor = 1.0;
+          grainAmount = 0.06;
+          textureStyle = "hatched";
+          inverted = true;
+          break;
+        default:
+          // 默认为经典素描
+          break;
+      }
+      
+      // 针对不同的铅笔类型应用额外的调整
+      let pencilContrast = 1.0;
+      let pencilWarmth = 0.0;
+      let pencilDarkness = 1.0;
+      
+      switch (pencilType) {
+        case "graphite_soft":
+          // 软石墨铅笔 (6B) - 更暗，更柔和的线条
+          pencilContrast = 0.9;
+          pencilDarkness = 1.2;
+          break;
+        case "graphite_hard":
+          // 硬石墨铅笔 (2H) - 更亮，更锐利的线条
+          pencilContrast = 1.1;
+          pencilDarkness = 0.8;
+          break;
+        case "charcoal_soft":
+          // 软木炭 - 非常暗，非常柔和
+          pencilContrast = 0.8;
+          pencilWarmth = 0.2;
+          pencilDarkness = 1.3;
+          break;
+        case "charcoal":
+          // 木炭 - 暗，温暖的色调
+          pencilContrast = 1.0;
+          pencilWarmth = 0.15;
+          pencilDarkness = 1.2;
+          break;
+      }
+      
       // 转换为灰度图并应用样式特定的处理
       for (let i = 0; i < data.length; i += 4) {
         let gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
         
-        // 反转并应用强度
-        gray = 255 - gray;
+        // 根据需要反转
+        if (!inverted) {
+          gray = 255 - gray;
+        }
+        
+        // 应用对比度、色调和强度调整
+        gray = gray * contrastFactor;
+        gray = Math.min(Math.max(gray, 0), 255);
         
         // 应用阴影级别 - 较高的值会保留更多的阴影细节
         const shadowFactor = shadingLevel / 50; // 转换到大约1.0范围
-        gray = Math.pow(gray / 255, intensity / (5 * shadowFactor)) * 255;
+        gray = Math.pow(gray / 255, intensity / (5 * shadowFactor) * toneFactor) * 255;
+        gray = gray * pencilDarkness;
+        gray = Math.min(Math.max(gray, 0), 255);
         
-        // 应用铅笔类型特定的效果
-        if (pencilType === "graphite") {
-          // 石墨铅笔 - 灰色调，干净的线条
+        // 添加粒状纹理（基于坐标的随机值）
+        const pixelIndex = i / 4;
+        const x = pixelIndex % canvas.width;
+        const y = Math.floor(pixelIndex / canvas.width);
+        
+        // 简单的伪随机数生成
+        let noise = 0;
+        if (grainAmount > 0) {
+          // 生成一个伪随机噪点
+          const randomValue = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+          noise = (randomValue - Math.floor(randomValue)) * grainAmount * 50;
+          
+          // 为交叉阴影样式生成特殊的纹理
+          if (textureStyle === "hatched") {
+            // 交叉阴影模式根据亮度值和坐标决定是否应用线条
+            const hatchSpacing = 8 - Math.floor(gray / 255 * 6); // 根据亮度调整线条密度
+            if ((x % hatchSpacing < 1 || y % hatchSpacing < 1) ||
+                ((x + y) % hatchSpacing < 1 && gray < 150)) {
+              noise = -30;
+            } else {
+              noise = 30;
+            }
+          }
+        }
+        
+        // 应用噪点
+        gray = Math.min(Math.max(gray + noise, 0), 255);
+        
+        // 应用铅笔色调
+        const warmth = pencilWarmth;
+        if (warmth > 0) {
+          // 将暖色调添加到颜色通道中
+          data[i] = gray;  // 红色保持不变
+          data[i + 1] = gray * (1 - warmth * 0.3); // 绿色略减
+          data[i + 2] = gray * (1 - warmth * 0.5); // 蓝色减少更多
+        } else {
+          // 中性灰色
           data[i] = gray;
           data[i + 1] = gray;
-          data[i + 2] = gray;
-        } else {
-          // 木炭效果 - 更深的黑色，更暖色调，更多纹理
-          const warmFactor = 1.0 - (shadingLevel / 100 * 0.3); // 阴影度影响色温
-          data[i] = gray * 0.9 * warmFactor; // 红色通道稍微偏暗
-          data[i + 1] = gray * 0.85 * warmFactor; // 绿色通道更暗
-          data[i + 2] = gray * 0.8 * warmFactor; // 蓝色通道最暗，创造暖色调
+          data[i + 2] = gray; 
         }
       }
       
       // 将处理后的数据放回画布
       ctx.putImageData(imageData, 0, 0);
       
-      // 添加纹理 - 基于阴影级别调整纹理强度
+      // 添加背景纹理 - 基于素描样式和铅笔类型调整
       ctx.globalCompositeOperation = "multiply";
       
-      // 根据铅笔类型和阴影级别调整纹理颜色和强度
-      if (pencilType === "graphite") {
-        // 石墨铅笔纹理 - 灰色调
-        ctx.fillStyle = "#f8f8f8";
-        ctx.globalAlpha = 0.15 + (shadingLevel / 100 * 0.15); // 0.15-0.30范围
-      } else {
-        // 木炭纹理 - 略带暖色调
-        ctx.fillStyle = "#f5f2f0";
-        ctx.globalAlpha = 0.2 + (shadingLevel / 100 * 0.2); // 0.2-0.4范围
+      // 根据素描样式选择合适的纹理颜色和强度
+      let textureColor = "#f8f8f8"; // 默认纸张颜色
+      let textureAlpha = 0.15 + (shadingLevel / 100 * 0.15); // 基础纹理强度
+      
+      switch (sketchStyle) {
+        case "charcoal":
+        case "crosshatch":
+          // 木炭和交叉阴影使用略带灰色的纸张
+          textureColor = "#f2f2f2";
+          textureAlpha = 0.25 + (shadingLevel / 100 * 0.2);
+          break;
+        case "conte":
+          // 康铉蜡笔使用带米色的纸张
+          textureColor = "#f7f4e9";
+          textureAlpha = 0.25 + (shadingLevel / 100 * 0.15);
+          break;
+        case "pastel":
+          // 软蜡笔使用深色纹理纸
+          textureColor = "#f0f0e8";
+          textureAlpha = 0.3 + (shadingLevel / 100 * 0.2);
+          break;
       }
+      
+      // 根据铅笔类型进一步调整
+      if (pencilType.includes("charcoal")) {
+        // 木炭类型需要更明显的纸张纹理
+        textureAlpha += 0.1;
+        textureColor = "#f5f2f0"; // 略带暖调的纸张颜色
+      } else if (pencilType.includes("graphite_hard")) {
+        // 硬铅笔使用更亮的纸张
+        textureColor = "#fafafa";
+        textureAlpha -= 0.05;
+      }
+      
+      // 应用纸张纹理
+      ctx.fillStyle = textureColor;
+      ctx.globalAlpha = textureAlpha;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // 对于某些风格，添加额外的纹理层
+      if (sketchStyle === "crosshatch" || sketchStyle === "conte" || sketchStyle === "pastel") {
+        // 添加第二层纹理，模拟纸张粗糙度
+        ctx.globalAlpha = 0.05;
+        
+        // 使用噪点模式
+        for (let x = 0; x < canvas.width; x += 4) {
+          for (let y = 0; y < canvas.height; y += 4) {
+            if (Math.random() > 0.7) {
+              ctx.fillStyle = textureColor;
+              ctx.fillRect(x, y, 2, 2);
+            }
+          }
+        }
+      }
       
       // 重置混合模式
       ctx.globalCompositeOperation = "source-over";
