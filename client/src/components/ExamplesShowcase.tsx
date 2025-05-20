@@ -1,4 +1,4 @@
-import { BeforeAfterComparison } from "@/components";
+import BeforeAfterComparison from "./BeforeAfterComparison";
 
 export default function ExamplesShowcase() {
   // Example images for different transformation types
