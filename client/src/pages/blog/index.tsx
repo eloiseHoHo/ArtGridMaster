@@ -147,20 +147,14 @@ export default function Blog() {
           ))}
         </div>
         
-        {/* Newsletter section */}
+        {/* Helpful links section */}
         <div className="bg-gray-50 rounded-xl p-8 mt-16">
           <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-4">Subscribe to Our Photo Grid Newsletter</h2>
-            <p className="text-gray-600 mb-6">Get the latest articles, tutorials, and tips about photo grid techniques delivered straight to your inbox.</p>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-1"
-              />
-              <Button>Subscribe</Button>
-            </div>
-            <p className="text-xs text-gray-500 mt-3">We respect your privacy. Unsubscribe at any time.</p>
+            <h2 className="text-2xl font-bold mb-4">Free Resources for Artists</h2>
+            <p className="text-gray-600 mb-6">Explore our completely free articles, tutorials, and tips about photo grid techniques to improve your art skills.</p>
+            <Button onClick={() => window.location.href='/'}>
+              Try PhotoGrid Tool Now
+            </Button>
           </div>
         </div>
       </main>
