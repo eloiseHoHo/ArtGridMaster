@@ -18,7 +18,7 @@ export default function Footer() {
               </svg>
               <h2 className="text-lg font-bold">PhotoGrid</h2>
             </div>
-            <p className="mb-4">Free online tool for artists to transform images into grids, line art, and sketches.</p>
+            <p className="mb-4">100% free online tool for artists to transform images into grids, line art, and sketches.</p>
           </div>
           
           <div>
