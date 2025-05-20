@@ -836,20 +836,27 @@ export default function SimpleImageEditor() {
   
   // Handle transform button click
   const handleTransform = useCallback(() => {
-    if (isProcessing || !uploadedImage) return;
+    if (!uploadedImage) return;
     
-    switch (activeTab) {
-      case 'grid':
-        applyGridTransform();
-        break;
-      case 'lineart':
-        applyLineArtTransform();
-        break;
-      case 'sketch':
-        applySketchTransform();
-        break;
-    }
-  }, [activeTab, isProcessing, uploadedImage, applyGridTransform, applyLineArtTransform, applySketchTransform]);
+    // Always reset processing state before starting a new transformation
+    // This helps prevent UI getting stuck in loading state
+    setIsProcessing(false);
+    
+    // Use setTimeout to ensure state reset completes before starting new processing
+    setTimeout(() => {
+      switch (activeTab) {
+        case 'grid':
+          applyGridTransform();
+          break;
+        case 'lineart':
+          applyLineArtTransform();
+          break;
+        case 'sketch':
+          applySketchTransform();
+          break;
+      }
+    }, 10);
+  }, [activeTab, uploadedImage, applyGridTransform, applyLineArtTransform, applySketchTransform]);
   
   // Create direct handlers for immediate updates when user changes settings
   const handleGridSizeChange = useCallback((values: number[]) => {
@@ -947,18 +954,26 @@ export default function SimpleImageEditor() {
   
   // Initial transformation when tab changes
   useEffect(() => {
+    // Force reset processing state on tab change
+    setIsProcessing(false);
+    
     if (uploadedImage) {
-      if (!isProcessing) {
+      // Use setTimeout for reliable state updates before starting transformation
+      const timer = setTimeout(() => {
         handleTransform();
-      } else {
-        // Set a safety timeout to clear processing state if it gets stuck
-        const timer = setTimeout(() => {
-          if (isProcessing) setIsProcessing(false);
-        }, 8000); // 8 seconds timeout
-        return () => clearTimeout(timer);
-      }
+      }, 50);
+      
+      // Set a backup safety timeout to clear any stuck processing state
+      const safetyTimer = setTimeout(() => {
+        setIsProcessing(false);
+      }, 10000); // 10 seconds max for any processing
+      
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(safetyTimer);
+      };
     }
-  }, [activeTab, uploadedImage, isProcessing, handleTransform]);
+  }, [activeTab, uploadedImage, handleTransform]);
   
   return (
     <section className="bg-gradient-to-br from-primary to-primary-700 text-white py-12 sm:py-16 md:py-20">
