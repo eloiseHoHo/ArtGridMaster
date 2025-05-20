@@ -12,7 +12,8 @@ export async function generateGridEffect(
   imageUrl: string,
   size: number = 50,
   color: string = "#000000",
-  opacity: number = 0.5
+  opacity: number = 0.5,
+  style: string = "lines"
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -23,46 +24,83 @@ export async function generateGridEffect(
       const ctx = canvas.getContext("2d");
       
       if (!ctx) {
-        reject(new Error("无法获取canvas上下文"));
+        reject(new Error("Unable to get canvas context"));
         return;
       }
       
-      // 设置画布尺寸与图像相同
+      // Set canvas size to match the image
       canvas.width = img.width;
       canvas.height = img.height;
       
-      // 绘制原始图像
+      // Draw the original image
       ctx.drawImage(img, 0, 0, img.width, img.height);
       
-      // 绘制网格
+      // Set global grid properties
       ctx.strokeStyle = color;
+      ctx.fillStyle = color;
       ctx.lineWidth = 1;
       ctx.globalAlpha = opacity;
       
-      // 绘制垂直线
-      for (let x = 0; x <= img.width; x += size) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, img.height);
-        ctx.stroke();
+      // Draw grid based on selected style
+      if (style === "dots") {
+        // Draw dots at grid intersections
+        const dotSize = 2;
+        for (let x = 0; x <= img.width; x += size) {
+          for (let y = 0; y <= img.height; y += size) {
+            ctx.beginPath();
+            ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      } else if (style === "dashed") {
+        // Draw dashed lines
+        ctx.setLineDash([5, 5]); // 5px dash, 5px gap
+        
+        // Draw vertical dashed lines
+        for (let x = 0; x <= img.width; x += size) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, img.height);
+          ctx.stroke();
+        }
+        
+        // Draw horizontal dashed lines
+        for (let y = 0; y <= img.height; y += size) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(img.width, y);
+          ctx.stroke();
+        }
+        
+        // Reset line dash
+        ctx.setLineDash([]);
+      } else {
+        // Default: solid lines
+        // Draw vertical lines
+        for (let x = 0; x <= img.width; x += size) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, img.height);
+          ctx.stroke();
+        }
+        
+        // Draw horizontal lines
+        for (let y = 0; y <= img.height; y += size) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(img.width, y);
+          ctx.stroke();
+        }
       }
       
-      // 绘制水平线
-      for (let y = 0; y <= img.height; y += size) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(img.width, y);
-        ctx.stroke();
-      }
-      
-      // 重置透明度
+      // Reset opacity
       ctx.globalAlpha = 1;
       
       resolve(canvas.toDataURL("image/jpeg", 0.9));
     };
     
     img.onerror = () => {
-      reject(new Error("图像加载失败"));
+      reject(new Error("Failed to load image"));
     };
     
     img.src = imageUrl;

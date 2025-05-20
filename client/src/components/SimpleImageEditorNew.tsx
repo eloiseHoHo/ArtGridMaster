@@ -17,8 +17,8 @@ export default function SimpleImageEditorNew() {
   const [isUrlMode, setIsUrlMode] = useState<boolean>(false);
   const [urlError, setUrlError] = useState<string | null>(null);
   
-  // Grid settings
-  const [gridSize, setGridSize] = useState(20);
+  // Grid settings - larger default size for more visible effect
+  const [gridSize, setGridSize] = useState(50);
   const [gridOpacity, setGridOpacity] = useState(70);
   const [gridColor, setGridColor] = useState("#000000");
   const [gridStyle, setGridStyle] = useState("lines");
@@ -126,7 +126,8 @@ export default function SimpleImageEditorNew() {
         uploadedImage,
         gridSize,
         gridColor,
-        gridOpacity / 100
+        gridOpacity / 100,
+        gridStyle
       );
       setTransformedImage(result);
     } catch (error) {
