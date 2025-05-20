@@ -4,7 +4,7 @@ import ArtistsGallery from "@/components/ArtistsGallery";
 import Testimonials from "@/components/Testimonials";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
-import ExamplesShowcase from "@/components/ExamplesShowcase";
+import ExamplesShowcase from "@/components/ExamplesShowcaseNew";
 import { Helmet } from "react-helmet";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
