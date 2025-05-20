@@ -8,6 +8,200 @@
  * @param opacity 网格不透明度 (0-1)
  * @returns 处理后的图像的DataURL
  */
+// 图像调整函数
+export async function adjustImage(
+  imageUrl: string,
+  brightness: number = 100, // 100%是原始亮度
+  contrast: number = 100, // 100%是原始对比度
+  saturation: number = 100 // 100%是原始饱和度
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('无法创建canvas上下文'));
+        return;
+      }
+      
+      // 绘制原图
+      ctx.drawImage(img, 0, 0);
+      
+      // 如果所有调整值都是默认值，直接返回原图
+      if (brightness === 100 && contrast === 100 && saturation === 100) {
+        resolve(canvas.toDataURL());
+        return;
+      }
+      
+      // 获取图像数据并应用调整
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      
+      // 亮度调整因子
+      const brightnessAdjust = brightness / 100;
+      
+      // 对比度调整因子
+      const contrastAdjust = contrast / 100;
+      const contrastFactor = (259 * (contrastAdjust - 1) + 255) / (255 * (259 - 255 * contrastAdjust));
+      
+      // 饱和度调整因子
+      const saturationAdjust = saturation / 100;
+      
+      // 应用调整
+      for (let i = 0; i < data.length; i += 4) {
+        // 亮度调整
+        data[i] = data[i] * brightnessAdjust;
+        data[i + 1] = data[i + 1] * brightnessAdjust;
+        data[i + 2] = data[i + 2] * brightnessAdjust;
+        
+        // 对比度调整
+        data[i] = truncateColor(contrastFactor * (data[i] - 128) + 128);
+        data[i + 1] = truncateColor(contrastFactor * (data[i + 1] - 128) + 128);
+        data[i + 2] = truncateColor(contrastFactor * (data[i + 2] - 128) + 128);
+        
+        // 饱和度调整
+        const gray = 0.2989 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+        if (saturationAdjust !== 1) {
+          data[i] = truncateColor(gray + saturationAdjust * (data[i] - gray));
+          data[i + 1] = truncateColor(gray + saturationAdjust * (data[i + 1] - gray));
+          data[i + 2] = truncateColor(gray + saturationAdjust * (data[i + 2] - gray));
+        }
+      }
+      
+      // 将调整后的数据放回画布
+      ctx.putImageData(imageData, 0, 0);
+      
+      // 转换为DataURL并返回
+      resolve(canvas.toDataURL());
+    };
+    
+    img.onerror = (error) => {
+      reject(error);
+    };
+    
+    img.src = imageUrl;
+  });
+}
+
+// 辅助函数：确保颜色值在0-255范围内
+function truncateColor(value: number): number {
+  return Math.min(255, Math.max(0, value));
+}
+
+// 绘制参考线到画布
+export function drawGuides(
+  canvas: HTMLCanvasElement,
+  type: string = "thirds", // 'thirds', 'golden', 'diagonal', 'center'
+  color: string = "#e74c3c",
+  opacity: number = 0.7
+): void {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  
+  const width = canvas.width;
+  const height = canvas.height;
+  
+  // 设置线条样式
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1;
+  ctx.globalAlpha = opacity;
+  
+  // 清除之前的绘制
+  ctx.clearRect(0, 0, width, height);
+  
+  // 根据类型绘制不同的参考线
+  switch (type) {
+    case "thirds": // 三分法则
+      // 垂直线
+      ctx.beginPath();
+      ctx.moveTo(width / 3, 0);
+      ctx.lineTo(width / 3, height);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(2 * width / 3, 0);
+      ctx.lineTo(2 * width / 3, height);
+      ctx.stroke();
+      
+      // 水平线
+      ctx.beginPath();
+      ctx.moveTo(0, height / 3);
+      ctx.lineTo(width, height / 3);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(0, 2 * height / 3);
+      ctx.lineTo(width, 2 * height / 3);
+      ctx.stroke();
+      break;
+      
+    case "golden": // 黄金分割
+      const goldenRatio = 0.618;
+      
+      // 垂直线
+      ctx.beginPath();
+      ctx.moveTo(width * goldenRatio, 0);
+      ctx.lineTo(width * goldenRatio, height);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(width * (1 - goldenRatio), 0);
+      ctx.lineTo(width * (1 - goldenRatio), height);
+      ctx.stroke();
+      
+      // 水平线
+      ctx.beginPath();
+      ctx.moveTo(0, height * goldenRatio);
+      ctx.lineTo(width, height * goldenRatio);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(0, height * (1 - goldenRatio));
+      ctx.lineTo(width, height * (1 - goldenRatio));
+      ctx.stroke();
+      break;
+      
+    case "diagonal": // 对角线
+      // 从左上到右下
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(width, height);
+      ctx.stroke();
+      
+      // 从右上到左下
+      ctx.beginPath();
+      ctx.moveTo(width, 0);
+      ctx.lineTo(0, height);
+      ctx.stroke();
+      break;
+      
+    case "center": // 中心线
+      // 垂直中线
+      ctx.beginPath();
+      ctx.moveTo(width / 2, 0);
+      ctx.lineTo(width / 2, height);
+      ctx.stroke();
+      
+      // 水平中线
+      ctx.beginPath();
+      ctx.moveTo(0, height / 2);
+      ctx.lineTo(width, height / 2);
+      ctx.stroke();
+      
+      // 中心圆 (可选)
+      ctx.beginPath();
+      const radius = Math.min(width, height) / 10;
+      ctx.arc(width / 2, height / 2, radius, 0, Math.PI * 2);
+      ctx.stroke();
+      break;
+  }
+}
+
 export async function generateGridEffect(
   imageUrl: string,
   size: number = 50,

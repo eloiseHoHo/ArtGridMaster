@@ -63,6 +63,26 @@ export default function SimpleImageEditorNew() {
     { value: "charcoal", label: "Charcoal" },
     { value: "charcoal_soft", label: "Soft Charcoal" }
   ];
+  
+  // 参考线设置
+  const [showGuides, setShowGuides] = useState(false);
+  const [guideType, setGuideType] = useState("thirds");
+  const [guideColor, setGuideColor] = useState("#e74c3c");
+  const [guideOpacity, setGuideOpacity] = useState(70);
+  
+  // 参考线类型选项
+  const guideTypes = [
+    { value: "thirds", label: "Rule of Thirds" },
+    { value: "golden", label: "Golden Ratio" },
+    { value: "diagonal", label: "Diagonal" },
+    { value: "center", label: "Center Lines" }
+  ];
+  
+  // 图像调整设置
+  const [brightness, setBrightness] = useState(100); // 100%表示原始亮度
+  const [contrast, setContrast] = useState(100); // 100%表示原始对比度
+  const [saturation, setSaturation] = useState(100); // 100%表示原始饱和度
+  const [showAdjustments, setShowAdjustments] = useState(false);
 
   // Handle file drop
   const onDrop = (acceptedFiles: File[]) => {
