@@ -122,7 +122,7 @@ export default function Categories() {
                   <ul className="list-disc pl-5 text-gray-600 text-sm">
                     {category.subcategories.map((sub, index) => (
                       <li key={index}>
-                        <Link href={`/categories/${category.id}/${sub.toLowerCase().replace(/\s+/g, '-')}`}>
+                        <Link href={`/transform/new?type=grid&preset=${sub.toLowerCase().replace(/\s+/g, '-')}`}>
                           <a className="hover:text-primary hover:underline">{sub}</a>
                         </Link>
                       </li>
