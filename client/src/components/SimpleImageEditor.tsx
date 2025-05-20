@@ -150,13 +150,27 @@ export default function SimpleImageEditor() {
   
   // Apply line art transformation using optimized Sobel edge detection and RoughJS for hand-drawn effect
   const applyLineArtTransform = () => {
-    if (!uploadedImage || !hiddenCanvasRef.current) return;
+    // Clear any previous processing state first
+    setIsProcessing(false);
     
-    setIsProcessing(true);
+    // Ensure we have required resources
+    if (!uploadedImage || !hiddenCanvasRef.current) {
+      return;
+    }
     
-    // Use setTimeout to prevent UI freezing during processing
+    // Start processing with a delay to ensure state update completes first
     setTimeout(() => {
+      setIsProcessing(true);
+      
+      // Image loading
       const img = new Image();
+      
+      // Define error handler to ensure loading state is reset
+      img.onerror = () => {
+        console.error("Failed to load image for line art transformation");
+        setIsProcessing(false);
+      };
+      
       img.onload = () => {
         const canvas = hiddenCanvasRef.current!;
         const ctx = canvas.getContext('2d');
