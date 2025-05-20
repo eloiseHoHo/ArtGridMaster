@@ -115,7 +115,7 @@ export default function BeforeAfterComparison({ beforeImage, afterImage, title, 
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 12h8M8 17h8" />
             </svg>
-            <span>拖动滑块比较效果</span>
+            <span>Drag to compare</span>
           </div>
         </div>
       </div>
