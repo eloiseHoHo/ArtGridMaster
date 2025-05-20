@@ -7,22 +7,22 @@ export default function ExamplesShowcase() {
       id: 1,
       title: "Grid Transformation",
       description: "Perfect for artists to maintain proportions while drawing",
-      beforeImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800",
-      afterImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800&grid=true"
+      beforeImage: "/images/examples/portrait.jpg",
+      afterImage: "/images/examples/grid/portrait-grid.svg"
     },
     {
       id: 2,
       title: "Line Art Transformation",
       description: "Convert photos into clean line drawings for tracing or coloring",
-      beforeImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800",
-      afterImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800&lineart=true"
+      beforeImage: "/images/examples/man-portrait.jpg",
+      afterImage: "/images/examples/lineart/man-portrait-lineart.svg"
     },
     {
       id: 3,
       title: "Sketch Transformation",
       description: "Transform photos into sketch-like images for artistic reference",
-      beforeImage: "https://images.unsplash.com/photo-1490312278390-ab64016e0aa2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800",
-      afterImage: "https://images.unsplash.com/photo-1490312278390-ab64016e0aa2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800&sketch=true"
+      beforeImage: "/images/examples/flower.jpg",
+      afterImage: "/images/examples/sketch/flower-sketch.svg"
     },
   ];
 
