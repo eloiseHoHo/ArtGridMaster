@@ -198,7 +198,9 @@ export default function SimpleImageEditorNew() {
       const result = await generateSketchEffect(
         uploadedImage,
         sketchIntensity / 10,
-        pencilType as "graphite" | "charcoal"
+        pencilType,
+        shadingLevel,
+        sketchStyle
       );
       setTransformedImage(result);
     } catch (error) {
@@ -528,15 +530,16 @@ export default function SimpleImageEditorNew() {
                       
                       <div>
                         <Label className="block mb-2 text-gray-700">Line Style</Label>
-                        <div className="grid grid-cols-3 gap-2">
-                          {['normal', 'detailed', 'minimal'].map((style) => (
+                        <div className="grid grid-cols-2 gap-2">
+                          {lineArtStyles.map((style) => (
                             <Button
-                              key={style}
-                              variant={lineStyle === style ? 'default' : 'outline'}
-                              onClick={() => setLineStyle(style)}
-                              className={lineStyle === style ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
+                              key={style.value}
+                              variant={lineStyle === style.value ? 'default' : 'outline'}
+                              onClick={() => setLineStyle(style.value)}
+                              className={lineStyle === style.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
+                              size="sm"
                             >
-                              {style.charAt(0).toUpperCase() + style.slice(1)}
+                              {style.label}
                             </Button>
                           ))}
                         </div>
@@ -561,6 +564,23 @@ export default function SimpleImageEditorNew() {
                     {/* Sketch Controls */}
                     <div className="space-y-5">
                       <div>
+                        <Label className="block mb-2 text-gray-700">Sketch Style</Label>
+                        <div className="grid grid-cols-2 gap-2 mb-3">
+                          {sketchStyles.map((style) => (
+                            <Button
+                              key={style.value}
+                              onClick={() => setSketchStyle(style.value)}
+                              variant={sketchStyle === style.value ? 'default' : 'outline'}
+                              className={sketchStyle === style.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
+                              size="sm"
+                            >
+                              {style.label}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    
+                      <div>
                         <div className="flex justify-between mb-2">
                           <Label className="text-gray-700">Intensity</Label>
                           <span className="text-sm text-indigo-600 font-medium">{sketchIntensity}%</span>
@@ -577,14 +597,15 @@ export default function SimpleImageEditorNew() {
                       <div>
                         <Label className="block mb-2 text-gray-700">Pencil Type</Label>
                         <div className="grid grid-cols-2 gap-2">
-                          {['graphite', 'charcoal'].map((type) => (
+                          {pencilTypes.map((type) => (
                             <Button
-                              key={type}
-                              variant={pencilType === type ? 'default' : 'outline'}
-                              onClick={() => setPencilType(type)}
-                              className={pencilType === type ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
+                              key={type.value}
+                              onClick={() => setPencilType(type.value)}
+                              variant={pencilType === type.value ? 'default' : 'outline'}
+                              className={pencilType === type.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
+                              size="sm"
                             >
-                              {type.charAt(0).toUpperCase() + type.slice(1)}
+                              {type.label}
                             </Button>
                           ))}
                         </div>
