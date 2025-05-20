@@ -8,6 +8,16 @@ export default function Blog() {
   // Blog posts data - in a real application, this would come from an API
   const blogPosts = [
     {
+      id: 7,
+      slug: "how-to-use-grid-for-perfect-portraits",
+      title: "如何使用网格法绘制完美肖像画",
+      excerpt: "学习如何使用网格法绘制准确的肖像画。这份详细指南将帮助您掌握肖像绘画的比例和细节，从而创作出令人惊叹的肖像作品。",
+      date: "2023-06-25",
+      readTime: "10 min read",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400",
+      category: "教程"
+    },
+    {
       id: 1,
       slug: "photo-grid-for-artists",
       title: "Photo Grid for Artists: The Complete Guide",
