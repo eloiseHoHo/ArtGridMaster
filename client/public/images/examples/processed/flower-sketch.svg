@@ -38,7 +38,7 @@
   
   <!-- Original image with sketch filter applied -->
   <image x="0" y="0" width="800" height="800" preserveAspectRatio="xMidYMid slice" 
-         xlink:href="/images/examples/real-flower.jpg" filter="url(#sketch-effect)" />
+         xlink:href="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80" filter="url(#sketch-effect)" />
   
   <!-- Pencil texture overlay -->
   <rect width="800" height="800" fill="url(#pencil-texture)" opacity="0.1" />

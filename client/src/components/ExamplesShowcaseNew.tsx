@@ -2,26 +2,27 @@ import BeforeAfterComparison from "./BeforeAfterComparison";
 
 export default function ExamplesShowcase() {
   // Example images for different transformation types
+  // Example images for different transformation types with their processed versions
   const examples = [
     {
       id: 1,
       title: "Grid Transformation",
       description: "Perfect for artists to maintain proportions while drawing",
-      beforeImage: "/images/examples/real-portrait.jpg",
+      beforeImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
       afterImage: "/images/examples/processed/portrait-grid.svg"
     },
     {
       id: 2,
       title: "Line Art Transformation",
       description: "Convert photos into clean line drawings for tracing or coloring",
-      beforeImage: "/images/examples/real-landscape.jpg",
+      beforeImage: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
       afterImage: "/images/examples/processed/landscape-lineart.svg"
     },
     {
       id: 3,
       title: "Sketch Transformation",
       description: "Transform photos into sketch-style drawings for artistic reference",
-      beforeImage: "/images/examples/real-flower.jpg",
+      beforeImage: "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
       afterImage: "/images/examples/processed/flower-sketch.svg"
     },
   ];

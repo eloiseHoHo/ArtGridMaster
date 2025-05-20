@@ -44,9 +44,9 @@
   
   <!-- Original image with line art filter applied -->
   <image x="0" y="0" width="800" height="600" preserveAspectRatio="xMidYMid slice" 
-         xlink:href="/images/examples/real-landscape.jpg" filter="url(#lineart)"/>
+         xlink:href="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" filter="url(#lineart)"/>
   
   <!-- Add subtle detail enhancement on top -->
   <image x="0" y="0" width="800" height="600" preserveAspectRatio="xMidYMid slice" 
-         xlink:href="/images/examples/real-landscape.jpg" filter="url(#detail-enhance)" opacity="0.2"/>
+         xlink:href="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" filter="url(#detail-enhance)" opacity="0.2"/>
 </svg>
