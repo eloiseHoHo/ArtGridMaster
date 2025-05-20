@@ -403,6 +403,20 @@ export default function SimpleImageEditorNew() {
                     </div>
                     
                     <div>
+                      <div className="flex justify-between mb-2">
+                        <Label className="text-gray-700">Line Thickness</Label>
+                        <span className="text-sm text-indigo-600 font-medium">{gridThickness}px</span>
+                      </div>
+                      <Slider
+                        min={1}
+                        max={5}
+                        step={0.5}
+                        value={[gridThickness]}
+                        onValueChange={(value) => setGridThickness(value[0])}
+                      />
+                    </div>
+                    
+                    <div>
                       <Label className="block mb-2 text-gray-700">Grid Color</Label>
                       <div className="flex space-x-3">
                         {['#000000', '#EF4444', '#3B82F6', '#10B981', '#8B5CF6'].map((color) => (
