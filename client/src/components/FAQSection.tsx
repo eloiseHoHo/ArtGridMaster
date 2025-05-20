@@ -23,12 +23,12 @@ export default function FAQSection() {
     {
       id: 3,
       question: "Is there a limit to how many images I can transform?",
-      answer: "The free version allows up to 10 image transformations per day. For unlimited transformations and access to advanced features, consider upgrading to our Pro version."
+      answer: "No, you can transform as many images as you want. Our service is completely free and has no usage limits."
     },
     {
       id: 4,
-      question: "What's the difference between the free and Pro versions?",
-      answer: "The Pro version offers higher resolution outputs, additional transformation styles, batch processing, the ability to save custom presets, and priority support. Pro users also get access to new features first."
+      question: "How can I give feedback or request new features?",
+      answer: "We're always looking to improve! You can send your feedback and feature requests to us at contact@photogrid.space or through our social media channels. We appreciate your input as it helps us make our service better."
     }
   ];
   
