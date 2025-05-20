@@ -333,24 +333,42 @@ export default function SimpleImageEditor() {
         
         // Process remaining chunks with slight delays to allow UI to remain responsive
         if (rowsPerChunk < height) {
+          // Add clearer progress indicators to help debug
+          console.log("Processing image in chunks for better UI response");
+          
           // Use requestAnimationFrame for smoother UI
           requestAnimationFrame(() => {
             processRows(rowsPerChunk, Math.min(rowsPerChunk * 2, height));
+            console.log("25% processed");
             
             requestAnimationFrame(() => {
               processRows(rowsPerChunk * 2, Math.min(rowsPerChunk * 3, height));
+              console.log("50% processed");
               
               requestAnimationFrame(() => {
                 processRows(rowsPerChunk * 3, height);
+                console.log("75% processed");
                 
-                // After all edge detection is complete, apply RoughJS for hand-drawn effect
-                finishWithRoughJS();
+                // Ensure we properly call finishWithRoughJS and handle any errors
+                try {
+                  console.log("Completing line art with RoughJS...");
+                  finishWithRoughJS();
+                } catch (err) {
+                  console.error("Error in line art processing:", err);
+                  // Make sure processing state is reset even on error
+                  setIsProcessing(false);
+                }
               });
             });
           });
         } else {
           // Small image, finish immediately
-          finishWithRoughJS();
+          try {
+            finishWithRoughJS();
+          } catch (err) {
+            console.error("Error in line art processing for small image:", err);
+            setIsProcessing(false);
+          }
         }
         
         // Final step: Apply RoughJS for hand-drawn effect
@@ -915,8 +933,16 @@ export default function SimpleImageEditor() {
   
   // Initial transformation when tab changes
   useEffect(() => {
-    if (uploadedImage && !isProcessing) {
-      handleTransform();
+    if (uploadedImage) {
+      if (!isProcessing) {
+        handleTransform();
+      } else {
+        // Set a safety timeout to clear processing state if it gets stuck
+        const timer = setTimeout(() => {
+          if (isProcessing) setIsProcessing(false);
+        }, 8000); // 8 seconds timeout
+        return () => clearTimeout(timer);
+      }
     }
   }, [activeTab, uploadedImage, isProcessing, handleTransform]);
   
