@@ -22,6 +22,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/how-to-use-grid-for-perfect-portraits" component={HowToUseGridForPerfectPortraits} />
       <Route path="/blog/grid-method-for-perfect-portraits" component={GridMethodForPerfectPortraits} />
+      <Route path="/blog/perspective-grid-techniques-for-landscapes" component={PerspectiveGridTechniquesForLandscapes} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/categories" component={Categories} />
       <Route path="/categories/portrait-photo-grid" component={PortraitPhotoGrid} />

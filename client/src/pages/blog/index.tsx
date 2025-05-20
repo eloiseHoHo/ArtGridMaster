@@ -8,6 +8,16 @@ export default function Blog() {
   // Blog posts data - in a real application, this would come from an API
   const blogPosts = [
     {
+      id: 9,
+      slug: "perspective-grid-techniques-for-landscapes",
+      title: "Perspective Grid Techniques for Landscape Painting",
+      excerpt: "Master perspective in landscape art with our guide to grid techniques. Learn how to capture depth, distance, and scale in your landscape paintings and drawings.",
+      date: "2023-06-29",
+      readTime: "12 min read",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400",
+      category: "Tutorial"
+    },
+    {
       id: 8,
       slug: "grid-method-for-perfect-portraits",
       title: "How to Use Grid Method for Perfect Portraits",
