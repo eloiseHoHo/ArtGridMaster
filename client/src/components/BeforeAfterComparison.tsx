@@ -58,7 +58,7 @@ export default function BeforeAfterComparison({ beforeImage, afterImage, title, 
       
       <div 
         ref={containerRef} 
-        className="relative w-full h-[300px] md:h-[400px] overflow-hidden rounded-lg shadow-lg cursor-pointer"
+        className="relative w-full h-full aspect-square overflow-hidden rounded-lg shadow-md cursor-pointer group"
         onMouseDown={handleMouseDown}
         onTouchStart={handleMouseDown}
       >
@@ -91,25 +91,35 @@ export default function BeforeAfterComparison({ beforeImage, afterImage, title, 
           onMouseDown={handleMouseDown}
           onTouchStart={handleMouseDown}
         >
-          <div className="w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center">
-            <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          <div className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-transform duration-200 group-hover:scale-110">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 12h8M8 17h8M4 12h4M16 12h4" />
               </svg>
             </div>
           </div>
         </div>
         
         {/* Before-After labels */}
-        <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 text-sm rounded">
+        <div className="absolute bottom-3 left-3 bg-black/60 text-white px-3 py-1 text-sm rounded-full font-medium">
           Before
         </div>
-        <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 text-sm rounded">
+        <div className="absolute bottom-3 right-3 bg-black/60 text-white px-3 py-1 text-sm rounded-full font-medium">
           After
+        </div>
+        
+        {/* Drag instruction overlay that fades out */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="bg-black/70 px-4 py-2 rounded-full flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 12h8M8 17h8" />
+            </svg>
+            <span>Drag to compare</span>
+          </div>
         </div>
       </div>
       
-      {description && <p className="text-gray-600 mt-2 text-center">{description}</p>}
+      {description && <p className="text-gray-600 mt-3 text-center">{description}</p>}
     </div>
   );
 }
