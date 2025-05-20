@@ -51,17 +51,7 @@ export default function PerspectiveGridTechniquesForLandscapes() {
             <span className="ml-4 bg-primary-100 text-primary-800 rounded-full px-3 py-1">Tutorial</span>
           </div>
           
-          <div className="flex items-center mb-6">
-            <img 
-              src="https://images.unsplash.com/photo-1499366440726-d8f9c19278d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
-              alt="Author avatar" 
-              className="w-10 h-10 rounded-full object-cover mr-3"
-            />
-            <div>
-              <div className="font-medium text-gray-900">Emma Thompson</div>
-              <div className="text-sm text-gray-500">Landscape Artist & Perspective Specialist</div>
-            </div>
-          </div>
+
         </div>
         
         {/* Featured image */}
