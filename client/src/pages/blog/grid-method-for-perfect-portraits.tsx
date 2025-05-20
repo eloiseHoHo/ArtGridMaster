@@ -345,20 +345,7 @@ export default function GridMethodForPerfectPortraits() {
           </p>
         </div>
         
-        {/* Author info */}
-        <div className="bg-gray-50 p-6 rounded-lg mt-12">
-          <div className="flex items-center">
-            <img 
-              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
-              alt="Author avatar" 
-              className="w-16 h-16 rounded-full object-cover mr-4"
-            />
-            <div>
-              <div className="font-bold text-gray-900 mb-1">About the Author</div>
-              <div className="text-gray-700 mb-1">Michael Adams is a professional portrait artist and instructor with 15 years of experience. His work has been exhibited internationally and is included in several private collections. Michael specializes in helping emerging artists master portrait techniques.</div>
-            </div>
-          </div>
-        </div>
+
         
         {/* Share and action buttons */}
         <div className="flex justify-between items-center my-8">

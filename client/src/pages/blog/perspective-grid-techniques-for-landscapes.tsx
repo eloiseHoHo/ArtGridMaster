@@ -431,20 +431,7 @@ export default function PerspectiveGridTechniquesForLandscapes() {
           </p>
         </div>
         
-        {/* Author info */}
-        <div className="bg-gray-50 p-6 rounded-lg mt-12">
-          <div className="flex items-center">
-            <img 
-              src="https://images.unsplash.com/photo-1499366440726-d8f9c19278d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
-              alt="Author avatar" 
-              className="w-16 h-16 rounded-full object-cover mr-4"
-            />
-            <div>
-              <div className="font-bold text-gray-900 mb-1">About the Author</div>
-              <div className="text-gray-700 mb-1">Emma Thompson is a professional landscape artist with a background in architectural drawing. Her work focuses on capturing the drama and atmosphere of natural environments through precise perspective techniques. She teaches landscape perspective workshops internationally and has authored several guides on the subject.</div>
-            </div>
-          </div>
-        </div>
+
         
         {/* Share and action buttons */}
         <div className="flex justify-between items-center my-8">
