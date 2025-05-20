@@ -1115,12 +1115,12 @@ export default function SimpleImageEditor() {
                       <div>
                         <div className="flex justify-between mb-2">
                           <Label>Grid Size</Label>
-                          <span className="text-sm text-primary">{gridSize}px</span>
+                          <span className="text-sm text-primary">{gridSize/100} inch</span>
                         </div>
                         <Slider 
-                          min={5} 
-                          max={200} 
-                          step={5}
+                          min={10} 
+                          max={500} 
+                          step={10}
                           value={[gridSize]} 
                           onValueChange={handleGridSizeChange}
                         />
