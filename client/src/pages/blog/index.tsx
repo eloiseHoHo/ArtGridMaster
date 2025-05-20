@@ -127,17 +127,11 @@ export default function Blog() {
           </p>
         </div>
         
-        {/* Categories filter */}
-        <div className="flex flex-wrap gap-2 justify-center mb-8">
-          {categories.map((category) => (
-            <Button 
-              key={category} 
-              variant={category === "All" ? "default" : "outline"}
-              className="rounded-full"
-            >
-              {category}
-            </Button>
-          ))}
+        {/* Blog introduction text */}
+        <div className="max-w-2xl mx-auto text-center mb-8">
+          <p className="text-gray-600">
+            Discover articles on grid drawing techniques, artistic methods, and practical tips to help you create better artwork.
+          </p>
         </div>
         
         {/* Blog post grid */}
