@@ -7,21 +7,21 @@ export default function ExamplesShowcase() {
       id: 1,
       title: "Grid Transformation",
       description: "Perfect for artists to maintain proportions while drawing",
-      beforeImage: "/images/examples/portrait.jpg",
+      beforeImage: "/images/examples/original/portrait.jpg",
       afterImage: "/images/examples/grid/portrait-grid.svg"
     },
     {
       id: 2,
       title: "Line Art Transformation",
       description: "Convert photos into clean line drawings for tracing or coloring",
-      beforeImage: "/images/examples/man-portrait.jpg",
-      afterImage: "/images/examples/lineart/man-portrait-lineart.svg"
+      beforeImage: "/images/examples/original/landscape.jpg",
+      afterImage: "/images/examples/lineart/landscape-lineart.svg"
     },
     {
       id: 3,
       title: "Sketch Transformation",
       description: "Transform photos into sketch-like images for artistic reference",
-      beforeImage: "/images/examples/flower.jpg",
+      beforeImage: "/images/examples/original/flower.jpg",
       afterImage: "/images/examples/sketch/flower-sketch.svg"
     },
   ];
