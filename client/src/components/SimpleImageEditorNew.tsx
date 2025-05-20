@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Upload, Image as ImageIcon, ArrowRight, Check, Link, XCircle } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input";
+import { generateGridEffect, generateLineArtEffect, generateSketchEffect } from "@/lib/imageEffects";
 
 export default function SimpleImageEditorNew() {
   const [activeTab, setActiveTab] = useState<string>("grid");
@@ -115,32 +116,63 @@ export default function SimpleImageEditorNew() {
     maxFiles: 1
   });
   
-  // Simulated transform functions
-  const applyGridTransform = () => {
+  // Real transform functions using our image processing library
+  const applyGridTransform = async () => {
+    if (!uploadedImage) return;
+    
     setIsProcessing(true);
-    // Simulate processing
-    setTimeout(() => {
-      setTransformedImage(uploadedImage);
+    try {
+      const result = await generateGridEffect(
+        uploadedImage,
+        gridSize,
+        gridColor,
+        gridOpacity / 100
+      );
+      setTransformedImage(result);
+    } catch (error) {
+      console.error("Error applying grid transform:", error);
+      alert("Failed to apply grid effect. Please try again.");
+    } finally {
       setIsProcessing(false);
-    }, 1000);
+    }
   };
   
-  const applyLineArtTransform = () => {
+  const applyLineArtTransform = async () => {
+    if (!uploadedImage) return;
+    
     setIsProcessing(true);
-    // Simulate processing
-    setTimeout(() => {
-      setTransformedImage(uploadedImage);
+    try {
+      const result = await generateLineArtEffect(
+        uploadedImage,
+        lineThreshold / 10,
+        lineThickness
+      );
+      setTransformedImage(result);
+    } catch (error) {
+      console.error("Error applying line art transform:", error);
+      alert("Failed to apply line art effect. Please try again.");
+    } finally {
       setIsProcessing(false);
-    }, 1500);
+    }
   };
   
-  const applySketchTransform = () => {
+  const applySketchTransform = async () => {
+    if (!uploadedImage) return;
+    
     setIsProcessing(true);
-    // Simulate processing
-    setTimeout(() => {
-      setTransformedImage(uploadedImage);
+    try {
+      const result = await generateSketchEffect(
+        uploadedImage,
+        sketchIntensity / 10,
+        pencilType as "graphite" | "charcoal"
+      );
+      setTransformedImage(result);
+    } catch (error) {
+      console.error("Error applying sketch transform:", error);
+      alert("Failed to apply sketch effect. Please try again.");
+    } finally {
       setIsProcessing(false);
-    }, 2000);
+    }
   };
   
   return (

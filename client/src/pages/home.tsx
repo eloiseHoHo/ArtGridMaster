@@ -108,10 +108,7 @@ export default function Home() {
           </div>
           
           <FeatureSection />
-          <ArtistsGallery />
-          <Testimonials />
           <FAQSection />
-          <CTASection />
         </div>
       </main>
     </>
