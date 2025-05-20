@@ -22,6 +22,7 @@ export default function SimpleImageEditorNew() {
   const [gridOpacity, setGridOpacity] = useState(70);
   const [gridColor, setGridColor] = useState("#000000");
   const [gridStyle, setGridStyle] = useState("lines");
+  const [gridThickness, setGridThickness] = useState(2); // 增加默认线条粗细
   
   // Line art settings
   const [lineThreshold, setLineThreshold] = useState(128);
@@ -127,7 +128,8 @@ export default function SimpleImageEditorNew() {
         gridSize,
         gridColor,
         gridOpacity / 100,
-        gridStyle
+        gridStyle,
+        gridThickness
       );
       setTransformedImage(result);
     } catch (error) {
@@ -146,7 +148,8 @@ export default function SimpleImageEditorNew() {
       const result = await generateLineArtEffect(
         uploadedImage,
         lineThreshold / 10,
-        lineThickness
+        lineThickness,
+        lineStyle
       );
       setTransformedImage(result);
     } catch (error) {

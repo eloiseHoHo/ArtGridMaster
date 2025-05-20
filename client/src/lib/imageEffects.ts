@@ -13,7 +13,8 @@ export async function generateGridEffect(
   size: number = 50,
   color: string = "#000000",
   opacity: number = 0.5,
-  style: string = "lines"
+  style: string = "lines",
+  thickness: number = 1
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -38,7 +39,7 @@ export async function generateGridEffect(
       // Set global grid properties
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = thickness; // 使用传入的线条粗细参数
       ctx.globalAlpha = opacity;
       
       // Draw grid based on selected style
@@ -117,7 +118,8 @@ export async function generateGridEffect(
 export async function generateLineArtEffect(
   imageUrl: string,
   threshold: number = 10,
-  lineThickness: number = 1
+  lineThickness: number = 1,
+  style: string = "normal"
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -139,6 +141,9 @@ export async function generateLineArtEffect(
       // 绘制原始图像
       ctx.drawImage(img, 0, 0, img.width, img.height);
       
+      // 设置线条粗细
+      ctx.lineWidth = lineThickness;
+      
       // 获取图像数据
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
@@ -151,8 +156,20 @@ export async function generateLineArtEffect(
         data[i + 2] = gray;
       }
       
+      // 应用不同的线稿样式
+      let sobelData = new Uint8ClampedArray(data.length);
+      let edgeMultiplier = 5; // 默认边缘检测倍数
+      
+      // 根据样式调整处理参数
+      if (style === "detailed") {
+        // 详细模式 - 较低阈值，显示更多细节
+        edgeMultiplier = 3;
+      } else if (style === "minimal") {
+        // 极简模式 - 较高阈值，只显示主要轮廓
+        edgeMultiplier = 8;
+      }
+      
       // 进行Sobel边缘检测
-      const sobelData = new Uint8ClampedArray(data.length);
       for (let y = 1; y < canvas.height - 1; y++) {
         for (let x = 1; x < canvas.width - 1; x++) {
           const idx = (y * canvas.width + x) * 4;
@@ -177,8 +194,21 @@ export async function generateLineArtEffect(
           // 计算梯度幅值
           const gradientMag = Math.sqrt(gx * gx + gy * gy);
           
-          // 阈值处理
-          const edgeValue = gradientMag > threshold * 5 ? 0 : 255;
+          // 应用样式特定的阈值处理
+          let edgeValue = 255;
+          
+          if (style === "detailed") {
+            // 详细模式 - 较低阈值，渐变边缘
+            edgeValue = gradientMag > threshold * edgeMultiplier 
+              ? Math.max(255 - gradientMag/2, 0) 
+              : 255;
+          } else if (style === "minimal") {
+            // 极简模式 - 较高阈值，清晰边缘
+            edgeValue = gradientMag > threshold * edgeMultiplier ? 0 : 255;
+          } else {
+            // 普通模式
+            edgeValue = gradientMag > threshold * edgeMultiplier ? 0 : 255;
+          }
           
           sobelData[idx] = edgeValue;
           sobelData[idx + 1] = edgeValue;
@@ -191,15 +221,18 @@ export async function generateLineArtEffect(
       const processedImageData = new ImageData(sobelData, canvas.width, canvas.height);
       ctx.putImageData(processedImageData, 0, 0);
       
-      // 调整对比度
-      ctx.globalCompositeOperation = "difference";
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // 反转颜色
-      ctx.globalCompositeOperation = "difference";
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // 样式特定的后处理
+      if (style !== "minimal") {
+        // 调整对比度
+        ctx.globalCompositeOperation = "difference";
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // 反转颜色
+        ctx.globalCompositeOperation = "difference";
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
       
       resolve(canvas.toDataURL("image/jpeg", 0.9));
     };
@@ -222,7 +255,8 @@ export async function generateLineArtEffect(
 export async function generateSketchEffect(
   imageUrl: string,
   intensity: number = 5,
-  pencilType: "graphite" | "charcoal" = "graphite"
+  pencilType: "graphite" | "charcoal" = "graphite",
+  shadingLevel: number = 50
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -248,34 +282,48 @@ export async function generateSketchEffect(
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       
-      // 转换为灰度图并调整对比度
+      // 转换为灰度图并应用样式特定的处理
       for (let i = 0; i < data.length; i += 4) {
         let gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
         
-        // 调整对比度
+        // 反转并应用强度
         gray = 255 - gray;
-        gray = Math.pow(gray / 255, intensity / 5) * 255;
         
-        // 根据铅笔类型调整颜色
+        // 应用阴影级别 - 较高的值会保留更多的阴影细节
+        const shadowFactor = shadingLevel / 50; // 转换到大约1.0范围
+        gray = Math.pow(gray / 255, intensity / (5 * shadowFactor)) * 255;
+        
+        // 应用铅笔类型特定的效果
         if (pencilType === "graphite") {
+          // 石墨铅笔 - 灰色调，干净的线条
           data[i] = gray;
           data[i + 1] = gray;
           data[i + 2] = gray;
         } else {
-          // 木炭效果 - 更深的黑色和更多纹理
-          data[i] = gray * 0.9;
-          data[i + 1] = gray * 0.85;
-          data[i + 2] = gray * 0.8;
+          // 木炭效果 - 更深的黑色，更暖色调，更多纹理
+          const warmFactor = 1.0 - (shadingLevel / 100 * 0.3); // 阴影度影响色温
+          data[i] = gray * 0.9 * warmFactor; // 红色通道稍微偏暗
+          data[i + 1] = gray * 0.85 * warmFactor; // 绿色通道更暗
+          data[i + 2] = gray * 0.8 * warmFactor; // 蓝色通道最暗，创造暖色调
         }
       }
       
       // 将处理后的数据放回画布
       ctx.putImageData(imageData, 0, 0);
       
-      // 添加纹理
+      // 添加纹理 - 基于阴影级别调整纹理强度
       ctx.globalCompositeOperation = "multiply";
-      ctx.fillStyle = pencilType === "graphite" ? "#f8f8f8" : "#f0f0f0";
-      ctx.globalAlpha = 0.2;
+      
+      // 根据铅笔类型和阴影级别调整纹理颜色和强度
+      if (pencilType === "graphite") {
+        // 石墨铅笔纹理 - 灰色调
+        ctx.fillStyle = "#f8f8f8";
+        ctx.globalAlpha = 0.15 + (shadingLevel / 100 * 0.15); // 0.15-0.30范围
+      } else {
+        // 木炭纹理 - 略带暖色调
+        ctx.fillStyle = "#f5f2f0";
+        ctx.globalAlpha = 0.2 + (shadingLevel / 100 * 0.2); // 0.2-0.4范围
+      }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // 重置混合模式
