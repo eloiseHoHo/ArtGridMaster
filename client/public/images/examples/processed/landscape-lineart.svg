@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <!-- Line art filter -->
+    <filter id="lineart">
+      <!-- Convert to grayscale -->
+      <feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0" />
+      
+      <!-- Increase contrast -->
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="3" intercept="-0.5"/>
+        <feFuncG type="linear" slope="3" intercept="-0.5"/>
+        <feFuncB type="linear" slope="3" intercept="-0.5"/>
+      </feComponentTransfer>
+      
+      <!-- Threshold to create black and white -->
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0 0 0 0 0 0 0 0 0 1"/>
+        <feFuncG type="table" tableValues="0 0 0 0 0 0 0 0 0 1"/>
+        <feFuncB type="table" tableValues="0 0 0 0 0 0 0 0 0 1"/>
+      </feComponentTransfer>
+    </filter>
+    
+    <!-- Detail enhancement filter -->
+    <filter id="detail-enhance">
+      <!-- Edge detection -->
+      <feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1"/>
+      
+      <!-- Adjust opacity of edge detection -->
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.5"/>
+        <feFuncG type="linear" slope="0.5"/>
+        <feFuncB type="linear" slope="0.5"/>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      
+      <!-- Merge with original -->
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  
+  <!-- White background -->
+  <rect width="800" height="600" fill="white"/>
+  
+  <!-- Original image with line art filter applied -->
+  <image x="0" y="0" width="800" height="600" preserveAspectRatio="xMidYMid slice" 
+         xlink:href="/images/examples/real-landscape.jpg" filter="url(#lineart)"/>
+  
+  <!-- Add subtle detail enhancement on top -->
+  <image x="0" y="0" width="800" height="600" preserveAspectRatio="xMidYMid slice" 
+         xlink:href="/images/examples/real-landscape.jpg" filter="url(#detail-enhance)" opacity="0.2"/>
+</svg>
