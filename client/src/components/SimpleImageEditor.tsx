@@ -80,7 +80,7 @@ export default function SimpleImageEditor() {
     setIsProcessing(true);
     
     if (!imageUrl.trim()) {
-      setUrlError("请输入有效的图片URL");
+      setUrlError("Please enter a valid image URL");
       setIsProcessing(false);
       return;
     }
@@ -98,7 +98,7 @@ export default function SimpleImageEditor() {
         
         img.onerror = () => {
           // Image failed to load
-          reject(new Error("图片加载失败，请检查URL是否有效"));
+          reject(new Error("Image failed to load, please check if the URL is valid"));
         };
         
         // Set crossOrigin to allow processing images from other domains
@@ -116,7 +116,7 @@ export default function SimpleImageEditor() {
       const tempCtx = tempCanvas.getContext('2d');
       
       if (!tempCtx) {
-        throw new Error("无法创建临时画布");
+        throw new Error("Could not create temporary canvas");
       }
       
       // Set canvas size to image size
@@ -138,7 +138,7 @@ export default function SimpleImageEditor() {
       
     } catch (error) {
       console.error("Error loading image from URL:", error);
-      setUrlError(error instanceof Error ? error.message : "加载图片时出错");
+      setUrlError(error instanceof Error ? error.message : "Error loading image");
     } finally {
       setIsProcessing(false);
     }
@@ -1098,28 +1098,31 @@ export default function SimpleImageEditor() {
                   {isUrlMode ? (
                     <div className="flex flex-col items-center justify-center flex-grow">
                       <ImageIcon className="h-12 w-12 text-gray-400 mb-3" />
-                      <h3 className="text-lg font-medium text-gray-700 mb-3">从URL加载图片</h3>
+                      <h3 className="text-lg font-medium text-gray-700 mb-3">Import Image from URL</h3>
                       <form onSubmit={handleUrlImport} className="w-full max-w-sm space-y-3">
                         <div className="flex items-center space-x-2">
                           <Input
                             type="text"
-                            placeholder="输入图片链接 (https://...)"
+                            placeholder="Enter image URL (https://...)"
                             value={imageUrl}
                             onChange={(e) => setImageUrl(e.target.value)}
                             className="flex-grow"
                           />
                           <Button type="submit" disabled={isProcessing}>
-                            {isProcessing ? "加载中..." : "导入"}
+                            {isProcessing ? "Loading..." : "Import"}
                           </Button>
                         </div>
                         {urlError && (
                           <div className="text-red-500 text-sm flex items-center">
                             <XCircle className="w-4 h-4 mr-1" />
-                            {urlError}
+                            {urlError === "请输入有效的图片URL" ? "Please enter a valid image URL" :
+                             urlError === "图片加载失败，请检查URL是否有效" ? "Image failed to load, please check URL" :
+                             urlError === "无法创建临时画布" ? "Could not create canvas" :
+                             urlError === "加载图片时出错" ? "Error loading image" : urlError}
                           </div>
                         )}
                       </form>
-                      <p className="text-xs text-gray-500 mt-3">提示：部分网站可能限制跨域访问，导致图片无法加载</p>
+                      <p className="text-xs text-gray-500 mt-3">Note: Some websites may block cross-origin access to their images</p>
                     </div>
                   ) : (
                     <div 
@@ -1131,18 +1134,18 @@ export default function SimpleImageEditor() {
                     >
                       <input {...getInputProps()} />
                       <ImageIcon className="h-16 w-16 text-gray-400 mb-4" />
-                      <h3 className="text-lg font-medium text-gray-700 mb-2">上传你的图片</h3>
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">Upload Your Image</h3>
                       <p className="text-gray-500 mb-4">
                         {isDragActive
-                          ? "放在这里..."
-                          : "拖放图片到这里，或点击浏览"
+                          ? "Drop it here..."
+                          : "Drag and drop an image, or click to browse"
                         }
                       </p>
                       <Button>
                         <Upload className="mr-2 h-4 w-4" />
-                        选择图片
+                        Select Image
                       </Button>
-                      <p className="text-xs text-gray-500 mt-4">支持格式: JPG, PNG (最大 10MB)</p>
+                      <p className="text-xs text-gray-500 mt-4">Supported formats: JPG, PNG (Max 10MB)</p>
                     </div>
                   )}
                 </div>
