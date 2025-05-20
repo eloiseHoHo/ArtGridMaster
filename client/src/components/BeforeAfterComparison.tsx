@@ -62,7 +62,7 @@ export default function BeforeAfterComparison({ beforeImage, afterImage, title, 
         onMouseDown={handleMouseDown}
         onTouchStart={handleMouseDown}
       >
-        {/* Before image (left side) */}
+        {/* "Before" image (background - covers the entire container) */}
         <div className="absolute inset-0">
           <img 
             src={beforeImage} 
@@ -71,20 +71,21 @@ export default function BeforeAfterComparison({ beforeImage, afterImage, title, 
           />
         </div>
         
-        {/* After image (right side) */}
+        {/* "After" image (foreground - reveals through clip-path) */}
         <div 
-          className="absolute inset-0 overflow-hidden"
-          style={{ width: `${position}%` }}
+          className="absolute inset-0"
+          style={{ 
+            clipPath: `inset(0 0 0 ${position}%)`
+          }}
         >
           <img 
             src={afterImage} 
             alt="After" 
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ width: `${100 / (position/100)}%` }}
+            className="w-full h-full object-cover"
           />
         </div>
         
-        {/* Slider handle */}
+        {/* Divider line */}
         <div 
           className="absolute top-0 bottom-0 w-1 bg-white shadow-md cursor-col-resize flex items-center justify-center"
           style={{ left: `${position}%` }}
@@ -108,13 +109,13 @@ export default function BeforeAfterComparison({ beforeImage, afterImage, title, 
           After
         </div>
         
-        {/* Drag instruction overlay that fades out */}
+        {/* Drag instruction overlay that appears on hover */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="bg-black/70 px-4 py-2 rounded-full flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 12h8M8 17h8" />
             </svg>
-            <span>Drag to compare</span>
+            <span>拖动滑块比较效果</span>
           </div>
         </div>
       </div>
