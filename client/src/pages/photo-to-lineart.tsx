@@ -249,7 +249,7 @@ export default function PhotoToLineart() {
                 <p className="text-gray-600 mb-4">Convert photos into line patterns perfect for embroidery, cross-stitch, or other needlecraft projects.</p>
                 <div className="overflow-hidden rounded-lg shadow-md">
                   <img 
-                    src="https://images.unsplash.com/photo-1479644025690-ddb860c1fddc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+                    src="https://images.unsplash.com/photo-1528249227670-9ba48616014f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
                     alt="Embroidery pattern example" 
                     className="w-full h-48 object-cover filter grayscale brightness-130 contrast-170"
                   />
@@ -261,7 +261,7 @@ export default function PhotoToLineart() {
                 <p className="text-gray-600 mb-4">Create line art references for custom tattoo designs from personal photographs or meaningful images.</p>
                 <div className="overflow-hidden rounded-lg shadow-md">
                   <img 
-                    src="https://images.unsplash.com/photo-1542727365-a4e5e33bfda9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+                    src="https://images.unsplash.com/photo-1590246814883-57764a28a773?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
                     alt="Tattoo design example" 
                     className="w-full h-48 object-cover filter grayscale brightness-150 contrast-190"
                   />
