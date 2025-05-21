@@ -8,6 +8,9 @@ import BlogPost from "@/pages/blog/BlogPost";
 import HowToUseGridForPerfectPortraits from "@/pages/blog/how-to-use-grid-for-perfect-portraits";
 import GridMethodForPerfectPortraits from "@/pages/blog/grid-method-for-perfect-portraits";
 import PerspectiveGridTechniquesForLandscapes from "@/pages/blog/perspective-grid-techniques-for-landscapes";
+import PhotoToSketch from "@/pages/photo-to-sketch";
+import PhotoToLineart from "@/pages/photo-to-lineart";
+import PhotoToGrid from "@/pages/photo-to-grid";
 import Categories from "@/pages/categories";
 import PortraitPhotoGrid from "@/pages/categories/portrait-photo-grid";
 import WomenPortraitPhotoGrid from "@/pages/categories/portrait-photo-grid/women-portrait-photo-grid";
@@ -24,6 +27,9 @@ function Router() {
       <Route path="/blog/grid-method-for-perfect-portraits" component={GridMethodForPerfectPortraits} />
       <Route path="/blog/perspective-grid-techniques-for-landscapes" component={PerspectiveGridTechniquesForLandscapes} />
       <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/photo-to-sketch" component={PhotoToSketch} />
+      <Route path="/photo-to-lineart" component={PhotoToLineart} />
+      <Route path="/photo-to-grid" component={PhotoToGrid} />
       <Route path="/categories" component={Categories} />
       <Route path="/categories/portrait-photo-grid" component={PortraitPhotoGrid} />
       <Route path="/categories/portrait-photo-grid/women-portrait-photo-grid" component={WomenPortraitPhotoGrid} />
