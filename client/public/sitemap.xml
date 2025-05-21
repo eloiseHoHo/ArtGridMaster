@@ -1,114 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
+  <!-- 主页 -->
   <url>
     <loc>https://photogrid.space/</loc>
-    <lastmod>2023-05-20</lastmod>
+    <lastmod>2023-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Main Features Page -->
+  <!-- 核心功能页面 -->
   <url>
-    <loc>https://photogrid.space/transform</loc>
-    <lastmod>2023-05-20</lastmod>
+    <loc>https://photogrid.space/photo-to-grid</loc>
+    <lastmod>2023-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://photogrid.space/photo-to-lineart</loc>
+    <lastmod>2023-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://photogrid.space/photo-to-sketch</loc>
+    <lastmod>2023-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   
-  <!-- Categories Main Page -->
-  <url>
-    <loc>https://photogrid.space/categories</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Blog Main Page -->
+  <!-- 博客主页 -->
   <url>
     <loc>https://photogrid.space/blog</loc>
-    <lastmod>2023-05-20</lastmod>
+    <lastmod>2023-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
-  <!-- Category Pages -->
+  <!-- 博客文章 -->
   <url>
-    <loc>https://photogrid.space/categories/portrait-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
+    <loc>https://photogrid.space/blog/grid-method-for-perfect-portraits</loc>
+    <lastmod>2023-06-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  
   <url>
-    <loc>https://photogrid.space/categories/landscape-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
+    <loc>https://photogrid.space/blog/perspective-grid-techniques-for-landscapes</loc>
+    <lastmod>2023-06-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  
-  <url>
-    <loc>https://photogrid.space/categories/animal-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://photogrid.space/categories/still-life-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://photogrid.space/categories/architecture-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://photogrid.space/categories/figure-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Portrait Subcategory Pages -->
-  <url>
-    <loc>https://photogrid.space/categories/portrait-photo-grid/women-portrait-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://photogrid.space/categories/portrait-photo-grid/men-portrait-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://photogrid.space/categories/portrait-photo-grid/children-portrait-photo-grid</loc>
-    <lastmod>2023-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <!-- Blog Posts -->
   <url>
     <loc>https://photogrid.space/blog/photo-grid-for-artists</loc>
     <lastmod>2023-05-15</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>https://photogrid.space/blog/portrait-photo-grid-techniques</loc>
     <lastmod>2023-05-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photogrid.space/blog/landscape-photo-grid-mastery</loc>
+    <lastmod>2023-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photogrid.space/blog/digital-art-with-photo-grid</loc>
+    <lastmod>2023-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photogrid.space/blog/photo-grid-vs-traditional-methods</loc>
+    <lastmod>2023-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photogrid.space/blog/animal-photo-grid-reference</loc>
+    <lastmod>2023-06-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
