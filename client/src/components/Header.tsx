@@ -29,9 +29,6 @@ export default function Header() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
           <nav className="flex items-center space-x-6 mr-4">
-            <Link href="/categories">
-              <a className="text-gray-600 hover:text-primary transition-colors">Categories</a>
-            </Link>
             <Link href="/blog">
               <a className="text-gray-600 hover:text-primary transition-colors">Blog</a>
             </Link>
@@ -55,9 +52,6 @@ export default function Header() {
         <div className="md:hidden bg-white border-t border-gray-100 py-2">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex flex-col space-y-3 py-3">
-              <Link href="/categories">
-                <a className="text-gray-600 hover:text-primary transition-colors py-2">Categories</a>
-              </Link>
               <Link href="/blog">
                 <a className="text-gray-600 hover:text-primary transition-colors py-2">Blog</a>
               </Link>
