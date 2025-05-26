@@ -14,13 +14,13 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Free Online Photo Grid, Line Art & Sketch Converter | PhotoGrid.space</title>
-        <meta name="description" content="Transform photos to grid references, line art, and pencil sketches with our free online tools. No signup required. Perfect for artists and drawing practice." />
+        <title>Free Photo Grid, Line Art & Sketch Converter - PhotoGrid.space</title>
+        <meta name="description" content="Transform photos into artist reference grids, line art, and sketches instantly. 100% free online tool. No signup required. Perfect for drawing, painting, and art practice." />
         <meta name="keywords" content="free photo grid, online line art converter, photo to sketch, grid method drawing, artist grid tool, free drawing grid, photo to line art, picture to drawing, art reference grid, convert photo to drawing" />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content="Free Online Photo Grid, Line Art & Sketch Converter | PhotoGrid.space" />
-        <meta property="og:description" content="Transform photos to grid references, line art, and pencil sketches with our free online tools. No signup required. Perfect for artists and drawing practice." />
+        <meta property="og:title" content="Free Photo Grid, Line Art & Sketch Converter - PhotoGrid.space" />
+        <meta property="og:description" content="Transform photos into artist reference grids, line art, and sketches instantly. 100% free online tool. No signup required. Perfect for drawing, painting, and art practice." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.photogrid.space" />
         {/* Canonical URL */}
