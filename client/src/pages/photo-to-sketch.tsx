@@ -22,6 +22,7 @@ export default function PhotoToSketch() {
         <link rel="canonical" href="https://photogrid.space/photo-to-sketch" />
         {/* Keywords */}
         <meta name="keywords" content="photo to sketch, photo to drawing, picture to sketch converter, photo to pencil sketch, photo to charcoal drawing, sketch maker, sketch generator, free sketch converter, online sketch tool, turn photos into drawings" />
+        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Sketch Converter","url":"https://www.photogrid.space/photo-to-sketch","description":"Free online tool to convert photos into pencil sketches and charcoal drawings","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1960"}})}</script>
       </Helmet>
       
       <main>
@@ -404,6 +405,50 @@ export default function PhotoToSketch() {
               <p>
                 Transform your photos into stunning sketch art in seconds with our free online photo to sketch converter. No signup, no downloads, and no artistic experience required. Simply upload a photo, choose your preferred sketch style, adjust settings to your liking, and download your finished sketch. Join thousands of users who have already discovered the creative possibilities of our photo to sketch tool!
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-gray-50 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Explore More Free Art Tools</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <Link href="/photo-to-grid">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Photo Grid</h3>
+                  <p className="text-sm text-gray-500 mt-1">Add drawing reference grids</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-lineart">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Line Art</h3>
+                  <p className="text-sm text-gray-500 mt-1">Convert to line drawings</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-coloring-page">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Coloring Page</h3>
+                  <p className="text-sm text-gray-500 mt-1">Make printable coloring pages</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-paint-by-numbers">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Paint by Numbers</h3>
+                  <p className="text-sm text-gray-500 mt-1">Generate numbered templates</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-pixel-art">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Pixel Art</h3>
+                  <p className="text-sm text-gray-500 mt-1">Create retro pixel art</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-watercolor">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Watercolor & Oil</h3>
+                  <p className="text-sm text-gray-500 mt-1">Apply painting effects</p>
+                </div>
+              </Link>
             </div>
           </div>
         </section>

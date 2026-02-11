@@ -100,17 +100,38 @@ export default function SimpleImageEditorNew() {
     { value: "impressionist", label: "Impressionist" }
   ];
 
-  // Handle file drop
+  const MAX_IMAGE_DIM = 2000;
+  const resizeImageIfNeeded = (dataUrl: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        if (img.width <= MAX_IMAGE_DIM && img.height <= MAX_IMAGE_DIM) {
+          resolve(dataUrl);
+          return;
+        }
+        const scale = Math.min(MAX_IMAGE_DIM / img.width, MAX_IMAGE_DIM / img.height);
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.9));
+      };
+      img.src = dataUrl;
+    });
+  };
+
   const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       const reader = new FileReader();
       
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         if (e.target?.result) {
-          setUploadedImage(e.target.result as string);
+          const resized = await resizeImageIfNeeded(e.target.result as string);
+          setUploadedImage(resized);
           setTransformedImage(null);
-          setIsUrlMode(false); // Switch back to upload mode
+          setIsUrlMode(false);
           setUrlError(null);
         }
       };
@@ -159,8 +180,8 @@ export default function SimpleImageEditorNew() {
       // Wait for image to load or fail
       await imageLoadPromise;
       
-      // For demo purposes, just set the uploaded image
-      setUploadedImage(imageUrl);
+      const resized = await resizeImageIfNeeded(imageUrl);
+      setUploadedImage(resized);
       setTransformedImage(null);
       
       // Clear URL input field after successful import

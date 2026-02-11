@@ -663,6 +663,40 @@ export async function generatePaintByNumbersEffect(
   });
 }
 
+function medianCutQuantize(pixels: [number,number,number][], targetColors: number): [number,number,number][] {
+  if (pixels.length === 0) return [[0,0,0]];
+  type Box = { pixels: [number,number,number][] };
+  const boxes: Box[] = [{ pixels: [...pixels] }];
+  const getRange = (box: Box, ch: number) => {
+    let min = 255, max = 0;
+    for (const p of box.pixels) { if (p[ch] < min) min = p[ch]; if (p[ch] > max) max = p[ch]; }
+    return max - min;
+  };
+  while (boxes.length < targetColors) {
+    let bestIdx = 0, bestRange = -1;
+    for (let i = 0; i < boxes.length; i++) {
+      if (boxes[i].pixels.length < 2) continue;
+      for (let ch = 0; ch < 3; ch++) {
+        const range = getRange(boxes[i], ch);
+        if (range > bestRange) { bestRange = range; bestIdx = i; }
+      }
+    }
+    if (bestRange <= 0) break;
+    const box = boxes[bestIdx];
+    let splitCh = 0, maxR = 0;
+    for (let ch = 0; ch < 3; ch++) { const r = getRange(box, ch); if (r > maxR) { maxR = r; splitCh = ch; } }
+    box.pixels.sort((a, b) => a[splitCh] - b[splitCh]);
+    const mid = Math.floor(box.pixels.length / 2);
+    boxes.splice(bestIdx, 1, { pixels: box.pixels.slice(0, mid) }, { pixels: box.pixels.slice(mid) });
+  }
+  return boxes.map(box => {
+    let r = 0, g = 0, b = 0;
+    for (const p of box.pixels) { r += p[0]; g += p[1]; b += p[2]; }
+    const n = box.pixels.length;
+    return [Math.round(r/n), Math.round(g/n), Math.round(b/n)] as [number,number,number];
+  });
+}
+
 export async function generatePixelArtEffect(
   imageUrl: string, pixelSize: number = 10, colorCount: number = 16, style: string = "classic"
 ): Promise<string> {
@@ -674,16 +708,25 @@ export async function generatePixelArtEffect(
       const ctx = canvas.getContext("2d");
       if (!ctx) { reject(new Error("Unable to get canvas context")); return; }
       canvas.width = img.width; canvas.height = img.height;
-      const smallW = Math.floor(img.width / pixelSize);
-      const smallH = Math.floor(img.height / pixelSize);
+      const smallW = Math.max(1, Math.floor(img.width / pixelSize));
+      const smallH = Math.max(1, Math.floor(img.height / pixelSize));
       const sc = document.createElement("canvas"); sc.width=smallW; sc.height=smallH;
       const sctx = sc.getContext("2d")!; sctx.imageSmoothingEnabled=true; sctx.drawImage(img, 0, 0, smallW, smallH);
       const sd = sctx.getImageData(0, 0, smallW, smallH);
       const sdd = sd.data;
       if (colorCount < 256) {
-        const levels = Math.max(2, Math.round(Math.pow(colorCount, 1/3)));
-        const step = 255 / (levels - 1);
-        for (let i = 0; i < sdd.length; i += 4) { sdd[i]=Math.round(sdd[i]/step)*step; sdd[i+1]=Math.round(sdd[i+1]/step)*step; sdd[i+2]=Math.round(sdd[i+2]/step)*step; }
+        const sampleStep = Math.max(1, Math.floor(smallW * smallH / 5000));
+        const samples: [number,number,number][] = [];
+        for (let i = 0; i < sdd.length; i += 4 * sampleStep) samples.push([sdd[i], sdd[i+1], sdd[i+2]]);
+        const palette = medianCutQuantize(samples, colorCount);
+        for (let i = 0; i < sdd.length; i += 4) {
+          let minD = Infinity, best = 0;
+          for (let c = 0; c < palette.length; c++) {
+            const d = (sdd[i]-palette[c][0])**2 + (sdd[i+1]-palette[c][1])**2 + (sdd[i+2]-palette[c][2])**2;
+            if (d < minD) { minD = d; best = c; }
+          }
+          sdd[i] = palette[best][0]; sdd[i+1] = palette[best][1]; sdd[i+2] = palette[best][2];
+        }
         sctx.putImageData(sd, 0, 0);
       }
       ctx.imageSmoothingEnabled = false;
@@ -717,6 +760,51 @@ export async function generatePixelArtEffect(
   });
 }
 
+function fastBoxBlur(data: Uint8ClampedArray, w: number, h: number, radius: number): Uint8ClampedArray {
+  const out = new Uint8ClampedArray(data.length);
+  const tmp = new Uint8ClampedArray(data.length);
+  const d = radius * 2 + 1;
+  for (let y = 0; y < h; y++) {
+    let ri = 0, gi = 0, bi = 0;
+    for (let x = -radius; x <= radius; x++) {
+      const cx = Math.min(w - 1, Math.max(0, x));
+      const idx = (y * w + cx) * 4;
+      ri += data[idx]; gi += data[idx + 1]; bi += data[idx + 2];
+    }
+    for (let x = 0; x < w; x++) {
+      const idx = (y * w + x) * 4;
+      tmp[idx] = ri / d; tmp[idx + 1] = gi / d; tmp[idx + 2] = bi / d; tmp[idx + 3] = 255;
+      const addX = Math.min(w - 1, x + radius + 1);
+      const remX = Math.max(0, x - radius);
+      const addIdx = (y * w + addX) * 4;
+      const remIdx = (y * w + remX) * 4;
+      ri += data[addIdx] - data[remIdx];
+      gi += data[addIdx + 1] - data[remIdx + 1];
+      bi += data[addIdx + 2] - data[remIdx + 2];
+    }
+  }
+  for (let x = 0; x < w; x++) {
+    let ri = 0, gi = 0, bi = 0;
+    for (let y = -radius; y <= radius; y++) {
+      const cy = Math.min(h - 1, Math.max(0, y));
+      const idx = (cy * w + x) * 4;
+      ri += tmp[idx]; gi += tmp[idx + 1]; bi += tmp[idx + 2];
+    }
+    for (let y = 0; y < h; y++) {
+      const idx = (y * w + x) * 4;
+      out[idx] = ri / d; out[idx + 1] = gi / d; out[idx + 2] = bi / d; out[idx + 3] = 255;
+      const addY = Math.min(h - 1, y + radius + 1);
+      const remY = Math.max(0, y - radius);
+      const addIdx = (addY * w + x) * 4;
+      const remIdx = (remY * w + x) * 4;
+      ri += tmp[addIdx] - tmp[remIdx];
+      gi += tmp[addIdx + 1] - tmp[remIdx + 1];
+      bi += tmp[addIdx + 2] - tmp[remIdx + 2];
+    }
+  }
+  return out;
+}
+
 export async function generateWatercolorEffect(
   imageUrl: string, intensity: number = 50, wetness: number = 50, style: string = "classic"
 ): Promise<string> {
@@ -733,17 +821,8 @@ export async function generateWatercolorEffect(
       const imageData = ctx.getImageData(0, 0, w, h);
       const data = imageData.data;
       const blurR = Math.max(1, Math.floor(wetness / 10));
-      const blurred = new Uint8ClampedArray(data.length);
-      for (let y = 0; y < h; y++) {
-        for (let x = 0; x < w; x++) {
-          let r=0,g=0,b=0,cnt=0;
-          for (let dy=-blurR;dy<=blurR;dy++) for (let dx=-blurR;dx<=blurR;dx++) {
-            const nx=Math.min(w-1,Math.max(0,x+dx)), ny=Math.min(h-1,Math.max(0,y+dy));
-            const idx=(ny*w+nx)*4; r+=data[idx]; g+=data[idx+1]; b+=data[idx+2]; cnt++;
-          }
-          const idx=(y*w+x)*4; blurred[idx]=r/cnt; blurred[idx+1]=g/cnt; blurred[idx+2]=b/cnt; blurred[idx+3]=255;
-        }
-      }
+      let blurred = fastBoxBlur(data, w, h, blurR);
+      if (blurR > 2) blurred = fastBoxBlur(blurred, w, h, Math.max(1, Math.floor(blurR / 2)));
       const satBoost = 1 + intensity / 100;
       for (let i = 0; i < blurred.length; i += 4) {
         let r=blurred[i],g=blurred[i+1],b=blurred[i+2];

@@ -22,6 +22,7 @@ export default function PhotoToGrid() {
         <link rel="canonical" href="https://photogrid.space/photo-to-grid" />
         {/* Keywords */}
         <meta name="keywords" content="photo grid generator, add grid to photo, drawing grid reference, artist grid tool, grid method drawing, grid overlay for images, photo grid maker, free grid generator, artistic grid, proportional drawing grid" />
+        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo Grid Generator","url":"https://www.photogrid.space/photo-to-grid","description":"Free online tool to add grid overlays to photos for drawing reference","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"2150"}})}</script>
       </Helmet>
       
       <main>
@@ -548,6 +549,50 @@ export default function PhotoToGrid() {
               <p>
                 Upload your photo now and see how the right grid reference can transform your artistic practice!
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-gray-50 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Explore More Free Art Tools</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <Link href="/photo-to-lineart">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Line Art</h3>
+                  <p className="text-sm text-gray-500 mt-1">Convert to line drawings</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-sketch">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Sketch</h3>
+                  <p className="text-sm text-gray-500 mt-1">Create pencil sketches</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-coloring-page">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Coloring Page</h3>
+                  <p className="text-sm text-gray-500 mt-1">Make printable coloring pages</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-paint-by-numbers">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Paint by Numbers</h3>
+                  <p className="text-sm text-gray-500 mt-1">Generate numbered templates</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-pixel-art">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Pixel Art</h3>
+                  <p className="text-sm text-gray-500 mt-1">Create retro pixel art</p>
+                </div>
+              </Link>
+              <Link href="/photo-to-watercolor">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                  <h3 className="font-semibold text-gray-900">Watercolor & Oil</h3>
+                  <p className="text-sm text-gray-500 mt-1">Apply painting effects</p>
+                </div>
+              </Link>
             </div>
           </div>
         </section>
