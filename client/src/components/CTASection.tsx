@@ -6,7 +6,7 @@ export default function CTASection() {
   const [, navigate] = useLocation();
   
   return (
-    <section className="bg-gradient-to-r from-primary to-primary-700 rounded-2xl text-white p-8 mb-16">
+    <section className="bg-gray-900 rounded-lg text-white p-8 mb-16">
       <div className="text-center max-w-2xl mx-auto">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4">Transform Your Images for Free</h2>
         <p className="text-white/90 mb-8">Our simple tools help artists create grids, line art, and sketches from any image.</p>

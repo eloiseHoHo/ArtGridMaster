@@ -1,101 +1,32 @@
-import { CheckCircle } from "lucide-react";
+import { Link } from "wouter";
+import { Grid3X3, Pencil, PenTool, BookOpen, Hash, Layers, Paintbrush } from "lucide-react";
+
+const tools = [
+  { icon: Grid3X3, title: "Grid Overlay", desc: "Add customizable grids to any photo for proportional drawing reference", href: "/photo-to-grid" },
+  { icon: PenTool, title: "Line Art", desc: "Extract clean line drawings with adjustable edge detection and styles", href: "/photo-to-lineart" },
+  { icon: Pencil, title: "Sketch", desc: "Convert to pencil, charcoal, or pastel sketch styles with texture control", href: "/photo-to-sketch" },
+  { icon: BookOpen, title: "Coloring Page", desc: "Generate printable coloring pages with adjustable detail and line weight", href: "/photo-to-coloring-page" },
+  { icon: Hash, title: "Paint by Numbers", desc: "Create numbered color regions with customizable palette size", href: "/photo-to-paint-by-numbers" },
+  { icon: Layers, title: "Pixel Art", desc: "Retro pixel art conversion with palette control and multiple render styles", href: "/photo-to-pixel-art" },
+  { icon: Paintbrush, title: "Watercolor & Oil", desc: "Apply watercolor, oil painting, and impressionist effects", href: "/photo-to-watercolor" },
+];
 
 export default function FeatureSection() {
   return (
-    <section className="mb-16">
-      <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Transform Your Images Into Artist Tools</h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Grid Transformation Feature */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all">
-          <div className="p-1 bg-gradient-to-r from-primary to-accent"></div>
-          <div className="p-6">
-            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="3" y1="9" x2="21" y2="9"></line>
-                <line x1="3" y1="15" x2="21" y2="15"></line>
-                <line x1="9" y1="3" x2="9" y2="21"></line>
-                <line x1="15" y1="3" x2="15" y2="21"></line>
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Grid Transformation</h3>
-            <p className="text-gray-600 mb-4">Convert images to grid patterns with adjustable density. Perfect for transferring images to canvas.</p>
-            <ul className="text-gray-700 mb-4">
-              <li className="flex items-center mb-1">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Adjustable grid size
-              </li>
-              <li className="flex items-center mb-1">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Custom grid color
-              </li>
-              <li className="flex items-center">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Perfect for painting references
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-        {/* Line Art Feature */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all">
-          <div className="p-1 bg-gradient-to-r from-accent to-emerald-500"></div>
-          <div className="p-6">
-            <div className="w-12 h-12 bg-accent-100 rounded-lg flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Line Art Conversion</h3>
-            <p className="text-gray-600 mb-4">Transform photos into clean line art drawings with adjustable detail levels.</p>
-            <ul className="text-gray-700 mb-4">
-              <li className="flex items-center mb-1">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Edge detection algorithms
-              </li>
-              <li className="flex items-center mb-1">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Adjustable line thickness
-              </li>
-              <li className="flex items-center">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Multiple line styles
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-        {/* Sketch Transformation Feature */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all">
-          <div className="p-1 bg-gradient-to-r from-emerald-500 to-primary"></div>
-          <div className="p-6">
-            <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                <path d="M2 2l7.586 7.586"></path>
-                <circle cx="11" cy="11" r="2"></circle>
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Sketch Conversion</h3>
-            <p className="text-gray-600 mb-4">Convert photos to pencil sketch style with customizable texture and detail levels.</p>
-            <ul className="text-gray-700 mb-4">
-              <li className="flex items-center mb-1">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Realistic pencil textures
-              </li>
-              <li className="flex items-center mb-1">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Control shading intensity
-              </li>
-              <li className="flex items-center">
-                <CheckCircle className="h-4 w-4 text-emerald-500 mr-2" />
-                Charcoal and graphite styles
-              </li>
-            </ul>
-          </div>
-        </div>
+    <section className="mb-20">
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">All tools</h2>
+      <p className="text-gray-500 mb-8">Seven ways to transform your photos, all free and instant.</p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {tools.map((tool) => (
+          <Link key={tool.href} href={tool.href}>
+            <a className="group block p-5 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50/50 transition-all">
+              <tool.icon className="h-5 w-5 text-gray-400 mb-3 group-hover:text-gray-600 transition-colors" />
+              <h3 className="font-medium text-gray-900 mb-1">{tool.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{tool.desc}</p>
+            </a>
+          </Link>
+        ))}
       </div>
     </section>
   );

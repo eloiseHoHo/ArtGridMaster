@@ -438,7 +438,7 @@ export default function HowToUseGridForPerfectPortraits() {
         </div>
         
         {/* CTA */}
-        <div className="bg-gradient-to-r from-primary to-primary-700 rounded-xl text-white p-8 mt-16">
+        <div className="bg-gray-900 rounded-xl text-white p-8 mt-16">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">准备提升您的肖像绘画技巧？</h2>
             <p className="text-white/90 mb-6">使用我们的免费工具立即为您的下一个肖像作品创建完美的网格参考。</p>

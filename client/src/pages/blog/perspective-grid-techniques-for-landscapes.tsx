@@ -503,7 +503,7 @@ export default function PerspectiveGridTechniquesForLandscapes() {
         </div>
         
         {/* CTA */}
-        <div className="bg-gradient-to-r from-primary to-primary-700 rounded-xl text-white p-8 mt-16">
+        <div className="bg-gray-900 rounded-xl text-white p-8 mt-16">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Ready to Perfect Your Landscape Perspective?</h2>
             <p className="text-white/90 mb-6">Create precision perspective grids for your next landscape masterpiece with our free tool.</p>

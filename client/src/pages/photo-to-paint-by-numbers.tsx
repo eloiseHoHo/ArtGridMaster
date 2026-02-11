@@ -23,7 +23,7 @@ export default function PhotoToPaintByNumbers() {
       </Helmet>
 
       <main>
-        <section className="bg-gradient-to-b from-white to-gray-50 py-16 sm:py-24">
+        <section className="bg-white py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -74,7 +74,7 @@ export default function PhotoToPaintByNumbers() {
                   </div>
                   <p className="text-center text-sm text-gray-500 mt-3 font-medium">Paint by numbers output preview</p>
                 </div>
-                <div className="absolute -bottom-4 -right-4 bg-primary text-white rounded-full px-4 py-2 shadow-lg text-sm font-semibold">
+                <div className="absolute -bottom-4 -right-4 bg-primary text-white rounded-full px-4 py-2 shadow-sm text-sm font-semibold">
                   100% Free
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default function PhotoToPaintByNumbers() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <Card className="border-0 shadow-md hover:shadow-lg transition-shadow">
+              <Card className="border-0 shadow-md transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Palette className="h-6 w-6 text-primary" />
@@ -100,7 +100,7 @@ export default function PhotoToPaintByNumbers() {
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md hover:shadow-lg transition-shadow">
+              <Card className="border-0 shadow-md transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Hash className="h-6 w-6 text-primary" />
@@ -110,7 +110,7 @@ export default function PhotoToPaintByNumbers() {
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md hover:shadow-lg transition-shadow">
+              <Card className="border-0 shadow-md transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <ScanLine className="h-6 w-6 text-primary" />
@@ -120,7 +120,7 @@ export default function PhotoToPaintByNumbers() {
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md hover:shadow-lg transition-shadow">
+              <Card className="border-0 shadow-md transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <BookImage className="h-6 w-6 text-primary" />
@@ -329,7 +329,7 @@ export default function PhotoToPaintByNumbers() {
           </div>
         </section>
 
-        <section className="py-16 bg-gradient-to-r from-primary to-primary-700 text-white">
+        <section className="py-16 bg-gray-900 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Create Your Custom Paint by Numbers?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">Turn any photo into a paintable masterpiece in seconds. Free, fast, and no signup required.</p>
@@ -384,37 +384,37 @@ export default function PhotoToPaintByNumbers() {
             <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Explore More Free Art Tools</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <Link href="/photo-to-grid">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
                   <h3 className="font-semibold text-gray-900">Photo Grid</h3>
                   <p className="text-sm text-gray-500 mt-1">Add drawing reference grids</p>
                 </div>
               </Link>
               <Link href="/photo-to-lineart">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
                   <h3 className="font-semibold text-gray-900">Line Art</h3>
                   <p className="text-sm text-gray-500 mt-1">Convert to line drawings</p>
                 </div>
               </Link>
               <Link href="/photo-to-sketch">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
                   <h3 className="font-semibold text-gray-900">Sketch</h3>
                   <p className="text-sm text-gray-500 mt-1">Create pencil sketches</p>
                 </div>
               </Link>
               <Link href="/photo-to-coloring-page">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
                   <h3 className="font-semibold text-gray-900">Coloring Page</h3>
                   <p className="text-sm text-gray-500 mt-1">Make printable coloring pages</p>
                 </div>
               </Link>
               <Link href="/photo-to-pixel-art">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
                   <h3 className="font-semibold text-gray-900">Pixel Art</h3>
                   <p className="text-sm text-gray-500 mt-1">Create retro pixel art</p>
                 </div>
               </Link>
               <Link href="/photo-to-watercolor">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer text-center">
+                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
                   <h3 className="font-semibold text-gray-900">Watercolor & Oil</h3>
                   <p className="text-sm text-gray-500 mt-1">Apply painting effects</p>
                 </div>

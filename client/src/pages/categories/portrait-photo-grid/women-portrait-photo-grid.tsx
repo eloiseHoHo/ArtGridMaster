@@ -94,7 +94,7 @@ export default function WomenPortraitPhotoGrid() {
         </div>
         
         {/* Hero section */}
-        <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl overflow-hidden mb-12">
+        <div className="bg-gray-50 rounded-xl overflow-hidden mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
             <div className="flex flex-col justify-center">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Women Portrait Photo Grid</h1>
@@ -119,7 +119,7 @@ export default function WomenPortraitPhotoGrid() {
               <img 
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
                 alt="Female portrait with grid overlay" 
-                className="rounded-lg shadow-lg object-cover"
+                className="rounded-lg shadow-sm object-cover"
               />
               <div className="grid-overlay rounded-lg"></div>
             </div>
@@ -348,7 +348,7 @@ export default function WomenPortraitPhotoGrid() {
         </div>
         
         {/* CTA section */}
-        <div className="bg-gradient-to-r from-pink-500 to-primary rounded-2xl text-white p-8">
+        <div className="bg-gray-900 rounded-lg text-white p-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">Create Your Female Portrait Grid</h2>
             <p className="text-white/90 mb-8">Transform your photos into the perfect female portrait references with our specialized grid tools.</p>

@@ -1,13 +1,12 @@
-import { useState, useRef, useEffect, useCallback, FormEvent } from "react";
+import { useState, useCallback, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import { Upload, Image as ImageIcon, ArrowRight, Check, Link, XCircle } from "lucide-react";
+import { Upload, Image as ImageIcon, ArrowRight, Link, XCircle, Download } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input";
 import { generateGridEffect, generateLineArtEffect, generateSketchEffect, generateColoringPageEffect, generatePaintByNumbersEffect, generatePixelArtEffect, generateWatercolorEffect } from "@/lib/imageEffects";
-import { Share2 } from "lucide-react";
 
 export default function SimpleImageEditorNew() {
   const [activeTab, setActiveTab] = useState<string>("grid");
@@ -17,49 +16,41 @@ export default function SimpleImageEditorNew() {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isUrlMode, setIsUrlMode] = useState<boolean>(false);
   const [urlError, setUrlError] = useState<string | null>(null);
-  
-  // Grid settings - larger default size for more visible effect
+
   const [gridSize, setGridSize] = useState(50);
   const [gridOpacity, setGridOpacity] = useState(70);
   const [gridColor, setGridColor] = useState("#000000");
   const [gridStyle, setGridStyle] = useState("lines");
-  const [gridThickness, setGridThickness] = useState(2); // 增加默认线条粗细
-  
-  // Line art settings
+  const [gridThickness, setGridThickness] = useState(2);
+
   const [lineThreshold, setLineThreshold] = useState(128);
   const [lineThickness, setLineThickness] = useState(1);
   const [lineStyle, setLineStyle] = useState("normal");
-  
-  // 扩展线稿样式选项
   const lineArtStyles = [
     { value: "normal", label: "Standard" },
     { value: "detailed", label: "Detailed" },
     { value: "minimal", label: "Minimal" },
     { value: "pen", label: "Pen & Ink" },
-    { value: "technical", label: "Technical Drawing" },
-    { value: "comic", label: "Comic Art" }
+    { value: "technical", label: "Technical" },
+    { value: "comic", label: "Comic" }
   ];
-  
-  // Sketch settings
+
   const [sketchIntensity, setSketchIntensity] = useState(50);
   const [pencilType, setPencilType] = useState("graphite");
   const [shadingLevel, setShadingLevel] = useState(50);
   const [sketchStyle, setSketchStyle] = useState("classic");
-  
-  // 扩展素描样式选项
   const sketchStyles = [
-    { value: "classic", label: "Classic Sketch" },
-    { value: "pencil", label: "Pencil Drawing" },
+    { value: "classic", label: "Classic" },
+    { value: "pencil", label: "Pencil" },
     { value: "charcoal", label: "Charcoal" },
-    { value: "conte", label: "Conté Crayon" },
-    { value: "pastel", label: "Soft Pastel" },
-    { value: "crosshatch", label: "Cross-Hatching" }
+    { value: "conte", label: "Conte" },
+    { value: "pastel", label: "Pastel" },
+    { value: "crosshatch", label: "Crosshatch" }
   ];
-  
   const pencilTypes = [
-    { value: "graphite", label: "Graphite (HB)" },
-    { value: "graphite_soft", label: "Soft Graphite (6B)" },
-    { value: "graphite_hard", label: "Hard Graphite (2H)" },
+    { value: "graphite", label: "HB Graphite" },
+    { value: "graphite_soft", label: "6B Soft" },
+    { value: "graphite_hard", label: "2H Hard" },
     { value: "charcoal", label: "Charcoal" },
     { value: "charcoal_soft", label: "Soft Charcoal" }
   ];
@@ -71,8 +62,8 @@ export default function SimpleImageEditorNew() {
     { value: "classic", label: "Classic" },
     { value: "detailed", label: "Detailed" },
     { value: "simple", label: "Simple" },
-    { value: "bold", label: "Bold Lines" },
-    { value: "kids", label: "Kids Friendly" }
+    { value: "bold", label: "Bold" },
+    { value: "kids", label: "Kids" }
   ];
 
   const [pbnNumColors, setPbnNumColors] = useState(12);
@@ -86,7 +77,7 @@ export default function SimpleImageEditorNew() {
   const pixelStyles = [
     { value: "classic", label: "Classic" },
     { value: "rounded", label: "Rounded" },
-    { value: "outline", label: "Grid Outline" },
+    { value: "outline", label: "Grid" },
     { value: "isometric", label: "Isometric" }
   ];
 
@@ -96,7 +87,7 @@ export default function SimpleImageEditorNew() {
   const watercolorStyles = [
     { value: "classic", label: "Watercolor" },
     { value: "wet", label: "Wet Wash" },
-    { value: "oil", label: "Oil Painting" },
+    { value: "oil", label: "Oil" },
     { value: "impressionist", label: "Impressionist" }
   ];
 
@@ -105,10 +96,7 @@ export default function SimpleImageEditorNew() {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width <= MAX_IMAGE_DIM && img.height <= MAX_IMAGE_DIM) {
-          resolve(dataUrl);
-          return;
-        }
+        if (img.width <= MAX_IMAGE_DIM && img.height <= MAX_IMAGE_DIM) { resolve(dataUrl); return; }
         const scale = Math.min(MAX_IMAGE_DIM / img.width, MAX_IMAGE_DIM / img.height);
         const canvas = document.createElement("canvas");
         canvas.width = Math.round(img.width * scale);
@@ -125,7 +113,6 @@ export default function SimpleImageEditorNew() {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       const reader = new FileReader();
-      
       reader.onload = async (e) => {
         if (e.target?.result) {
           const resized = await resizeImageIfNeeded(e.target.result as string);
@@ -135,767 +122,340 @@ export default function SimpleImageEditorNew() {
           setUrlError(null);
         }
       };
-      
       reader.readAsDataURL(file);
     }
   };
-  
-  // Handle image import from URL
+
   const handleUrlImport = useCallback(async (e: FormEvent) => {
     e.preventDefault();
-    
-    // Reset states
     setUrlError(null);
     setIsProcessing(true);
-    
-    if (!imageUrl.trim()) {
-      setUrlError("Please enter a valid image URL");
-      setIsProcessing(false);
-      return;
-    }
-    
+    if (!imageUrl.trim()) { setUrlError("Please enter a valid image URL"); setIsProcessing(false); return; }
     try {
-      // Create a new image to test URL validity
       const img = new Image();
-      
-      // Create a promise to handle image loading
-      const imageLoadPromise = new Promise<string>((resolve, reject) => {
-        img.onload = () => {
-          // Image loaded successfully
-          resolve(imageUrl);
-        };
-        
-        img.onerror = () => {
-          // Image failed to load
-          reject(new Error("Image failed to load, please check if the URL is valid"));
-        };
-        
-        // Set crossOrigin to allow processing images from other domains
+      const p = new Promise<string>((resolve, reject) => {
+        img.onload = () => resolve(imageUrl);
+        img.onerror = () => reject(new Error("Could not load this image URL"));
         img.crossOrigin = "Anonymous";
       });
-      
-      // Set the source to start loading
       img.src = imageUrl;
-      
-      // Wait for image to load or fail
-      await imageLoadPromise;
-      
+      await p;
       const resized = await resizeImageIfNeeded(imageUrl);
       setUploadedImage(resized);
       setTransformedImage(null);
-      
-      // Clear URL input field after successful import
       setImageUrl("");
-      
     } catch (error) {
-      console.error("Error loading image from URL:", error);
       setUrlError(error instanceof Error ? error.message : "Error loading image");
     } finally {
       setIsProcessing(false);
     }
   }, [imageUrl]);
-  
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      'image/jpeg': ['.jpg', '.jpeg'],
-      'image/png': ['.png']
-    },
+    accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'] },
     maxFiles: 1
   });
-  
-  // Real transform functions using our image processing library
-  const applyGridTransform = async () => {
+
+  const wrapTransform = async (fn: () => Promise<string>) => {
     if (!uploadedImage) return;
-    
     setIsProcessing(true);
-    try {
-      const result = await generateGridEffect(
-        uploadedImage,
-        gridSize,
-        gridColor,
-        gridOpacity / 100,
-        gridStyle,
-        gridThickness
-      );
-      setTransformedImage(result);
-    } catch (error) {
-      console.error("Error applying grid transform:", error);
-      alert("Failed to apply grid effect. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
+    try { setTransformedImage(await fn()); }
+    catch { alert("Processing failed. Please try again."); }
+    finally { setIsProcessing(false); }
   };
-  
-  const applyLineArtTransform = async () => {
+
+  const applyTransform = () => {
     if (!uploadedImage) return;
-    
-    setIsProcessing(true);
-    try {
-      const result = await generateLineArtEffect(
-        uploadedImage,
-        lineThreshold / 10,
-        lineThickness,
-        lineStyle
-      );
-      setTransformedImage(result);
-    } catch (error) {
-      console.error("Error applying line art transform:", error);
-      alert("Failed to apply line art effect. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-  
-  const applySketchTransform = async () => {
-    if (!uploadedImage) return;
-    setIsProcessing(true);
-    try {
-      const result = await generateSketchEffect(uploadedImage, sketchIntensity / 10, pencilType, shadingLevel, sketchStyle);
-      setTransformedImage(result);
-    } catch (error) {
-      console.error("Error applying sketch transform:", error);
-      alert("Failed to apply sketch effect. Please try again.");
-    } finally {
-      setIsProcessing(false);
+    switch (activeTab) {
+      case "grid": return wrapTransform(() => generateGridEffect(uploadedImage!, gridSize, gridColor, gridOpacity / 100, gridStyle, gridThickness));
+      case "lineart": return wrapTransform(() => generateLineArtEffect(uploadedImage!, lineThreshold / 10, lineThickness, lineStyle));
+      case "sketch": return wrapTransform(() => generateSketchEffect(uploadedImage!, sketchIntensity / 10, pencilType, shadingLevel, sketchStyle));
+      case "coloring": return wrapTransform(() => generateColoringPageEffect(uploadedImage!, coloringLineThickness, coloringDetailLevel, coloringStyle));
+      case "pbn": return wrapTransform(() => generatePaintByNumbersEffect(uploadedImage!, pbnNumColors, pbnCellSize, pbnShowNumbers, pbnShowOutlines));
+      case "pixel": return wrapTransform(() => generatePixelArtEffect(uploadedImage!, pixelSize, pixelColorCount, pixelStyle));
+      case "watercolor": return wrapTransform(() => generateWatercolorEffect(uploadedImage!, watercolorIntensity, watercolorWetness, watercolorStyle));
     }
   };
 
-  const applyColoringTransform = async () => {
-    if (!uploadedImage) return;
-    setIsProcessing(true);
-    try {
-      const result = await generateColoringPageEffect(uploadedImage, coloringLineThickness, coloringDetailLevel, coloringStyle);
-      setTransformedImage(result);
-    } catch (error) {
-      console.error("Error applying coloring page transform:", error);
-      alert("Failed to apply coloring page effect. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const ToggleSwitch = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
+    <button onClick={onChange} className={`relative w-9 h-5 rounded-full transition-colors ${checked ? 'bg-gray-900' : 'bg-gray-200'}`}>
+      <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${checked ? 'translate-x-4' : ''}`} />
+    </button>
+  );
 
-  const applyPaintByNumbersTransform = async () => {
-    if (!uploadedImage) return;
-    setIsProcessing(true);
-    try {
-      const result = await generatePaintByNumbersEffect(uploadedImage, pbnNumColors, pbnCellSize, pbnShowNumbers, pbnShowOutlines);
-      setTransformedImage(result);
-    } catch (error) {
-      console.error("Error applying paint by numbers transform:", error);
-      alert("Failed to apply paint by numbers effect. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const StyleGrid = ({ options, value, onChange, cols = 3 }: { options: { value: string; label: string }[]; value: string; onChange: (v: string) => void; cols?: number }) => (
+    <div className={`grid gap-1.5 ${cols === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+      {options.map((o) => (
+        <button
+          key={o.value}
+          onClick={() => onChange(o.value)}
+          className={`px-2.5 py-1.5 text-xs rounded-md border transition-colors ${value === o.value ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'}`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
 
-  const applyPixelArtTransform = async () => {
-    if (!uploadedImage) return;
-    setIsProcessing(true);
-    try {
-      const result = await generatePixelArtEffect(uploadedImage, pixelSize, pixelColorCount, pixelStyle);
-      setTransformedImage(result);
-    } catch (error) {
-      console.error("Error applying pixel art transform:", error);
-      alert("Failed to apply pixel art effect. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const SliderControl = ({ label, value, unit, min, max, step, onChange }: { label: string; value: number; unit?: string; min: number; max: number; step: number; onChange: (v: number) => void }) => (
+    <div>
+      <div className="flex justify-between mb-2">
+        <Label className="text-xs text-gray-500">{label}</Label>
+        <span className="text-xs text-gray-900 font-medium tabular-nums">{value}{unit}</span>
+      </div>
+      <Slider min={min} max={max} step={step} value={[value]} onValueChange={(v) => onChange(v[0])} />
+    </div>
+  );
 
-  const applyWatercolorTransform = async () => {
-    if (!uploadedImage) return;
-    setIsProcessing(true);
-    try {
-      const result = await generateWatercolorEffect(uploadedImage, watercolorIntensity, watercolorWetness, watercolorStyle);
-      setTransformedImage(result);
-    } catch (error) {
-      console.error("Error applying watercolor transform:", error);
-      alert("Failed to apply watercolor effect. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  const handleShare = (platform: string) => {
-    const url = encodeURIComponent("https://www.photogrid.space");
-    const text = encodeURIComponent("Check out this free photo transformation tool for artists!");
-    if (platform === "twitter") window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank");
-    else if (platform === "facebook") window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
-    else if (platform === "pinterest" && transformedImage) window.open(`https://pinterest.com/pin/create/button/?url=${url}&description=${text}`, "_blank");
-  };
-  
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left Card: Upload Area */}
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200">
-          {/* Card Header */}
-          <div className="px-6 py-5 border-b border-gray-100">
-            <h3 className="text-xl font-semibold text-gray-800">Upload Your Image</h3>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+          <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
+            <span className="text-sm font-medium text-gray-900">Image</span>
+            {uploadedImage && (
+              <div className="flex items-center gap-2">
+                {transformedImage && (
+                  <button
+                    className="text-xs text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1"
+                    onClick={() => {
+                      const link = document.createElement("a");
+                      link.href = transformedImage;
+                      link.download = `photogrid-${activeTab}.png`;
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }}
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    Download
+                  </button>
+                )}
+                <button
+                  className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={() => { setUploadedImage(null); setTransformedImage(null); }}
+                >
+                  Clear
+                </button>
+              </div>
+            )}
           </div>
-          
-          {/* Card Content */}
-          <div className="p-6">
-            {/* Tab Navigation */}
-            <div className="flex mb-6 rounded-lg overflow-hidden border border-gray-200">
-              <button
-                className={`flex items-center justify-center py-3 px-4 flex-1 ${!isUrlMode ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
-                onClick={() => setIsUrlMode(false)}
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Upload File
-              </button>
-              
-              <button
-                className={`flex items-center justify-center py-3 px-4 flex-1 ${isUrlMode ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
-                onClick={() => setIsUrlMode(true)}
-              >
-                <Link className="h-4 w-4 mr-2" />
-                Image URL
-              </button>
-            </div>
-            
-            {/* Upload Area Content */}
+
+          <div className="p-4">
             {!uploadedImage ? (
-              <div className="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 aspect-square">
+              <div className="rounded-lg border border-dashed border-gray-200 bg-gray-50/50">
+                <div className="flex gap-0 border-b border-gray-200">
+                  <button
+                    className={`flex-1 py-2 text-xs font-medium transition-colors ${!isUrlMode ? 'text-gray-900 bg-white' : 'text-gray-400 hover:text-gray-600'}`}
+                    onClick={() => setIsUrlMode(false)}
+                  >
+                    Upload File
+                  </button>
+                  <button
+                    className={`flex-1 py-2 text-xs font-medium transition-colors ${isUrlMode ? 'text-gray-900 bg-white' : 'text-gray-400 hover:text-gray-600'}`}
+                    onClick={() => setIsUrlMode(true)}
+                  >
+                    From URL
+                  </button>
+                </div>
+
                 {!isUrlMode ? (
-                  // File Upload Interface
                   <div
                     {...getRootProps()}
-                    className="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer hover:bg-gray-100 transition-colors"
+                    className="flex flex-col items-center justify-center py-16 px-6 cursor-pointer hover:bg-gray-50 transition-colors"
                   >
                     <input {...getInputProps()} id="fileInput" />
-                    <div className="w-20 h-20 rounded-full bg-indigo-50 flex items-center justify-center mb-4">
-                      <ImageIcon className="h-10 w-10 text-indigo-500" />
-                    </div>
-                    <h3 className="text-lg font-medium text-gray-800 mb-2">Upload Your Image</h3>
-                    <p className="text-gray-500 text-center mb-4">
-                      {isDragActive ? "Drop the image here..." : "Drag and drop an image, or click to browse"}
+                    <Upload className="h-8 w-8 text-gray-300 mb-4" />
+                    <p className="text-sm text-gray-500 mb-1">
+                      {isDragActive ? "Drop here" : "Drop an image or click to browse"}
                     </p>
-                    <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700">
-                      <Upload className="mr-2 h-4 w-4" />
-                      Select Image
-                    </Button>
-                    <p className="text-xs text-gray-500 mt-4">Supported formats: JPG, PNG (Max 10MB)</p>
+                    <p className="text-xs text-gray-400">JPG, PNG up to 10MB</p>
                   </div>
                 ) : (
-                  // URL Import Interface
-                  <div className="w-full h-full flex flex-col p-6">
-                    <form onSubmit={handleUrlImport} className="flex-1 flex flex-col">
-                      <div className="mb-6">
-                        <Label htmlFor="image-url" className="block text-gray-700 mb-2">Enter Image URL</Label>
-                        <div className="flex">
-                          <Input
-                            id="image-url"
-                            type="url"
-                            placeholder="https://example.com/image.jpg"
-                            value={imageUrl}
-                            onChange={e => setImageUrl(e.target.value)}
-                            className="flex-1 rounded-r-none"
-                          />
-                          <Button type="submit" className="rounded-l-none bg-gradient-to-r from-indigo-600 to-purple-600">
-                            {isProcessing ? (
-                              <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                            ) : (
-                              <ArrowRight className="h-4 w-4" />
-                            )}
-                          </Button>
-                        </div>
-                        {urlError && (
-                          <p className="mt-2 text-sm text-red-500 flex items-center">
-                            <XCircle className="h-4 w-4 mr-1" />
-                            {urlError}
-                          </p>
-                        )}
-                      </div>
-                      
-                      <div className="flex-1 flex flex-col items-center justify-center">
-                        <div className="w-20 h-20 rounded-full bg-indigo-50 flex items-center justify-center mb-4">
-                          <Link className="h-10 w-10 text-indigo-500" />
-                        </div>
-                        <h3 className="text-lg font-medium text-gray-800 mb-2">Import from URL</h3>
-                        <p className="text-gray-500 text-center mb-4">
-                          Paste an image URL from the web to transform
-                        </p>
-                        <Button
-                          type="submit"
-                          className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                        >
-                          {isProcessing ? (
-                            <>
-                              <div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                              Importing...
-                            </>
-                          ) : (
-                            <>
-                              <Link className="mr-2 h-4 w-4" />
-                              Import Image
-                            </>
-                          )}
+                  <div className="p-6">
+                    <form onSubmit={handleUrlImport} className="space-y-3">
+                      <div className="flex gap-2">
+                        <Input
+                          type="url"
+                          placeholder="https://example.com/image.jpg"
+                          value={imageUrl}
+                          onChange={e => setImageUrl(e.target.value)}
+                          className="text-sm"
+                        />
+                        <Button type="submit" size="sm" disabled={isProcessing} className="px-3">
+                          {isProcessing ? <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" /> : <ArrowRight className="h-4 w-4" />}
                         </Button>
                       </div>
+                      {urlError && (
+                        <p className="text-xs text-red-500 flex items-center gap-1">
+                          <XCircle className="h-3 w-3" />{urlError}
+                        </p>
+                      )}
                     </form>
+                    <div className="flex flex-col items-center py-10">
+                      <Link className="h-8 w-8 text-gray-300 mb-3" />
+                      <p className="text-sm text-gray-500">Paste an image URL to get started</p>
+                    </div>
                   </div>
                 )}
               </div>
             ) : (
-              // Image Preview Area
-              <div className="flex flex-col">
-                <div className="relative rounded-xl overflow-hidden bg-gray-100 border border-gray-200 aspect-square">
-                  <img
-                    src={transformedImage || uploadedImage}
-                    alt="Preview"
-                    className="w-full h-full object-contain"
-                  />
-                  {isProcessing && (
-                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
-                    </div>
-                  )}
-                </div>
-                <div className="flex justify-between mt-4">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setUploadedImage(null);
-                      setTransformedImage(null);
-                    }}
-                  >
-                    {isUrlMode ? 'Import New Image' : 'Upload New Image'}
-                  </Button>
-                  {transformedImage && (
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1">
-                        <button onClick={() => handleShare("pinterest")} className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition-colors" title="Share on Pinterest">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-                        </button>
-                        <button onClick={() => handleShare("twitter")} className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors" title="Share on X">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </button>
-                        <button onClick={() => handleShare("facebook")} className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors" title="Share on Facebook">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        </button>
-                      </div>
-                      <Button
-                        className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                        onClick={() => {
-                          const link = document.createElement("a");
-                          link.href = transformedImage;
-                          link.download = `photogrid-${activeTab}.png`;
-                          document.body.appendChild(link);
-                          link.click();
-                          document.body.removeChild(link);
-                        }}
-                      >
-                        Download
-                      </Button>
-                    </div>
-                  )}
-                </div>
+              <div className="relative rounded-lg overflow-hidden bg-gray-50 border border-gray-100 aspect-square">
+                <img
+                  src={transformedImage || uploadedImage}
+                  alt="Preview"
+                  className="w-full h-full object-contain"
+                />
+                {isProcessing && (
+                  <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-300 border-t-gray-600"></div>
+                  </div>
+                )}
               </div>
             )}
           </div>
         </div>
-        
-        {/* Right Card: Settings Area */}
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200">
-          {/* Card Header */}
-          <div className="px-6 py-5 border-b border-gray-100">
-            <h3 className="text-xl font-semibold text-gray-800">Transformation Settings</h3>
+
+        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+          <div className="px-5 py-3 border-b border-gray-100">
+            <span className="text-sm font-medium text-gray-900">Settings</span>
           </div>
-          
-          {/* Card Content */}
-          <div className="p-6">
+
+          <div className="p-4">
             {uploadedImage ? (
-              // Transformation Controls
-              <div>
-                <Tabs defaultValue="grid" value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="flex flex-wrap gap-1 mb-6 h-auto p-1">
-                    {[
-                      { value: "grid", label: "Grid" },
-                      { value: "lineart", label: "Line Art" },
-                      { value: "sketch", label: "Sketch" },
-                      { value: "coloring", label: "Coloring" },
-                      { value: "pbn", label: "Paint by #" },
-                      { value: "pixel", label: "Pixel Art" },
-                      { value: "watercolor", label: "Painting" },
-                    ].map((tab) => (
-                      <TabsTrigger
-                        key={tab.value}
-                        value={tab.value}
-                        className="text-xs px-2 py-1.5 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
-                      >
-                        {tab.label}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                  
-                  <TabsContent value="grid" className="space-y-5">
-                    <div>
-                      <div className="flex justify-between mb-2">
-                        <Label className="text-gray-700">Grid Size</Label>
-                        <span className="text-sm text-indigo-600 font-medium">{gridSize/100} inch</span>
-                      </div>
-                      <Slider
-                        min={10}
-                        max={500}
-                        step={10}
-                        value={[gridSize]}
-                        onValueChange={(value) => setGridSize(value[0])}
-                      />
-                    </div>
-                    
-                    <div>
-                      <div className="flex justify-between mb-2">
-                        <Label className="text-gray-700">Opacity</Label>
-                        <span className="text-sm text-indigo-600 font-medium">{gridOpacity}%</span>
-                      </div>
-                      <Slider
-                        min={10}
-                        max={100}
-                        step={1}
-                        value={[gridOpacity]}
-                        onValueChange={(value) => setGridOpacity(value[0])}
-                      />
-                    </div>
-                    
-                    <div>
-                      <div className="flex justify-between mb-2">
-                        <Label className="text-gray-700">Line Thickness</Label>
-                        <span className="text-sm text-indigo-600 font-medium">{gridThickness}px</span>
-                      </div>
-                      <Slider
-                        min={1}
-                        max={5}
-                        step={0.5}
-                        value={[gridThickness]}
-                        onValueChange={(value) => setGridThickness(value[0])}
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label className="block mb-2 text-gray-700">Grid Color</Label>
-                      <div className="flex space-x-3">
-                        {['#000000', '#EF4444', '#3B82F6', '#10B981', '#8B5CF6'].map((color) => (
-                          <button
-                            key={color}
-                            type="button"
-                            className={`w-8 h-8 rounded-full border ${
-                              gridColor === color ? 'ring-2 ring-indigo-500 ring-offset-2 scale-110' : 'hover:scale-105'
-                            } transition-all`}
-                            style={{ backgroundColor: color }}
-                            onClick={() => setGridColor(color)}
-                            aria-label={`Set grid color to ${color}`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <Label className="block mb-2 text-gray-700">Grid Style</Label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {['lines', 'dots', 'dashed'].map((style) => (
-                          <Button
-                            key={style}
-                            variant={gridStyle === style ? 'default' : 'outline'}
-                            onClick={() => setGridStyle(style)}
-                            className={gridStyle === style ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
-                          >
-                            {style.charAt(0).toUpperCase() + style.slice(1)}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <Button
-                      className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                      onClick={applyGridTransform}
-                      disabled={isProcessing}
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="flex flex-wrap gap-1 mb-5 h-auto p-1 bg-gray-50 rounded-md">
+                  {[
+                    { value: "grid", label: "Grid" },
+                    { value: "lineart", label: "Line Art" },
+                    { value: "sketch", label: "Sketch" },
+                    { value: "coloring", label: "Coloring" },
+                    { value: "pbn", label: "Paint #" },
+                    { value: "pixel", label: "Pixel" },
+                    { value: "watercolor", label: "Paint" },
+                  ].map((tab) => (
+                    <TabsTrigger
+                      key={tab.value}
+                      value={tab.value}
+                      className="text-xs px-2.5 py-1.5 rounded data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm text-gray-500"
                     >
-                      {isProcessing ? (
-                        <>
-                          <div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                          Processing...
-                        </>
-                      ) : transformedImage ? 'Update Grid' : 'Apply Grid'}
-                    </Button>
-                  </TabsContent>
-                  
-                  {/* Other tabs content would be similar */}
-                  <TabsContent value="lineart">
-                    {/* Line Art Controls */}
-                    <div className="space-y-5">
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <Label className="text-gray-700">Edge Threshold</Label>
-                          <span className="text-sm text-indigo-600 font-medium">{lineThreshold}</span>
-                        </div>
-                        <Slider
-                          min={20}
-                          max={200}
-                          step={1}
-                          value={[lineThreshold]}
-                          onValueChange={(value) => setLineThreshold(value[0])}
-                        />
-                      </div>
-                      
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <Label className="text-gray-700">Line Thickness</Label>
-                          <span className="text-sm text-indigo-600 font-medium">{lineThickness}px</span>
-                        </div>
-                        <Slider
-                          min={0.5}
-                          max={3}
-                          step={0.1}
-                          value={[lineThickness]}
-                          onValueChange={(value) => setLineThickness(value[0])}
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label className="block mb-2 text-gray-700">Line Style</Label>
-                        <div className="grid grid-cols-2 gap-2">
-                          {lineArtStyles.map((style) => (
-                            <Button
-                              key={style.value}
-                              variant={lineStyle === style.value ? 'default' : 'outline'}
-                              onClick={() => setLineStyle(style.value)}
-                              className={lineStyle === style.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
-                              size="sm"
-                            >
-                              {style.label}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <Button
-                        className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                        onClick={applyLineArtTransform}
-                        disabled={isProcessing}
-                      >
-                        {isProcessing ? (
-                          <>
-                            <div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                            Processing...
-                          </>
-                        ) : transformedImage ? 'Update Line Art' : 'Create Line Art'}
-                      </Button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="sketch">
-                    {/* Sketch Controls */}
-                    <div className="space-y-5">
-                      <div>
-                        <Label className="block mb-2 text-gray-700">Sketch Style</Label>
-                        <div className="grid grid-cols-2 gap-2 mb-3">
-                          {sketchStyles.map((style) => (
-                            <Button
-                              key={style.value}
-                              onClick={() => setSketchStyle(style.value)}
-                              variant={sketchStyle === style.value ? 'default' : 'outline'}
-                              className={sketchStyle === style.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
-                              size="sm"
-                            >
-                              {style.label}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                    
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <Label className="text-gray-700">Intensity</Label>
-                          <span className="text-sm text-indigo-600 font-medium">{sketchIntensity}%</span>
-                        </div>
-                        <Slider
-                          min={10}
-                          max={100}
-                          step={1}
-                          value={[sketchIntensity]}
-                          onValueChange={(value) => setSketchIntensity(value[0])}
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label className="block mb-2 text-gray-700">Pencil Type</Label>
-                        <div className="grid grid-cols-2 gap-2">
-                          {pencilTypes.map((type) => (
-                            <Button
-                              key={type.value}
-                              onClick={() => setPencilType(type.value)}
-                              variant={pencilType === type.value ? 'default' : 'outline'}
-                              className={pencilType === type.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''}
-                              size="sm"
-                            >
-                              {type.label}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <Label className="text-gray-700">Shading Level</Label>
-                          <span className="text-sm text-indigo-600 font-medium">{shadingLevel}%</span>
-                        </div>
-                        <Slider
-                          min={0}
-                          max={100}
-                          step={1}
-                          value={[shadingLevel]}
-                          onValueChange={(value) => setShadingLevel(value[0])}
-                        />
-                      </div>
-                      
-                      <Button
-                        className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                        onClick={applySketchTransform}
-                        disabled={isProcessing}
-                      >
-                        {isProcessing ? (
-                          <>
-                            <div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                            Processing...
-                          </>
-                        ) : transformedImage ? 'Update Sketch' : 'Create Sketch'}
-                      </Button>
-                    </div>
-                  </TabsContent>
+                      {tab.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
 
-                  <TabsContent value="coloring">
-                    <div className="space-y-5">
-                      <div>
-                        <Label className="block mb-2 text-gray-700">Style</Label>
-                        <div className="grid grid-cols-3 gap-2">
-                          {coloringStyles.map((s) => (
-                            <Button key={s.value} variant={coloringStyle === s.value ? 'default' : 'outline'} onClick={() => setColoringStyle(s.value)} className={coloringStyle === s.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''} size="sm">{s.label}</Button>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Line Thickness</Label><span className="text-sm text-indigo-600 font-medium">{coloringLineThickness}px</span></div>
-                        <Slider min={1} max={5} step={1} value={[coloringLineThickness]} onValueChange={(v) => setColoringLineThickness(v[0])} />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Detail Level</Label><span className="text-sm text-indigo-600 font-medium">{coloringDetailLevel}%</span></div>
-                        <Slider min={10} max={100} step={5} value={[coloringDetailLevel]} onValueChange={(v) => setColoringDetailLevel(v[0])} />
-                      </div>
-                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyColoringTransform} disabled={isProcessing}>
-                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Coloring Page' : 'Create Coloring Page'}
-                      </Button>
+                <TabsContent value="grid" className="space-y-4">
+                  <SliderControl label="Grid Size" value={gridSize} unit="px" min={10} max={200} step={5} onChange={setGridSize} />
+                  <SliderControl label="Opacity" value={gridOpacity} unit="%" min={10} max={100} step={5} onChange={setGridOpacity} />
+                  <SliderControl label="Thickness" value={gridThickness} unit="px" min={1} max={5} step={0.5} onChange={setGridThickness} />
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Color</Label>
+                    <div className="flex gap-2">
+                      {['#000000', '#EF4444', '#3B82F6', '#10B981', '#8B5CF6'].map((c) => (
+                        <button
+                          key={c}
+                          className={`w-6 h-6 rounded-full border-2 transition-all ${gridColor === c ? 'border-gray-900 scale-110' : 'border-gray-200'}`}
+                          style={{ backgroundColor: c }}
+                          onClick={() => setGridColor(c)}
+                        />
+                      ))}
                     </div>
-                  </TabsContent>
+                  </div>
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <StyleGrid options={[{ value: "lines", label: "Solid" }, { value: "dots", label: "Dots" }, { value: "dashed", label: "Dashed" }]} value={gridStyle} onChange={setGridStyle} />
+                  </div>
+                </TabsContent>
 
-                  <TabsContent value="pbn">
-                    <div className="space-y-5">
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Number of Colors</Label><span className="text-sm text-indigo-600 font-medium">{pbnNumColors}</span></div>
-                        <Slider min={4} max={24} step={1} value={[pbnNumColors]} onValueChange={(v) => setPbnNumColors(v[0])} />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Number Size</Label><span className="text-sm text-indigo-600 font-medium">{pbnCellSize}px</span></div>
-                        <Slider min={15} max={60} step={5} value={[pbnCellSize]} onValueChange={(v) => setPbnCellSize(v[0])} />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <Label className="text-gray-700">Show Numbers</Label>
-                        <button onClick={() => setPbnShowNumbers(!pbnShowNumbers)} className={`w-10 h-6 rounded-full transition-colors ${pbnShowNumbers ? 'bg-indigo-600' : 'bg-gray-300'}`}>
-                          <div className={`w-4 h-4 rounded-full bg-white transform transition-transform mx-1 ${pbnShowNumbers ? 'translate-x-4' : 'translate-x-0'}`}></div>
-                        </button>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <Label className="text-gray-700">Show Outlines</Label>
-                        <button onClick={() => setPbnShowOutlines(!pbnShowOutlines)} className={`w-10 h-6 rounded-full transition-colors ${pbnShowOutlines ? 'bg-indigo-600' : 'bg-gray-300'}`}>
-                          <div className={`w-4 h-4 rounded-full bg-white transform transition-transform mx-1 ${pbnShowOutlines ? 'translate-x-4' : 'translate-x-0'}`}></div>
-                        </button>
-                      </div>
-                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyPaintByNumbersTransform} disabled={isProcessing}>
-                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Paint by Numbers' : 'Create Paint by Numbers'}
-                      </Button>
-                    </div>
-                  </TabsContent>
+                <TabsContent value="lineart" className="space-y-4">
+                  <SliderControl label="Edge Threshold" value={lineThreshold} min={20} max={200} step={1} onChange={setLineThreshold} />
+                  <SliderControl label="Line Thickness" value={lineThickness} unit="px" min={0.5} max={3} step={0.1} onChange={setLineThickness} />
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <StyleGrid options={lineArtStyles} value={lineStyle} onChange={setLineStyle} cols={2} />
+                  </div>
+                </TabsContent>
 
-                  <TabsContent value="pixel">
-                    <div className="space-y-5">
-                      <div>
-                        <Label className="block mb-2 text-gray-700">Style</Label>
-                        <div className="grid grid-cols-2 gap-2">
-                          {pixelStyles.map((s) => (
-                            <Button key={s.value} variant={pixelStyle === s.value ? 'default' : 'outline'} onClick={() => setPixelStyle(s.value)} className={pixelStyle === s.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''} size="sm">{s.label}</Button>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Pixel Size</Label><span className="text-sm text-indigo-600 font-medium">{pixelSize}px</span></div>
-                        <Slider min={4} max={30} step={1} value={[pixelSize]} onValueChange={(v) => setPixelSize(v[0])} />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Color Count</Label><span className="text-sm text-indigo-600 font-medium">{pixelColorCount}</span></div>
-                        <Slider min={4} max={64} step={4} value={[pixelColorCount]} onValueChange={(v) => setPixelColorCount(v[0])} />
-                      </div>
-                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyPixelArtTransform} disabled={isProcessing}>
-                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Pixel Art' : 'Create Pixel Art'}
-                      </Button>
-                    </div>
-                  </TabsContent>
+                <TabsContent value="sketch" className="space-y-4">
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <StyleGrid options={sketchStyles} value={sketchStyle} onChange={setSketchStyle} cols={2} />
+                  </div>
+                  <SliderControl label="Intensity" value={sketchIntensity} unit="%" min={10} max={100} step={1} onChange={setSketchIntensity} />
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Pencil Type</Label>
+                    <StyleGrid options={pencilTypes} value={pencilType} onChange={setPencilType} cols={2} />
+                  </div>
+                  <SliderControl label="Shading" value={shadingLevel} unit="%" min={0} max={100} step={1} onChange={setShadingLevel} />
+                </TabsContent>
 
-                  <TabsContent value="watercolor">
-                    <div className="space-y-5">
-                      <div>
-                        <Label className="block mb-2 text-gray-700">Style</Label>
-                        <div className="grid grid-cols-2 gap-2">
-                          {watercolorStyles.map((s) => (
-                            <Button key={s.value} variant={watercolorStyle === s.value ? 'default' : 'outline'} onClick={() => setWatercolorStyle(s.value)} className={watercolorStyle === s.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''} size="sm">{s.label}</Button>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Color Intensity</Label><span className="text-sm text-indigo-600 font-medium">{watercolorIntensity}%</span></div>
-                        <Slider min={10} max={100} step={5} value={[watercolorIntensity]} onValueChange={(v) => setWatercolorIntensity(v[0])} />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Wetness / Blur</Label><span className="text-sm text-indigo-600 font-medium">{watercolorWetness}%</span></div>
-                        <Slider min={10} max={100} step={5} value={[watercolorWetness]} onValueChange={(v) => setWatercolorWetness(v[0])} />
-                      </div>
-                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyWatercolorTransform} disabled={isProcessing}>
-                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Painting' : 'Create Painting'}
-                      </Button>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            ) : (
-              // Features Section When No Image
-              <div className="text-center py-4 h-full flex flex-col items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                  <Check className="h-8 w-8 text-green-500" />
-                </div>
-                <h4 className="text-xl font-semibold mb-3 text-gray-800">Free to Use Online</h4>
-                <p className="text-gray-600 mb-6 max-w-md">
-                  Upload an image and apply transformations instantly,
-                  no sign-up or installation required
-                </p>
-                <div className="bg-gray-50 rounded-xl p-5 w-full mb-6">
-                  <ul className="space-y-4">
-                    {["Grid overlays for drawing reference", "Line art & sketch conversion", "Coloring pages & paint by numbers", "Pixel art & watercolor/oil painting"].map((feature) => (
-                      <li key={feature} className="flex items-start">
-                        <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
-                          <Check className="h-4 w-4 text-green-500" />
-                        </div>
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <TabsContent value="coloring" className="space-y-4">
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <StyleGrid options={coloringStyles} value={coloringStyle} onChange={setColoringStyle} />
+                  </div>
+                  <SliderControl label="Line Thickness" value={coloringLineThickness} unit="px" min={1} max={5} step={1} onChange={setColoringLineThickness} />
+                  <SliderControl label="Detail Level" value={coloringDetailLevel} unit="%" min={10} max={100} step={5} onChange={setColoringDetailLevel} />
+                </TabsContent>
+
+                <TabsContent value="pbn" className="space-y-4">
+                  <SliderControl label="Colors" value={pbnNumColors} min={4} max={24} step={1} onChange={setPbnNumColors} />
+                  <SliderControl label="Region Size" value={pbnCellSize} unit="px" min={15} max={60} step={5} onChange={setPbnCellSize} />
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs text-gray-500">Show Numbers</Label>
+                    <ToggleSwitch checked={pbnShowNumbers} onChange={() => setPbnShowNumbers(!pbnShowNumbers)} />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs text-gray-500">Show Outlines</Label>
+                    <ToggleSwitch checked={pbnShowOutlines} onChange={() => setPbnShowOutlines(!pbnShowOutlines)} />
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="pixel" className="space-y-4">
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <StyleGrid options={pixelStyles} value={pixelStyle} onChange={setPixelStyle} cols={2} />
+                  </div>
+                  <SliderControl label="Pixel Size" value={pixelSize} unit="px" min={4} max={30} step={1} onChange={setPixelSize} />
+                  <SliderControl label="Colors" value={pixelColorCount} min={4} max={64} step={4} onChange={setPixelColorCount} />
+                </TabsContent>
+
+                <TabsContent value="watercolor" className="space-y-4">
+                  <div>
+                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <StyleGrid options={watercolorStyles} value={watercolorStyle} onChange={setWatercolorStyle} cols={2} />
+                  </div>
+                  <SliderControl label="Intensity" value={watercolorIntensity} unit="%" min={10} max={100} step={5} onChange={setWatercolorIntensity} />
+                  <SliderControl label="Wetness" value={watercolorWetness} unit="%" min={10} max={100} step={5} onChange={setWatercolorWetness} />
+                </TabsContent>
+
                 <Button
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-md"
+                  className="w-full mt-5"
+                  onClick={applyTransform}
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                      Processing...
+                    </div>
+                  ) : transformedImage ? 'Update' : 'Apply'}
+                </Button>
+              </Tabs>
+            ) : (
+              <div className="text-center py-12">
+                <ImageIcon className="h-10 w-10 text-gray-200 mx-auto mb-4" />
+                <p className="text-sm text-gray-500 mb-1">Upload an image to get started</p>
+                <p className="text-xs text-gray-400">7 transformation tools available</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-4"
                   onClick={() => document.getElementById('fileInput')?.click()}
                 >
-                  <Upload className="mr-2 h-4 w-4" />
-                  Upload an Image Now
+                  <Upload className="mr-2 h-3.5 w-3.5" />
+                  Choose Image
                 </Button>
               </div>
             )}

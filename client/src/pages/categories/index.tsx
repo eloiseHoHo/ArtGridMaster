@@ -104,7 +104,7 @@ export default function Categories() {
         {/* Categories grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {categories.map((category) => (
-            <Card key={category.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card key={category.id} className="overflow-hidden transition-shadow">
               <div className="h-48 overflow-hidden">
                 <img 
                   src={category.image} 
@@ -184,7 +184,7 @@ export default function Categories() {
         </div>
         
         {/* CTA section */}
-        <div className="bg-gradient-to-r from-primary to-primary-700 rounded-2xl text-white p-8">
+        <div className="bg-gray-900 rounded-lg text-white p-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">Ready to Transform Your Photos?</h2>
             <p className="text-white/90 mb-8">Create custom photo grids for any artistic subject with our easy-to-use tools.</p>

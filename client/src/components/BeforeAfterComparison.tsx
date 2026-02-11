@@ -92,8 +92,8 @@ export default function BeforeAfterComparison({ beforeImage, afterImage, title, 
           onMouseDown={handleMouseDown}
           onTouchStart={handleMouseDown}
         >
-          <div className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-transform duration-200 group-hover:scale-110">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-200 group-hover:scale-110">
+            <div className="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 12h8M8 17h8M4 12h4M16 12h4" />
               </svg>
