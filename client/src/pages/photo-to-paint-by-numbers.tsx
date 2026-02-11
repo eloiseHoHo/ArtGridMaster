@@ -18,6 +18,9 @@ export default function PhotoToPaintByNumbers() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.photogrid.space/photo-to-paint-by-numbers" />
         <link rel="canonical" href="https://www.photogrid.space/photo-to-paint-by-numbers" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         <meta name="keywords" content="photo to paint by numbers, paint by numbers generator, custom paint by numbers, turn photo into paint by numbers, free paint by numbers maker, paint by numbers from photo, DIY paint by numbers, personalized paint by numbers, paint by numbers template, create paint by numbers" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Paint by Numbers Generator","url":"https://www.photogrid.space/photo-to-paint-by-numbers","description":"Free online tool to create paint by numbers templates from photos","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","ratingCount":"1280"}})}</script>
       </Helmet>

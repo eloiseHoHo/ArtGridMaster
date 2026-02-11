@@ -89,9 +89,12 @@ export default function LandscapePhotoGrid() {
         <meta property="og:title" content="Landscape Photo Grid: Transform Nature Photos for Artists | PhotoGrid.space" />
         <meta property="og:description" content="Transform landscape photos into perfect grid references. Our Landscape Photo Grid tool helps artists capture natural scenes with accurate perspective." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://photogrid.space/categories/landscape-photo-grid" />
+        <meta property="og:url" content="https://www.photogrid.space/categories/landscape-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://photogrid.space/categories/landscape-photo-grid" />
+        <link rel="canonical" href="https://www.photogrid.space/categories/landscape-photo-grid" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
       </Helmet>
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

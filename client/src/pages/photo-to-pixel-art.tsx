@@ -18,6 +18,9 @@ export default function PhotoToPixelArt() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.photogrid.space/photo-to-pixel-art" />
         <link rel="canonical" href="https://www.photogrid.space/photo-to-pixel-art" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         <meta name="keywords" content="photo to pixel art, convert photo to pixel art, pixel art converter, pixel art maker, turn photo into pixel art, free pixel art converter, pixel art generator, pixelate photo, retro pixel art, 8-bit art converter" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Pixel Art Converter","url":"https://www.photogrid.space/photo-to-pixel-art","description":"Free online tool to convert photos into retro pixel art","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1670"}})}</script>
       </Helmet>

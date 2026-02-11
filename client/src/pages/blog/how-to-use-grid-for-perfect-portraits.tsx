@@ -16,9 +16,12 @@ export default function HowToUseGridForPerfectPortraits() {
         <meta property="og:title" content="如何使用网格法绘制完美肖像画 | PhotoGrid.space" />
         <meta property="og:description" content="学习如何使用网格法绘制准确的肖像画。这份详细指南将帮助您掌握肖像绘画的比例和细节。" />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://photogrid.space/blog/how-to-use-grid-for-perfect-portraits" />
+        <meta property="og:url" content="https://www.photogrid.space/blog/how-to-use-grid-for-perfect-portraits" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://photogrid.space/blog/how-to-use-grid-for-perfect-portraits" />
+        <link rel="canonical" href="https://www.photogrid.space/blog/how-to-use-grid-for-perfect-portraits" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
       </Helmet>
       
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-12">

@@ -431,6 +431,9 @@ export default function BlogPost() {
         <meta property="og:image" content={post.featuredImage} />
         {/* Canonical URL */}
         <link rel="canonical" href={`https://www.photogrid.space/blog/${slug}`} />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
       </Helmet>
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -18,6 +18,9 @@ export default function PhotoToWatercolor() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.photogrid.space/photo-to-watercolor" />
         <link rel="canonical" href="https://www.photogrid.space/photo-to-watercolor" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         <meta name="keywords" content="photo to watercolor, photo to oil painting, convert photo to painting, watercolor effect, oil painting effect, photo to art, turn photo into painting, free painting converter, impressionist photo filter, photo to canvas art, watercolor filter online, digital watercolor" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Watercolor Converter","url":"https://www.photogrid.space/photo-to-watercolor","description":"Free online tool to convert photos into watercolor and oil painting effects","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1420"}})}</script>
       </Helmet>

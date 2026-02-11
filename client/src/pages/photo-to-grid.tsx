@@ -17,9 +17,12 @@ export default function PhotoToGrid() {
         <meta property="og:title" content="Add Grid to Photos Online Free | Drawing Reference Tool | PhotoGrid.space" />
         <meta property="og:description" content="Turn any photo into a perfect drawing reference with customizable grid overlay. Essential tool for artists, completely free to use." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://photogrid.space/photo-to-grid" />
+        <meta property="og:url" content="https://www.photogrid.space/photo-to-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://photogrid.space/photo-to-grid" />
+        <link rel="canonical" href="https://www.photogrid.space/photo-to-grid" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         {/* Keywords */}
         <meta name="keywords" content="photo grid generator, add grid to photo, drawing grid reference, artist grid tool, grid method drawing, grid overlay for images, photo grid maker, free grid generator, artistic grid, proportional drawing grid" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo Grid Generator","url":"https://www.photogrid.space/photo-to-grid","description":"Free online tool to add grid overlays to photos for drawing reference","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"2150"}})}</script>

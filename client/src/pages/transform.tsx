@@ -157,6 +157,14 @@ export default function Transform() {
       <Helmet>
         <title>Transform Image - PhotoGrid.space</title>
         <meta name="description" content="Transform your image into grid, line art, or sketch format with customizable settings." />
+        <link rel="canonical" href="https://www.photogrid.space/transform" />
+        <meta property="og:title" content="Transform Image - PhotoGrid.space" />
+        <meta property="og:description" content="Transform your image into grid, line art, or sketch format with customizable settings." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.photogrid.space/transform" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
       </Helmet>
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

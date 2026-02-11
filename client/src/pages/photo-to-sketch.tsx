@@ -17,9 +17,12 @@ export default function PhotoToSketch() {
         <meta property="og:title" content="Convert Photo to Sketch Online Free | PhotoGrid.space" />
         <meta property="og:description" content="Transform your photos into beautiful sketches with our free online photo to sketch converter. No signup or installation needed." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://photogrid.space/photo-to-sketch" />
+        <meta property="og:url" content="https://www.photogrid.space/photo-to-sketch" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://photogrid.space/photo-to-sketch" />
+        <link rel="canonical" href="https://www.photogrid.space/photo-to-sketch" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         {/* Keywords */}
         <meta name="keywords" content="photo to sketch, photo to drawing, picture to sketch converter, photo to pencil sketch, photo to charcoal drawing, sketch maker, sketch generator, free sketch converter, online sketch tool, turn photos into drawings" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Sketch Converter","url":"https://www.photogrid.space/photo-to-sketch","description":"Free online tool to convert photos into pencil sketches and charcoal drawings","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1960"}})}</script>

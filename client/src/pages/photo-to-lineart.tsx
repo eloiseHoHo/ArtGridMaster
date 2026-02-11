@@ -17,9 +17,12 @@ export default function PhotoToLineart() {
         <meta property="og:title" content="Convert Photo to Line Art Online Free | PhotoGrid.space" />
         <meta property="og:description" content="Transform your photos into beautiful line drawings with our free online converter. Perfect for coloring pages, illustrations, and art projects." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://photogrid.space/photo-to-lineart" />
+        <meta property="og:url" content="https://www.photogrid.space/photo-to-lineart" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://photogrid.space/photo-to-lineart" />
+        <link rel="canonical" href="https://www.photogrid.space/photo-to-lineart" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         {/* Keywords */}
         <meta name="keywords" content="photo to line art, photo to line drawing, picture to outline, photo to coloring page, line art generator, convert image to line drawing, online line art tool, line drawing maker, free line art converter, photo to illustration" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Line Art Converter","url":"https://www.photogrid.space/photo-to-lineart","description":"Free online tool to convert photos into line art drawings","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","ratingCount":"1830"}})}</script>

@@ -106,6 +106,9 @@ export default function Blog() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.photogrid.space/blog" />
         <link rel="canonical" href="https://www.photogrid.space/blog" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
       </Helmet>
       
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12">

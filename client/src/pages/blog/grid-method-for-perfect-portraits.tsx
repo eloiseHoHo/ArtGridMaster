@@ -16,9 +16,12 @@ export default function GridMethodForPerfectPortraits() {
         <meta property="og:title" content="How to Use Grid Method for Perfect Portraits | Professional Art Techniques" />
         <meta property="og:description" content="Master the grid method for portrait drawing with our comprehensive tutorial. Perfect for beginners and professional artists alike." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://photogrid.space/blog/grid-method-for-perfect-portraits" />
+        <meta property="og:url" content="https://www.photogrid.space/blog/grid-method-for-perfect-portraits" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://photogrid.space/blog/grid-method-for-perfect-portraits" />
+        <link rel="canonical" href="https://www.photogrid.space/blog/grid-method-for-perfect-portraits" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         {/* Keywords */}
         <meta name="keywords" content="grid method, portrait drawing, drawing techniques, art grid, portrait proportions, facial proportions, artist tips, drawing tutorial, portrait art" />
       </Helmet>

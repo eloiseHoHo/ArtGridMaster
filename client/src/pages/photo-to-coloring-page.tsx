@@ -18,6 +18,9 @@ export default function PhotoToColoringPage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.photogrid.space/photo-to-coloring-page" />
         <link rel="canonical" href="https://www.photogrid.space/photo-to-coloring-page" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
         <meta name="keywords" content="photo to coloring page, convert photo to coloring page, coloring page maker, coloring page generator, turn photo into coloring page, free coloring page converter, custom coloring pages, printable coloring pages, photo coloring book, coloring page from picture" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Coloring Page Converter","url":"https://www.photogrid.space/photo-to-coloring-page","description":"Free online tool to convert photos into printable coloring pages","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","ratingCount":"1540"}})}</script>
       </Helmet>

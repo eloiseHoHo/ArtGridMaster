@@ -8,6 +8,13 @@ export default function TermsOfService() {
         <title>Terms of Service - PhotoGrid.space</title>
         <meta name="description" content="Terms of Service for PhotoGrid.space. Read the terms and conditions for using our free photo transformation tools." />
         <link rel="canonical" href="https://www.photogrid.space/terms" />
+        <meta property="og:title" content="Terms of Service - PhotoGrid.space" />
+        <meta property="og:description" content="Terms of Service for PhotoGrid.space. Read the terms and conditions for using our free photo transformation tools." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.photogrid.space/terms" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.position" content="37.09024;-95.712891" />
+        <meta name="ICBM" content="37.09024, -95.712891" />
       </Helmet>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
