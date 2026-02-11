@@ -3,6 +3,7 @@ import { Switch, Route } from "wouter";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CookieConsent from "@/components/CookieConsent";
 
 const Home = lazy(() => import("@/pages/home"));
 const Transform = lazy(() => import("@/pages/transform"));
@@ -21,12 +22,14 @@ const PhotoToWatercolor = lazy(() => import("@/pages/photo-to-watercolor"));
 const Categories = lazy(() => import("@/pages/categories"));
 const PortraitPhotoGrid = lazy(() => import("@/pages/categories/portrait-photo-grid"));
 const WomenPortraitPhotoGrid = lazy(() => import("@/pages/categories/portrait-photo-grid/women-portrait-photo-grid"));
+const PrivacyPolicy = lazy(() => import("@/pages/privacy"));
+const TermsOfService = lazy(() => import("@/pages/terms"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
 function PageLoader() {
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-indigo-600"></div>
+      <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-300 border-t-gray-600"></div>
     </div>
   );
 }
@@ -52,6 +55,8 @@ function Router() {
         <Route path="/categories" component={Categories} />
         <Route path="/categories/portrait-photo-grid" component={PortraitPhotoGrid} />
         <Route path="/categories/portrait-photo-grid/women-portrait-photo-grid" component={WomenPortraitPhotoGrid} />
+        <Route path="/privacy" component={PrivacyPolicy} />
+        <Route path="/terms" component={TermsOfService} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
@@ -67,6 +72,7 @@ function App() {
           <Router />
         </div>
         <Footer />
+        <CookieConsent />
       </div>
     </TooltipProvider>
   );

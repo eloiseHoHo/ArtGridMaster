@@ -96,44 +96,35 @@ export default function Blog() {
   return (
     <>
       <Helmet>
-        <title>Photo Grid Blog: Tips, Techniques & Tutorials for Artists | GridArt Studio</title>
+        <title>Photo Grid Blog: Tips, Techniques & Tutorials for Artists | PhotoGrid.space</title>
         <meta 
           name="description" 
           content="Explore our Photo Grid blog with expert tips, step-by-step tutorials, and advanced techniques to enhance your artistic skills using grid, line art, and sketch transformations."
         />
-        {/* Open Graph tags */}
-        <meta property="og:title" content="Photo Grid Blog: Tips, Techniques & Tutorials | GridArt Studio" />
+        <meta property="og:title" content="Photo Grid Blog: Tips, Techniques & Tutorials | PhotoGrid.space" />
         <meta property="og:description" content="Explore our Photo Grid blog with expert tips, step-by-step tutorials, and advanced techniques to enhance your artistic skills." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://gridart.studio/blog" />
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://gridart.studio/blog" />
+        <meta property="og:url" content="https://www.photogrid.space/blog" />
+        <link rel="canonical" href="https://www.photogrid.space/blog" />
       </Helmet>
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Photo Grid Blog</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Expert tips, step-by-step tutorials, and advanced techniques to enhance your artistic skills using grid transformations
-          </p>
-        </div>
-        
-        {/* Blog introduction text */}
-        <div className="max-w-2xl mx-auto text-center mb-8">
-          <p className="text-gray-600">
-            Discover articles on grid drawing techniques, artistic methods, and practical tips to help you create better artwork.
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Blog</h1>
+          <p className="text-gray-500">
+            Tutorials, techniques, and tips for artists using grid transformations.
           </p>
         </div>
         
         {/* Blog post grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
-            <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card key={post.id} className="overflow-hidden hover:shadow-sm transition-shadow border border-gray-100">
               <div className="h-48 overflow-hidden">
                 <img 
                   src={post.image} 
                   alt={post.title} 
-                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <CardHeader>

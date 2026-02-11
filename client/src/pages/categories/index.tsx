@@ -79,18 +79,18 @@ export default function Categories() {
   return (
     <>
       <Helmet>
-        <title>Photo Grid Categories for Artists: Portrait, Landscape, Animal & More | GridArt Studio</title>
+        <title>Photo Grid Categories for Artists: Portrait, Landscape, Animal & More | PhotoGrid.space</title>
         <meta 
           name="description" 
           content="Explore our specialized Photo Grid categories for artists: Portrait Photo Grid, Landscape Photo Grid, Animal Photo Grid, and more. Find the perfect grid references for your art."
         />
         {/* Open Graph tags */}
-        <meta property="og:title" content="Photo Grid Categories for Artists | GridArt Studio" />
+        <meta property="og:title" content="Photo Grid Categories for Artists | PhotoGrid.space" />
         <meta property="og:description" content="Explore our specialized Photo Grid categories for artists: Portrait, Landscape, Animal, Still Life, Architecture, and Figure grid references." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://gridart.studio/categories" />
+        <meta property="og:url" content="https://www.photogrid.space/categories" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://gridart.studio/categories" />
+        <link rel="canonical" href="https://www.photogrid.space/categories" />
       </Helmet>
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -159,7 +159,7 @@ export default function Categories() {
               A photo grid is a powerful technique used by artists to improve accuracy and proportions in their drawings and paintings. By overlaying a grid on a reference photo, artists can focus on small sections at a time, making complex subjects more manageable and ensuring correct proportions.
             </p>
             <p className="mb-4 text-gray-700">
-              At GridArt Studio, we've optimized our photo grid tools for different artistic subjects. Whether you're creating portrait art, landscape paintings, wildlife illustrations, still life compositions, architectural sketches, or figure drawings, we have specialized grid transformations to enhance your artistic process.
+              At PhotoGrid.space, we've optimized our photo grid tools for different artistic subjects. Whether you're creating portrait art, landscape paintings, wildlife illustrations, still life compositions, architectural sketches, or figure drawings, we have specialized grid transformations to enhance your artistic process.
             </p>
             <p className="mb-4 text-gray-700">
               Our categories offer different grid densities, styles, and optimizations based on the subject matter. For example, portrait photo grids focus on facial proportions, while landscape photo grids help manage perspective and spatial relationships in natural scenes.

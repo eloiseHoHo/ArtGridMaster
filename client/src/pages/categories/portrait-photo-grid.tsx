@@ -80,18 +80,18 @@ export default function PortraitPhotoGrid() {
   return (
     <>
       <Helmet>
-        <title>Portrait Photo Grid: Expert Guide for Artist References | GridArt Studio</title>
+        <title>Portrait Photo Grid: Expert Guide for Artist References | PhotoGrid.space</title>
         <meta 
           name="description" 
           content="Transform portrait photos into perfect grid references for drawings and paintings. Our Portrait Photo Grid tool helps artists capture accurate facial proportions and details."
         />
         {/* Open Graph tags */}
-        <meta property="og:title" content="Portrait Photo Grid: Expert Guide for Artist References | GridArt Studio" />
+        <meta property="og:title" content="Portrait Photo Grid: Expert Guide for Artist References | PhotoGrid.space" />
         <meta property="og:description" content="Transform portrait photos into perfect grid references. Our Portrait Photo Grid tool helps artists capture accurate facial proportions and details." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://gridart.studio/categories/portrait-photo-grid" />
+        <meta property="og:url" content="https://www.photogrid.space/categories/portrait-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://gridart.studio/categories/portrait-photo-grid" />
+        <link rel="canonical" href="https://www.photogrid.space/categories/portrait-photo-grid" />
       </Helmet>
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

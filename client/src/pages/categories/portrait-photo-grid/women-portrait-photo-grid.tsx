@@ -59,7 +59,7 @@ export default function WomenPortraitPhotoGrid() {
   return (
     <>
       <Helmet>
-        <title>Women Portrait Photo Grid: Create Perfect Female Portrait References | GridArt Studio</title>
+        <title>Women Portrait Photo Grid: Create Perfect Female Portrait References | PhotoGrid.space</title>
         <meta 
           name="description" 
           content="Our Women Portrait Photo Grid transforms photos into perfect grid references for female portrait art. Capture accurate facial proportions and beautiful details in your drawings and paintings."
@@ -68,9 +68,9 @@ export default function WomenPortraitPhotoGrid() {
         <meta property="og:title" content="Women Portrait Photo Grid: Create Perfect Female Portrait References" />
         <meta property="og:description" content="Transform photos into perfect grid references for female portrait art. Capture accurate facial proportions and beautiful details." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://gridart.studio/categories/portrait-photo-grid/women-portrait-photo-grid" />
+        <meta property="og:url" content="https://www.photogrid.space/categories/portrait-photo-grid/women-portrait-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://gridart.studio/categories/portrait-photo-grid/women-portrait-photo-grid" />
+        <link rel="canonical" href="https://www.photogrid.space/categories/portrait-photo-grid/women-portrait-photo-grid" />
       </Helmet>
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

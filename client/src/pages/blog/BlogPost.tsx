@@ -53,7 +53,7 @@ export default function BlogPost() {
         <p>The traditional approach involves physically drawing grid lines on your reference photo (or a copy of it) and then drawing a proportional grid on your canvas or paper. Each square is then transferred one by one.</p>
         
         <h3>Digital Photo Grid Tools</h3>
-        <p>Modern artists have the advantage of digital tools that can automatically apply grid overlays to reference photos. Our GridArt Studio application allows you to customize your grid size, opacity, color, and style with just a few clicks.</p>
+        <p>Modern artists have the advantage of digital tools that can automatically apply grid overlays to reference photos. Our PhotoGrid.space application allows you to customize your grid size, opacity, color, and style with just a few clicks.</p>
         
         <div class="my-8">
           <img src="https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500" alt="Digital grid overlay on a portrait" class="rounded-lg w-full" />
@@ -67,7 +67,7 @@ export default function BlogPost() {
             <strong>Select your reference image:</strong> Choose a high-quality photo with good lighting and clear details.
           </li>
           <li>
-            <strong>Apply a grid overlay:</strong> Either manually draw a grid or use a digital tool like GridArt Studio to apply one automatically.
+            <strong>Apply a grid overlay:</strong> Either manually draw a grid or use a digital tool like PhotoGrid.space to apply one automatically.
           </li>
           <li>
             <strong>Prepare your canvas or paper:</strong> Draw a proportional grid on your working surface, ensuring the number of squares matches your reference grid.
@@ -127,7 +127,7 @@ export default function BlogPost() {
         
         <p>The photo grid method continues to be one of the most reliable and effective techniques for artists of all skill levels. By breaking down complex visual information into manageable chunks, it provides a structured approach to achieving accuracy in your drawings and paintings.</p>
         
-        <p>Whether you're just starting out or looking to refine your technique, incorporating photo grids into your artistic practice can lead to significant improvements in your work. With digital tools like GridArt Studio, the process is easier and more flexible than ever before.</p>
+        <p>Whether you're just starting out or looking to refine your technique, incorporating photo grids into your artistic practice can lead to significant improvements in your work. With digital tools like PhotoGrid.space, the process is easier and more flexible than ever before.</p>
         
         <p>Remember that while the grid method is an invaluable tool, it's also important to develop your observational skills. With practice, you'll find yourself relying less on the grid and more on your trained artistic eye—though many professional artists continue to use grids for complex or commissioned works where accuracy is paramount.</p>
       `
@@ -188,7 +188,7 @@ export default function BlogPost() {
             <strong>Select a high-quality portrait photo:</strong> Choose one with good lighting that clearly shows facial features.
           </li>
           <li>
-            <strong>Apply a grid overlay:</strong> Use the GridArt Studio tool to apply a grid, making it finer (10x10 or more) for detailed portrait work.
+            <strong>Apply a grid overlay:</strong> Use the PhotoGrid.space tool to apply a grid, making it finer (10x10 or more) for detailed portrait work.
           </li>
           <li>
             <strong>Draw a corresponding grid on your paper:</strong> Make sure the proportions match your reference grid.
@@ -309,7 +309,7 @@ export default function BlogPost() {
             <strong>Determine the key compositional elements:</strong> Identify the horizon line, major vertical elements, and focal points.
           </li>
           <li>
-            <strong>Apply a grid overlay:</strong> Use GridArt Studio to create a grid that aligns with these key elements.
+            <strong>Apply a grid overlay:</strong> Use PhotoGrid.space to create a grid that aligns with these key elements.
           </li>
           <li>
             <strong>Transfer to your canvas or paper:</strong> Create a scaled grid on your working surface.
@@ -418,7 +418,7 @@ export default function BlogPost() {
   return (
     <>
       <Helmet>
-        <title>{post.title} | Photo Grid Blog - GridArt Studio</title>
+        <title>{post.title} | Photo Grid Blog - PhotoGrid.space</title>
         <meta 
           name="description" 
           content={post.title + " - " + post.content.split('<p>')[1].split('</p>')[0].substring(0, 160) + "..."}
@@ -427,10 +427,10 @@ export default function BlogPost() {
         <meta property="og:title" content={post.title + " | Photo Grid Blog"} />
         <meta property="og:description" content={post.content.split('<p>')[1].split('</p>')[0].substring(0, 160) + "..."} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://gridart.studio/blog/${slug}`} />
+        <meta property="og:url" content={`https://www.photogrid.space/blog/${slug}`} />
         <meta property="og:image" content={post.featuredImage} />
         {/* Canonical URL */}
-        <link rel="canonical" href={`https://gridart.studio/blog/${slug}`} />
+        <link rel="canonical" href={`https://www.photogrid.space/blog/${slug}`} />
       </Helmet>
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -155,7 +155,7 @@ export default function Transform() {
   return (
     <>
       <Helmet>
-        <title>Transform Image - GridArt Studio</title>
+        <title>Transform Image - PhotoGrid.space</title>
         <meta name="description" content="Transform your image into grid, line art, or sketch format with customizable settings." />
       </Helmet>
       

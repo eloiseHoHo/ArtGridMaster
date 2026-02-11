@@ -34,12 +34,18 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/blog"><a className="text-gray-500 hover:text-gray-900 transition-colors">Blog</a></Link></li>
               <li><Link href="/categories"><a className="text-gray-500 hover:text-gray-900 transition-colors">Categories</a></Link></li>
+              <li><Link href="/privacy"><a className="text-gray-500 hover:text-gray-900 transition-colors">Privacy Policy</a></Link></li>
+              <li><Link href="/terms"><a className="text-gray-500 hover:text-gray-900 transition-colors">Terms of Service</a></Link></li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-100 text-xs text-gray-400">
-          &copy; {new Date().getFullYear()} PhotoGrid.space
+        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between gap-2 text-xs text-gray-400">
+          <span>&copy; {new Date().getFullYear()} PhotoGrid.space</span>
+          <div className="flex gap-4">
+            <Link href="/privacy"><a className="hover:text-gray-600 transition-colors">Privacy</a></Link>
+            <Link href="/terms"><a className="hover:text-gray-600 transition-colors">Terms</a></Link>
+          </div>
         </div>
       </div>
     </footer>
