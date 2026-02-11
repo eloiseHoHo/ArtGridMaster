@@ -1,10 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { UserIcon, Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { useState } from "react";
+
+const toolLinks = [
+  { href: "/photo-to-grid", label: "Photo to Grid" },
+  { href: "/photo-to-lineart", label: "Photo to Line Art" },
+  { href: "/photo-to-sketch", label: "Photo to Sketch" },
+  { href: "/photo-to-coloring-page", label: "Photo to Coloring Page" },
+  { href: "/photo-to-paint-by-numbers", label: "Paint by Numbers" },
+  { href: "/photo-to-pixel-art", label: "Photo to Pixel Art" },
+  { href: "/photo-to-watercolor", label: "Watercolor & Oil Painting" },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -26,28 +37,32 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
           <nav className="flex items-center space-x-6 mr-4">
-            <Link href="/photo-to-grid">
-              <a className="text-gray-600 hover:text-primary transition-colors">Photo to Grid</a>
-            </Link>
-            <Link href="/photo-to-lineart">
-              <a className="text-gray-600 hover:text-primary transition-colors">Photo to Line Art</a>
-            </Link>
-            <Link href="/photo-to-sketch">
-              <a className="text-gray-600 hover:text-primary transition-colors">Photo to Sketch</a>
-            </Link>
+            <div className="relative" onMouseEnter={() => setToolsOpen(true)} onMouseLeave={() => setToolsOpen(false)}>
+              <button className="text-gray-600 hover:text-primary transition-colors flex items-center gap-1">
+                Tools <ChevronDown className="h-4 w-4" />
+              </button>
+              {toolsOpen && (
+                <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-100 py-2 w-56 z-50">
+                  {toolLinks.map((link) => (
+                    <Link key={link.href} href={link.href}>
+                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-primary transition-colors">
+                        {link.label}
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
             <Link href="/blog">
               <a className="text-gray-600 hover:text-primary transition-colors">Blog</a>
             </Link>
           </nav>
-
         </div>
 
-        {/* Mobile menu button */}
         <div className="md:hidden flex items-center">
-          <button 
+          <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-gray-500 hover:text-gray-700 focus:outline-none"
           >
@@ -56,22 +71,21 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-2">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex flex-col space-y-3 py-3">
-              <Link href="/photo-to-grid">
-                <a className="text-gray-600 hover:text-primary transition-colors py-2">Photo to Grid</a>
-              </Link>
-              <Link href="/photo-to-lineart">
-                <a className="text-gray-600 hover:text-primary transition-colors py-2">Photo to Line Art</a>
-              </Link>
-              <Link href="/photo-to-sketch">
-                <a className="text-gray-600 hover:text-primary transition-colors py-2">Photo to Sketch</a>
-              </Link>
+            <nav className="flex flex-col space-y-1 py-3">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-2 mb-1">Tools</p>
+              {toolLinks.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  <a className="text-gray-600 hover:text-primary transition-colors py-2 px-2 rounded hover:bg-gray-50" onClick={() => setMobileMenuOpen(false)}>
+                    {link.label}
+                  </a>
+                </Link>
+              ))}
+              <div className="border-t border-gray-100 my-2"></div>
               <Link href="/blog">
-                <a className="text-gray-600 hover:text-primary transition-colors py-2">Blog</a>
+                <a className="text-gray-600 hover:text-primary transition-colors py-2 px-2" onClick={() => setMobileMenuOpen(false)}>Blog</a>
               </Link>
             </nav>
           </div>

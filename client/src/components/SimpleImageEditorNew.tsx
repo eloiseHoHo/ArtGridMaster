@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Upload, Image as ImageIcon, ArrowRight, Check, Link, XCircle } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input";
-import { generateGridEffect, generateLineArtEffect, generateSketchEffect } from "@/lib/imageEffects";
+import { generateGridEffect, generateLineArtEffect, generateSketchEffect, generateColoringPageEffect, generatePaintByNumbersEffect, generatePixelArtEffect, generateWatercolorEffect } from "@/lib/imageEffects";
+import { Share2 } from "lucide-react";
 
 export default function SimpleImageEditorNew() {
   const [activeTab, setActiveTab] = useState<string>("grid");
@@ -55,13 +56,48 @@ export default function SimpleImageEditorNew() {
     { value: "crosshatch", label: "Cross-Hatching" }
   ];
   
-  // 扩展铅笔类型选项
   const pencilTypes = [
     { value: "graphite", label: "Graphite (HB)" },
     { value: "graphite_soft", label: "Soft Graphite (6B)" },
     { value: "graphite_hard", label: "Hard Graphite (2H)" },
     { value: "charcoal", label: "Charcoal" },
     { value: "charcoal_soft", label: "Soft Charcoal" }
+  ];
+
+  const [coloringLineThickness, setColoringLineThickness] = useState(2);
+  const [coloringDetailLevel, setColoringDetailLevel] = useState(50);
+  const [coloringStyle, setColoringStyle] = useState("classic");
+  const coloringStyles = [
+    { value: "classic", label: "Classic" },
+    { value: "detailed", label: "Detailed" },
+    { value: "simple", label: "Simple" },
+    { value: "bold", label: "Bold Lines" },
+    { value: "kids", label: "Kids Friendly" }
+  ];
+
+  const [pbnNumColors, setPbnNumColors] = useState(12);
+  const [pbnCellSize, setPbnCellSize] = useState(30);
+  const [pbnShowNumbers, setPbnShowNumbers] = useState(true);
+  const [pbnShowOutlines, setPbnShowOutlines] = useState(true);
+
+  const [pixelSize, setPixelSize] = useState(10);
+  const [pixelColorCount, setPixelColorCount] = useState(16);
+  const [pixelStyle, setPixelStyle] = useState("classic");
+  const pixelStyles = [
+    { value: "classic", label: "Classic" },
+    { value: "rounded", label: "Rounded" },
+    { value: "outline", label: "Grid Outline" },
+    { value: "isometric", label: "Isometric" }
+  ];
+
+  const [watercolorIntensity, setWatercolorIntensity] = useState(50);
+  const [watercolorWetness, setWatercolorWetness] = useState(50);
+  const [watercolorStyle, setWatercolorStyle] = useState("classic");
+  const watercolorStyles = [
+    { value: "classic", label: "Watercolor" },
+    { value: "wet", label: "Wet Wash" },
+    { value: "oil", label: "Oil Painting" },
+    { value: "impressionist", label: "Impressionist" }
   ];
 
   // Handle file drop
@@ -192,16 +228,9 @@ export default function SimpleImageEditorNew() {
   
   const applySketchTransform = async () => {
     if (!uploadedImage) return;
-    
     setIsProcessing(true);
     try {
-      const result = await generateSketchEffect(
-        uploadedImage,
-        sketchIntensity / 10,
-        pencilType,
-        shadingLevel,
-        sketchStyle
-      );
+      const result = await generateSketchEffect(uploadedImage, sketchIntensity / 10, pencilType, shadingLevel, sketchStyle);
       setTransformedImage(result);
     } catch (error) {
       console.error("Error applying sketch transform:", error);
@@ -209,6 +238,70 @@ export default function SimpleImageEditorNew() {
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const applyColoringTransform = async () => {
+    if (!uploadedImage) return;
+    setIsProcessing(true);
+    try {
+      const result = await generateColoringPageEffect(uploadedImage, coloringLineThickness, coloringDetailLevel, coloringStyle);
+      setTransformedImage(result);
+    } catch (error) {
+      console.error("Error applying coloring page transform:", error);
+      alert("Failed to apply coloring page effect. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const applyPaintByNumbersTransform = async () => {
+    if (!uploadedImage) return;
+    setIsProcessing(true);
+    try {
+      const result = await generatePaintByNumbersEffect(uploadedImage, pbnNumColors, pbnCellSize, pbnShowNumbers, pbnShowOutlines);
+      setTransformedImage(result);
+    } catch (error) {
+      console.error("Error applying paint by numbers transform:", error);
+      alert("Failed to apply paint by numbers effect. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const applyPixelArtTransform = async () => {
+    if (!uploadedImage) return;
+    setIsProcessing(true);
+    try {
+      const result = await generatePixelArtEffect(uploadedImage, pixelSize, pixelColorCount, pixelStyle);
+      setTransformedImage(result);
+    } catch (error) {
+      console.error("Error applying pixel art transform:", error);
+      alert("Failed to apply pixel art effect. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const applyWatercolorTransform = async () => {
+    if (!uploadedImage) return;
+    setIsProcessing(true);
+    try {
+      const result = await generateWatercolorEffect(uploadedImage, watercolorIntensity, watercolorWetness, watercolorStyle);
+      setTransformedImage(result);
+    } catch (error) {
+      console.error("Error applying watercolor transform:", error);
+      alert("Failed to apply watercolor effect. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleShare = (platform: string) => {
+    const url = encodeURIComponent("https://www.photogrid.space");
+    const text = encodeURIComponent("Check out this free photo transformation tool for artists!");
+    if (platform === "twitter") window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank");
+    else if (platform === "facebook") window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
+    else if (platform === "pinterest" && transformedImage) window.open(`https://pinterest.com/pin/create/button/?url=${url}&description=${text}`, "_blank");
   };
   
   return (
@@ -351,19 +444,32 @@ export default function SimpleImageEditorNew() {
                     {isUrlMode ? 'Import New Image' : 'Upload New Image'}
                   </Button>
                   {transformedImage && (
-                    <Button
-                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                      onClick={() => {
-                        const link = document.createElement("a");
-                        link.href = transformedImage;
-                        link.download = `gridart-${activeTab}.png`;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                      }}
-                    >
-                      Download Image
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1">
+                        <button onClick={() => handleShare("pinterest")} className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition-colors" title="Share on Pinterest">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+                        </button>
+                        <button onClick={() => handleShare("twitter")} className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors" title="Share on X">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </button>
+                        <button onClick={() => handleShare("facebook")} className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors" title="Share on Facebook">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </button>
+                      </div>
+                      <Button
+                        className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                        onClick={() => {
+                          const link = document.createElement("a");
+                          link.href = transformedImage;
+                          link.download = `photogrid-${activeTab}.png`;
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                        }}
+                      >
+                        Download
+                      </Button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -384,25 +490,24 @@ export default function SimpleImageEditorNew() {
               // Transformation Controls
               <div>
                 <Tabs defaultValue="grid" value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="grid grid-cols-3 gap-2 mb-6">
-                    <TabsTrigger
-                      value="grid"
-                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
-                    >
-                      Grid
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="lineart"
-                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
-                    >
-                      Line Art
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="sketch"
-                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
-                    >
-                      Sketch
-                    </TabsTrigger>
+                  <TabsList className="flex flex-wrap gap-1 mb-6 h-auto p-1">
+                    {[
+                      { value: "grid", label: "Grid" },
+                      { value: "lineart", label: "Line Art" },
+                      { value: "sketch", label: "Sketch" },
+                      { value: "coloring", label: "Coloring" },
+                      { value: "pbn", label: "Paint by #" },
+                      { value: "pixel", label: "Pixel Art" },
+                      { value: "watercolor", label: "Painting" },
+                    ].map((tab) => (
+                      <TabsTrigger
+                        key={tab.value}
+                        value={tab.value}
+                        className="text-xs px-2 py-1.5 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+                      >
+                        {tab.label}
+                      </TabsTrigger>
+                    ))}
                   </TabsList>
                   
                   <TabsContent value="grid" className="space-y-5">
@@ -639,6 +744,106 @@ export default function SimpleImageEditorNew() {
                       </Button>
                     </div>
                   </TabsContent>
+
+                  <TabsContent value="coloring">
+                    <div className="space-y-5">
+                      <div>
+                        <Label className="block mb-2 text-gray-700">Style</Label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {coloringStyles.map((s) => (
+                            <Button key={s.value} variant={coloringStyle === s.value ? 'default' : 'outline'} onClick={() => setColoringStyle(s.value)} className={coloringStyle === s.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''} size="sm">{s.label}</Button>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Line Thickness</Label><span className="text-sm text-indigo-600 font-medium">{coloringLineThickness}px</span></div>
+                        <Slider min={1} max={5} step={1} value={[coloringLineThickness]} onValueChange={(v) => setColoringLineThickness(v[0])} />
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Detail Level</Label><span className="text-sm text-indigo-600 font-medium">{coloringDetailLevel}%</span></div>
+                        <Slider min={10} max={100} step={5} value={[coloringDetailLevel]} onValueChange={(v) => setColoringDetailLevel(v[0])} />
+                      </div>
+                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyColoringTransform} disabled={isProcessing}>
+                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Coloring Page' : 'Create Coloring Page'}
+                      </Button>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="pbn">
+                    <div className="space-y-5">
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Number of Colors</Label><span className="text-sm text-indigo-600 font-medium">{pbnNumColors}</span></div>
+                        <Slider min={4} max={24} step={1} value={[pbnNumColors]} onValueChange={(v) => setPbnNumColors(v[0])} />
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Number Size</Label><span className="text-sm text-indigo-600 font-medium">{pbnCellSize}px</span></div>
+                        <Slider min={15} max={60} step={5} value={[pbnCellSize]} onValueChange={(v) => setPbnCellSize(v[0])} />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <Label className="text-gray-700">Show Numbers</Label>
+                        <button onClick={() => setPbnShowNumbers(!pbnShowNumbers)} className={`w-10 h-6 rounded-full transition-colors ${pbnShowNumbers ? 'bg-indigo-600' : 'bg-gray-300'}`}>
+                          <div className={`w-4 h-4 rounded-full bg-white transform transition-transform mx-1 ${pbnShowNumbers ? 'translate-x-4' : 'translate-x-0'}`}></div>
+                        </button>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <Label className="text-gray-700">Show Outlines</Label>
+                        <button onClick={() => setPbnShowOutlines(!pbnShowOutlines)} className={`w-10 h-6 rounded-full transition-colors ${pbnShowOutlines ? 'bg-indigo-600' : 'bg-gray-300'}`}>
+                          <div className={`w-4 h-4 rounded-full bg-white transform transition-transform mx-1 ${pbnShowOutlines ? 'translate-x-4' : 'translate-x-0'}`}></div>
+                        </button>
+                      </div>
+                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyPaintByNumbersTransform} disabled={isProcessing}>
+                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Paint by Numbers' : 'Create Paint by Numbers'}
+                      </Button>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="pixel">
+                    <div className="space-y-5">
+                      <div>
+                        <Label className="block mb-2 text-gray-700">Style</Label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {pixelStyles.map((s) => (
+                            <Button key={s.value} variant={pixelStyle === s.value ? 'default' : 'outline'} onClick={() => setPixelStyle(s.value)} className={pixelStyle === s.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''} size="sm">{s.label}</Button>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Pixel Size</Label><span className="text-sm text-indigo-600 font-medium">{pixelSize}px</span></div>
+                        <Slider min={4} max={30} step={1} value={[pixelSize]} onValueChange={(v) => setPixelSize(v[0])} />
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Color Count</Label><span className="text-sm text-indigo-600 font-medium">{pixelColorCount}</span></div>
+                        <Slider min={4} max={64} step={4} value={[pixelColorCount]} onValueChange={(v) => setPixelColorCount(v[0])} />
+                      </div>
+                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyPixelArtTransform} disabled={isProcessing}>
+                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Pixel Art' : 'Create Pixel Art'}
+                      </Button>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="watercolor">
+                    <div className="space-y-5">
+                      <div>
+                        <Label className="block mb-2 text-gray-700">Style</Label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {watercolorStyles.map((s) => (
+                            <Button key={s.value} variant={watercolorStyle === s.value ? 'default' : 'outline'} onClick={() => setWatercolorStyle(s.value)} className={watercolorStyle === s.value ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-0' : ''} size="sm">{s.label}</Button>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Color Intensity</Label><span className="text-sm text-indigo-600 font-medium">{watercolorIntensity}%</span></div>
+                        <Slider min={10} max={100} step={5} value={[watercolorIntensity]} onValueChange={(v) => setWatercolorIntensity(v[0])} />
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-2"><Label className="text-gray-700">Wetness / Blur</Label><span className="text-sm text-indigo-600 font-medium">{watercolorWetness}%</span></div>
+                        <Slider min={10} max={100} step={5} value={[watercolorWetness]} onValueChange={(v) => setWatercolorWetness(v[0])} />
+                      </div>
+                      <Button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" onClick={applyWatercolorTransform} disabled={isProcessing}>
+                        {isProcessing ? (<><div className="mr-2 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>Processing...</>) : transformedImage ? 'Update Painting' : 'Create Painting'}
+                      </Button>
+                    </div>
+                  </TabsContent>
                 </Tabs>
               </div>
             ) : (
@@ -654,24 +859,14 @@ export default function SimpleImageEditorNew() {
                 </p>
                 <div className="bg-gray-50 rounded-xl p-5 w-full mb-6">
                   <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
-                        <Check className="h-4 w-4 text-green-500" />
-                      </div>
-                      <span className="text-gray-700">Create precise grid references for your artwork</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
-                        <Check className="h-4 w-4 text-green-500" />
-                      </div>
-                      <span className="text-gray-700">Convert photos to line art with adjustable styles</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
-                        <Check className="h-4 w-4 text-green-500" />
-                      </div>
-                      <span className="text-gray-700">Transform images into sketch-style drawings</span>
-                    </li>
+                    {["Grid overlays for drawing reference", "Line art & sketch conversion", "Coloring pages & paint by numbers", "Pixel art & watercolor/oil painting"].map((feature) => (
+                      <li key={feature} className="flex items-start">
+                        <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                          <Check className="h-4 w-4 text-green-500" />
+                        </div>
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <Button

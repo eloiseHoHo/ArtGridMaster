@@ -14,30 +14,13 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>
-          Free Online Photo Grid, Line Art & Sketch Converter - PhotoGrid.space
-        </title>
-        <meta
-          name="description"
-          content="Transform photos into artist reference grids, line art, and sketches instantly. 100% free online tool. No signup required. Perfect for drawing, painting, and art practice."
-        />
-        <meta
-          name="keywords"
-          content="free photo grid, online line art converter, photo to sketch, grid method drawing, artist grid tool, free drawing grid, photo to line art, picture to drawing, art reference grid, convert photo to drawing"
-        />
-
-        {/* Open Graph tags */}
-        <meta
-          property="og:title"
-          content="Free Online Photo Grid, Line Art & Sketch Converter - PhotoGrid.space"
-        />
-        <meta
-          property="og:description"
-          content="Transform photos into artist reference grids, line art, and sketches instantly. 100% free online tool. No signup required. Perfect for drawing, painting, and art practice."
-        />
+        <title>Free Photo Grid, Line Art, Sketch & Coloring Tools - PhotoGrid.space</title>
+        <meta name="description" content="Transform photos into grids, line art, sketches, coloring pages, paint by numbers, pixel art & paintings. 100% free, no signup. 7 tools for artists in one place." />
+        <meta name="keywords" content="free photo grid, photo to line art, photo to sketch, photo to coloring page, paint by numbers generator, photo to pixel art, photo to watercolor, grid method drawing, artist tools, free drawing grid" />
+        <meta property="og:title" content="Free Photo Grid, Line Art, Sketch & Coloring Tools - PhotoGrid.space" />
+        <meta property="og:description" content="Transform photos into grids, line art, sketches, coloring pages, paint by numbers, pixel art & paintings. 100% free, no signup. 7 tools for artists in one place." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.photogrid.space" />
-        {/* Canonical URL */}
         <link rel="canonical" href="https://www.photogrid.space" />
       </Helmet>
 
@@ -50,8 +33,7 @@ export default function Home() {
                 Transform Your Photos for Art
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Create grid overlays, line art, and sketches from your photos to
-                improve your drawing skills
+                Create grids, line art, sketches, coloring pages, paint by numbers, pixel art, and paintings from your photos — all free
               </p>
             </div>
           </div>

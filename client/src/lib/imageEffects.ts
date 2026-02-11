@@ -510,7 +510,6 @@ export async function generateSketchEffect(
         }
       }
       
-      // 重置混合模式
       ctx.globalCompositeOperation = "source-over";
       ctx.globalAlpha = 1;
       
@@ -518,9 +517,259 @@ export async function generateSketchEffect(
     };
     
     img.onerror = () => {
-      reject(new Error("图像加载失败"));
+      reject(new Error("Failed to load image"));
     };
     
+    img.src = imageUrl;
+  });
+}
+
+export async function generateColoringPageEffect(
+  imageUrl: string,
+  lineThickness: number = 2,
+  detailLevel: number = 50,
+  style: string = "classic"
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) { reject(new Error("Unable to get canvas context")); return; }
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const w = canvas.width, h = canvas.height;
+      for (let i = 0; i < data.length; i += 4) {
+        const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+        data[i] = gray; data[i + 1] = gray; data[i + 2] = gray;
+      }
+      let edgeThreshold = 4 + (100 - detailLevel) / 10;
+      if (style === "detailed") edgeThreshold = 2;
+      else if (style === "simple") edgeThreshold = 8;
+      else if (style === "bold") edgeThreshold = 5;
+      else if (style === "kids") edgeThreshold = 10;
+      const sobelData = new Uint8ClampedArray(data.length);
+      for (let y = 1; y < h - 1; y++) {
+        for (let x = 1; x < w - 1; x++) {
+          const idx = (y * w + x) * 4;
+          const gx = -data[idx-4-w*4] - 2*data[idx-w*4] - data[idx+4-w*4] + data[idx-4+w*4] + 2*data[idx+w*4] + data[idx+4+w*4];
+          const gy = -data[idx-4-w*4] - 2*data[idx-4] - data[idx-4+w*4] + data[idx+4-w*4] + 2*data[idx+4] + data[idx+4+w*4];
+          const mag = Math.sqrt(gx * gx + gy * gy);
+          const edge = mag > edgeThreshold * 5 ? 0 : 255;
+          sobelData[idx] = edge; sobelData[idx+1] = edge; sobelData[idx+2] = edge; sobelData[idx+3] = 255;
+        }
+      }
+      for (let x = 0; x < w; x++) {
+        const t = x * 4; sobelData[t]=255; sobelData[t+1]=255; sobelData[t+2]=255; sobelData[t+3]=255;
+        const b = ((h-1)*w+x)*4; sobelData[b]=255; sobelData[b+1]=255; sobelData[b+2]=255; sobelData[b+3]=255;
+      }
+      for (let y = 0; y < h; y++) {
+        const l = (y*w)*4; sobelData[l]=255; sobelData[l+1]=255; sobelData[l+2]=255; sobelData[l+3]=255;
+        const r = (y*w+w-1)*4; sobelData[r]=255; sobelData[r+1]=255; sobelData[r+2]=255; sobelData[r+3]=255;
+      }
+      ctx.putImageData(new ImageData(sobelData, w, h), 0, 0);
+      if (lineThickness > 1) {
+        const tc = document.createElement("canvas"); tc.width=w; tc.height=h;
+        const tctx = tc.getContext("2d")!; tctx.drawImage(canvas, 0, 0);
+        ctx.fillStyle = "white"; ctx.fillRect(0, 0, w, h);
+        for (let dx = -(lineThickness-1); dx <= lineThickness-1; dx++) {
+          for (let dy = -(lineThickness-1); dy <= lineThickness-1; dy++) {
+            if (dx*dx+dy*dy <= (lineThickness-1)*(lineThickness-1)) {
+              ctx.globalCompositeOperation = "multiply"; ctx.drawImage(tc, dx, dy);
+            }
+          }
+        }
+        ctx.globalCompositeOperation = "source-over";
+      }
+      resolve(canvas.toDataURL("image/jpeg", 0.95));
+    };
+    img.onerror = () => reject(new Error("Failed to load image"));
+    img.src = imageUrl;
+  });
+}
+
+export async function generatePaintByNumbersEffect(
+  imageUrl: string,
+  numColors: number = 12,
+  cellSize: number = 20,
+  showNumbers: boolean = true,
+  showOutlines: boolean = true
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) { reject(new Error("Unable to get canvas context")); return; }
+      canvas.width = img.width; canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const w = canvas.width, h = canvas.height;
+      const sampleStep = Math.max(1, Math.floor(w * h / 10000));
+      const samples: [number,number,number][] = [];
+      for (let i = 0; i < data.length; i += 4 * sampleStep) samples.push([data[i], data[i+1], data[i+2]]);
+      const kMeans: [number,number,number][] = [];
+      for (let i = 0; i < numColors; i++) { const idx = Math.floor(i * samples.length / numColors); kMeans.push([...samples[idx]]); }
+      for (let iter = 0; iter < 8; iter++) {
+        const clusters: [number,number,number][][] = Array.from({length: numColors}, () => []);
+        for (const s of samples) {
+          let minD = Infinity, best = 0;
+          for (let c = 0; c < numColors; c++) { const d = (s[0]-kMeans[c][0])**2+(s[1]-kMeans[c][1])**2+(s[2]-kMeans[c][2])**2; if (d < minD) { minD=d; best=c; } }
+          clusters[best].push(s);
+        }
+        for (let c = 0; c < numColors; c++) {
+          if (clusters[c].length > 0) {
+            let sr=0,sg=0,sb=0; for (const p of clusters[c]) { sr+=p[0]; sg+=p[1]; sb+=p[2]; }
+            kMeans[c] = [Math.round(sr/clusters[c].length), Math.round(sg/clusters[c].length), Math.round(sb/clusters[c].length)];
+          }
+        }
+      }
+      const colorMap = new Uint8Array(w * h);
+      for (let i = 0; i < data.length; i += 4) {
+        let minD = Infinity, best = 0;
+        for (let c = 0; c < numColors; c++) { const d = (data[i]-kMeans[c][0])**2+(data[i+1]-kMeans[c][1])**2+(data[i+2]-kMeans[c][2])**2; if (d < minD) { minD=d; best=c; } }
+        colorMap[i/4] = best; data[i]=kMeans[best][0]; data[i+1]=kMeans[best][1]; data[i+2]=kMeans[best][2];
+      }
+      ctx.putImageData(imageData, 0, 0);
+      if (showOutlines) {
+        for (let y = 1; y < h; y++) for (let x = 1; x < w; x++) {
+          const idx = y*w+x;
+          if (colorMap[idx] !== colorMap[idx-1] || colorMap[idx] !== colorMap[idx-w]) { ctx.fillStyle="#333"; ctx.fillRect(x,y,1,1); }
+        }
+      }
+      if (showNumbers) {
+        const fs = Math.max(8, Math.min(cellSize/2, 14));
+        ctx.font = `bold ${fs}px Arial`; ctx.textAlign="center"; ctx.textBaseline="middle";
+        for (let cy = Math.floor(cellSize/2); cy < h; cy += cellSize) {
+          for (let cx = Math.floor(cellSize/2); cx < w; cx += cellSize) {
+            const idx = Math.min(cy,h-1)*w+Math.min(cx,w-1);
+            const ci = colorMap[idx]+1; const bg = kMeans[colorMap[idx]];
+            const br = 0.299*bg[0]+0.587*bg[1]+0.114*bg[2];
+            ctx.fillStyle = br > 128 ? "#333" : "#fff"; ctx.strokeStyle = br > 128 ? "#fff" : "#333"; ctx.lineWidth = 2;
+            ctx.strokeText(String(ci), cx, cy); ctx.fillText(String(ci), cx, cy);
+          }
+        }
+      }
+      resolve(canvas.toDataURL("image/jpeg", 0.9));
+    };
+    img.onerror = () => reject(new Error("Failed to load image"));
+    img.src = imageUrl;
+  });
+}
+
+export async function generatePixelArtEffect(
+  imageUrl: string, pixelSize: number = 10, colorCount: number = 16, style: string = "classic"
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) { reject(new Error("Unable to get canvas context")); return; }
+      canvas.width = img.width; canvas.height = img.height;
+      const smallW = Math.floor(img.width / pixelSize);
+      const smallH = Math.floor(img.height / pixelSize);
+      const sc = document.createElement("canvas"); sc.width=smallW; sc.height=smallH;
+      const sctx = sc.getContext("2d")!; sctx.imageSmoothingEnabled=true; sctx.drawImage(img, 0, 0, smallW, smallH);
+      const sd = sctx.getImageData(0, 0, smallW, smallH);
+      const sdd = sd.data;
+      if (colorCount < 256) {
+        const levels = Math.max(2, Math.round(Math.pow(colorCount, 1/3)));
+        const step = 255 / (levels - 1);
+        for (let i = 0; i < sdd.length; i += 4) { sdd[i]=Math.round(sdd[i]/step)*step; sdd[i+1]=Math.round(sdd[i+1]/step)*step; sdd[i+2]=Math.round(sdd[i+2]/step)*step; }
+        sctx.putImageData(sd, 0, 0);
+      }
+      ctx.imageSmoothingEnabled = false;
+      if (style === "rounded") {
+        ctx.fillStyle="#f5f5f5"; ctx.fillRect(0,0,canvas.width,canvas.height);
+        for (let y=0;y<smallH;y++) for (let x=0;x<smallW;x++) {
+          const idx=(y*smallW+x)*4; ctx.fillStyle=`rgb(${sdd[idx]},${sdd[idx+1]},${sdd[idx+2]})`;
+          ctx.beginPath(); ctx.roundRect(x*pixelSize+1,y*pixelSize+1,pixelSize-2,pixelSize-2,pixelSize*0.3); ctx.fill();
+        }
+      } else if (style === "outline") {
+        for (let y=0;y<smallH;y++) for (let x=0;x<smallW;x++) {
+          const idx=(y*smallW+x)*4; ctx.fillStyle=`rgb(${sdd[idx]},${sdd[idx+1]},${sdd[idx+2]})`;
+          ctx.fillRect(x*pixelSize,y*pixelSize,pixelSize,pixelSize);
+          ctx.strokeStyle="rgba(0,0,0,0.15)"; ctx.lineWidth=0.5; ctx.strokeRect(x*pixelSize,y*pixelSize,pixelSize,pixelSize);
+        }
+      } else if (style === "isometric") {
+        ctx.fillStyle="#e8e8e8"; ctx.fillRect(0,0,canvas.width,canvas.height);
+        for (let y=0;y<smallH;y++) for (let x=0;x<smallW;x++) {
+          const idx=(y*smallW+x)*4; const r=sdd[idx],g=sdd[idx+1],b=sdd[idx+2];
+          const br=(r+g+b)/3; const bH=Math.max(1,Math.floor(br/255*pixelSize*0.5));
+          ctx.fillStyle=`rgb(${Math.floor(r*0.7)},${Math.floor(g*0.7)},${Math.floor(b*0.7)})`; ctx.fillRect(x*pixelSize,y*pixelSize+pixelSize-bH,pixelSize,bH);
+          ctx.fillStyle=`rgb(${r},${g},${b})`; ctx.fillRect(x*pixelSize,y*pixelSize,pixelSize,pixelSize-bH);
+        }
+      } else {
+        ctx.drawImage(sc, 0, 0, canvas.width, canvas.height);
+      }
+      resolve(canvas.toDataURL("image/png"));
+    };
+    img.onerror = () => reject(new Error("Failed to load image"));
+    img.src = imageUrl;
+  });
+}
+
+export async function generateWatercolorEffect(
+  imageUrl: string, intensity: number = 50, wetness: number = 50, style: string = "classic"
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) { reject(new Error("Unable to get canvas context")); return; }
+      canvas.width = img.width; canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      const w = canvas.width, h = canvas.height;
+      const imageData = ctx.getImageData(0, 0, w, h);
+      const data = imageData.data;
+      const blurR = Math.max(1, Math.floor(wetness / 10));
+      const blurred = new Uint8ClampedArray(data.length);
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          let r=0,g=0,b=0,cnt=0;
+          for (let dy=-blurR;dy<=blurR;dy++) for (let dx=-blurR;dx<=blurR;dx++) {
+            const nx=Math.min(w-1,Math.max(0,x+dx)), ny=Math.min(h-1,Math.max(0,y+dy));
+            const idx=(ny*w+nx)*4; r+=data[idx]; g+=data[idx+1]; b+=data[idx+2]; cnt++;
+          }
+          const idx=(y*w+x)*4; blurred[idx]=r/cnt; blurred[idx+1]=g/cnt; blurred[idx+2]=b/cnt; blurred[idx+3]=255;
+        }
+      }
+      const satBoost = 1 + intensity / 100;
+      for (let i = 0; i < blurred.length; i += 4) {
+        let r=blurred[i],g=blurred[i+1],b=blurred[i+2];
+        const gray = 0.299*r+0.587*g+0.114*b;
+        r=gray+(r-gray)*satBoost; g=gray+(g-gray)*satBoost; b=gray+(b-gray)*satBoost;
+        r=Math.min(255,r*1.05+10); g=Math.min(255,g*1.05+10); b=Math.min(255,b*1.05+10);
+        const pi=i/4, px=pi%w, py=Math.floor(pi/w);
+        const ns=Math.sin(px*12.9898+py*78.233)*43758.5453;
+        const n=(ns-Math.floor(ns))*10-5;
+        blurred[i]=Math.min(255,Math.max(0,r+n)); blurred[i+1]=Math.min(255,Math.max(0,g+n)); blurred[i+2]=Math.min(255,Math.max(0,b+n));
+      }
+      ctx.putImageData(new ImageData(blurred, w, h), 0, 0);
+      if (style==="classic"||style==="wet") { ctx.globalCompositeOperation="screen"; ctx.globalAlpha=0.08+wetness/500; ctx.fillStyle="#faf8f0"; ctx.fillRect(0,0,w,h); }
+      if (style==="oil") { ctx.globalCompositeOperation="multiply"; ctx.globalAlpha=0.05; ctx.fillStyle="#f0e8d8"; ctx.fillRect(0,0,w,h); }
+      if (style==="impressionist") {
+        ctx.globalCompositeOperation="overlay"; ctx.globalAlpha=0.03;
+        for (let i=0;i<200;i++) { ctx.beginPath(); ctx.arc(Math.random()*w,Math.random()*h,Math.random()*20+5,0,Math.PI*2); ctx.fillStyle="rgba(255,255,255,0.03)"; ctx.fill(); }
+      }
+      ctx.globalCompositeOperation="screen"; ctx.globalAlpha=0.15;
+      const grad=ctx.createRadialGradient(w/2,h/2,0,w/2,h/2,Math.max(w,h)*0.7);
+      grad.addColorStop(0,"rgba(255,255,255,0.3)"); grad.addColorStop(1,"rgba(255,255,255,0)");
+      ctx.fillStyle=grad; ctx.fillRect(0,0,w,h);
+      ctx.globalCompositeOperation="source-over"; ctx.globalAlpha=1;
+      resolve(canvas.toDataURL("image/jpeg", 0.9));
+    };
+    img.onerror = () => reject(new Error("Failed to load image"));
     img.src = imageUrl;
   });
 }
