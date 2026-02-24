@@ -7,6 +7,20 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const blockedPaths = [
+  '/wp-login.php', '/wp-admin', '/wp-content', '/wp-includes',
+  '/wp-json', '/xmlrpc.php', '/wp-cron.php', '/wp-config',
+  '/.env', '/.git', '/phpmyadmin', '/administrator',
+  '/wp-signup.php', '/wp-trackback.php', '/wp-links-opml.php',
+];
+app.use((req, res, next) => {
+  const p = req.path.toLowerCase();
+  if (blockedPaths.some(blocked => p.startsWith(blocked))) {
+    return res.status(404).end();
+  }
+  next();
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
