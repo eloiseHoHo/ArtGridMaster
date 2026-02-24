@@ -9,6 +9,9 @@ const Home = lazy(() => import("@/pages/home"));
 const Transform = lazy(() => import("@/pages/transform"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPost = lazy(() => import("@/pages/blog/BlogPost"));
+const BeginnerGuideToPixelArt = lazy(() => import("@/pages/blog/beginner-guide-to-pixel-art"));
+const LineArtVsSketch = lazy(() => import("@/pages/blog/line-art-vs-sketch-which-style-for-your-art"));
+const HowToCreateColoringPages = lazy(() => import("@/pages/blog/how-to-create-coloring-pages-from-photos"));
 const HowToUseGridForPerfectPortraits = lazy(() => import("@/pages/blog/how-to-use-grid-for-perfect-portraits"));
 const GridMethodForPerfectPortraits = lazy(() => import("@/pages/blog/grid-method-for-perfect-portraits"));
 const PerspectiveGridTechniquesForLandscapes = lazy(() => import("@/pages/blog/perspective-grid-techniques-for-landscapes"));
@@ -41,6 +44,9 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/transform/:id" component={Transform} />
         <Route path="/blog" component={Blog} />
+        <Route path="/blog/beginner-guide-to-pixel-art" component={BeginnerGuideToPixelArt} />
+        <Route path="/blog/line-art-vs-sketch-which-style-for-your-art" component={LineArtVsSketch} />
+        <Route path="/blog/how-to-create-coloring-pages-from-photos" component={HowToCreateColoringPages} />
         <Route path="/blog/how-to-use-grid-for-perfect-portraits" component={HowToUseGridForPerfectPortraits} />
         <Route path="/blog/grid-method-for-perfect-portraits" component={GridMethodForPerfectPortraits} />
         <Route path="/blog/perspective-grid-techniques-for-landscapes" component={PerspectiveGridTechniquesForLandscapes} />

@@ -72,6 +72,24 @@ const routeMeta: Record<string, PageMeta> = {
     ogType: "article",
     keywords: "perspective grid landscape, landscape drawing techniques, vanishing point grid, perspective drawing tutorial",
   },
+  "/blog/line-art-vs-sketch-which-style-for-your-art": {
+    title: "Line Art vs Sketch: Which Drawing Style is Right for Your Art? | PhotoGrid.space Blog",
+    description: "Compare line art and sketch drawing styles. Learn the key differences, when to use each, and how to convert photos to both styles using free online tools.",
+    ogType: "article",
+    keywords: "line art vs sketch, difference between line art and sketch, line art drawing, sketch drawing style, convert photo to line art",
+  },
+  "/blog/how-to-create-coloring-pages-from-photos": {
+    title: "How to Create Custom Coloring Pages from Your Photos | PhotoGrid.space Blog",
+    description: "Turn any photo into a printable coloring page. Step-by-step guide to making custom coloring books for kids and adults. Free online coloring page maker.",
+    ogType: "article",
+    keywords: "create coloring pages from photos, photo to coloring page, custom coloring book, make your own coloring pages, free coloring page maker",
+  },
+  "/blog/beginner-guide-to-pixel-art": {
+    title: "Beginner's Guide to Pixel Art: From Photos to Retro Masterpieces | PhotoGrid.space Blog",
+    description: "Learn how to create pixel art from photos. Complete beginner's guide covering pixel art fundamentals, photo conversion, and creative uses for retro-style art.",
+    ogType: "article",
+    keywords: "pixel art tutorial, how to make pixel art, photo to pixel art, pixel art converter, pixel art for beginners",
+  },
   "/blog/grid-drawing-for-beginners": {
     title: "Complete Guide to Grid Drawing for Beginners | PhotoGrid.space Blog",
     description: "Start your grid drawing journey with this comprehensive beginner's guide. Learn the grid method step by step, from setup to finished artwork. Free tips and techniques for new artists.",

@@ -8,6 +8,36 @@ export default function Blog() {
   // Blog posts data - in a real application, this would come from an API
   const blogPosts = [
     {
+      id: 12,
+      slug: "beginner-guide-to-pixel-art",
+      title: "Beginner's Guide to Pixel Art: From Photos to Retro Masterpieces",
+      excerpt: "Learn how to create pixel art from photos. Complete beginner's guide covering pixel art fundamentals, photo conversion, and creative uses for retro-style art.",
+      date: "2026-02-10",
+      readTime: "10 min read",
+      image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      category: "Tutorial"
+    },
+    {
+      id: 11,
+      slug: "how-to-create-coloring-pages-from-photos",
+      title: "How to Create Custom Coloring Pages from Your Photos",
+      excerpt: "Turn any photo into a printable coloring page. Step-by-step guide to making custom coloring books for kids and adults using free online tools.",
+      date: "2026-02-05",
+      readTime: "9 min read",
+      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      category: "Tutorial"
+    },
+    {
+      id: 10,
+      slug: "line-art-vs-sketch-which-style-for-your-art",
+      title: "Line Art vs Sketch: Which Drawing Style is Right for Your Art?",
+      excerpt: "Compare line art and sketch drawing styles. Learn the key differences, when to use each, and how to convert photos to both styles.",
+      date: "2026-01-15",
+      readTime: "8 min read",
+      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      category: "Guide"
+    },
+    {
       id: 9,
       slug: "perspective-grid-techniques-for-landscapes",
       title: "Perspective Grid Techniques for Landscape Painting",
@@ -91,7 +121,7 @@ export default function Blog() {
   ];
 
   // Categories for filter
-  const categories = ["All", "Tutorials", "Techniques", "Digital Art", "Tips & Tricks"];
+  const categories = ["All", "Tutorial", "Guide", "Tutorials", "Techniques", "Digital Art", "Tips & Tricks"];
 
   return (
     <>
