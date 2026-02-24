@@ -1,4 +1,4 @@
-import { useState, useCallback, FormEvent } from "react";
+import { useState, useCallback, useRef, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
@@ -16,6 +16,9 @@ export default function SimpleImageEditorNew() {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isUrlMode, setIsUrlMode] = useState<boolean>(false);
   const [urlError, setUrlError] = useState<string | null>(null);
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const sliderContainerRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef(false);
 
   const [gridSize, setGridSize] = useState(50);
   const [gridOpacity, setGridOpacity] = useState(70);
@@ -90,6 +93,37 @@ export default function SimpleImageEditorNew() {
     { value: "oil", label: "Oil" },
     { value: "impressionist", label: "Impressionist" }
   ];
+
+  const handleSliderMove = useCallback((clientX: number) => {
+    if (!sliderContainerRef.current || !isDraggingRef.current) return;
+    const rect = sliderContainerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percent);
+  }, []);
+
+  const handleSliderStart = useCallback((clientX: number) => {
+    isDraggingRef.current = true;
+    if (!sliderContainerRef.current) return;
+    const rect = sliderContainerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percent);
+
+    const onMouseMove = (e: MouseEvent) => handleSliderMove(e.clientX);
+    const onTouchMove = (e: TouchEvent) => handleSliderMove(e.touches[0].clientX);
+    const onEnd = () => {
+      isDraggingRef.current = false;
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onEnd);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onEnd);
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onEnd);
+    window.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("touchend", onEnd);
+  }, [handleSliderMove]);
 
   const MAX_IMAGE_DIM = 2000;
   const resizeImageIfNeeded = (dataUrl: string): Promise<string> => {
@@ -179,8 +213,8 @@ export default function SimpleImageEditorNew() {
   };
 
   const ToggleSwitch = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
-    <button onClick={onChange} className={`relative w-9 h-5 rounded-full transition-colors ${checked ? 'bg-gray-900' : 'bg-gray-200'}`}>
-      <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${checked ? 'translate-x-4' : ''}`} />
+    <button onClick={onChange} className={`relative w-9 h-5 rounded-full transition-colors ${checked ? 'bg-gray-900 dark:bg-gray-100' : 'bg-gray-200 dark:bg-gray-600'}`}>
+      <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white dark:bg-gray-900 transition-transform ${checked ? 'translate-x-4' : ''}`} />
     </button>
   );
 
@@ -190,7 +224,7 @@ export default function SimpleImageEditorNew() {
         <button
           key={o.value}
           onClick={() => onChange(o.value)}
-          className={`px-2.5 py-1.5 text-xs rounded-md border transition-colors ${value === o.value ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'}`}
+          className={`px-2.5 py-1.5 text-xs rounded-md border transition-colors ${value === o.value ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-gray-900 dark:border-gray-100' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'}`}
         >
           {o.label}
         </button>
@@ -201,8 +235,8 @@ export default function SimpleImageEditorNew() {
   const SliderControl = ({ label, value, unit, min, max, step, onChange }: { label: string; value: number; unit?: string; min: number; max: number; step: number; onChange: (v: number) => void }) => (
     <div>
       <div className="flex justify-between mb-2">
-        <Label className="text-xs text-gray-500">{label}</Label>
-        <span className="text-xs text-gray-900 font-medium tabular-nums">{value}{unit}</span>
+        <Label className="text-xs text-gray-500 dark:text-gray-400">{label}</Label>
+        <span className="text-xs text-gray-900 dark:text-gray-100 font-medium tabular-nums">{value}{unit}</span>
       </div>
       <Slider min={min} max={max} step={step} value={[value]} onValueChange={(v) => onChange(v[0])} />
     </div>
@@ -211,14 +245,14 @@ export default function SimpleImageEditorNew() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
-          <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-900">Image</span>
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
+          <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Image</span>
             {uploadedImage && (
               <div className="flex items-center gap-2">
                 {transformedImage && (
                   <button
-                    className="text-xs text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1"
+                    className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
                     onClick={() => {
                       const link = document.createElement("a");
                       link.href = transformedImage;
@@ -233,7 +267,7 @@ export default function SimpleImageEditorNew() {
                   </button>
                 )}
                 <button
-                  className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                   onClick={() => { setUploadedImage(null); setTransformedImage(null); }}
                 >
                   Clear
@@ -244,16 +278,16 @@ export default function SimpleImageEditorNew() {
 
           <div className="p-4">
             {!uploadedImage ? (
-              <div className="rounded-lg border border-dashed border-gray-200 bg-gray-50/50">
-                <div className="flex gap-0 border-b border-gray-200">
+              <div className="rounded-lg border border-dashed border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                <div className="flex gap-0 border-b border-gray-200 dark:border-gray-700">
                   <button
-                    className={`flex-1 py-2 text-xs font-medium transition-colors ${!isUrlMode ? 'text-gray-900 bg-white' : 'text-gray-400 hover:text-gray-600'}`}
+                    className={`flex-1 py-2 text-xs font-medium transition-colors ${!isUrlMode ? 'text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                     onClick={() => setIsUrlMode(false)}
                   >
                     Upload File
                   </button>
                   <button
-                    className={`flex-1 py-2 text-xs font-medium transition-colors ${isUrlMode ? 'text-gray-900 bg-white' : 'text-gray-400 hover:text-gray-600'}`}
+                    className={`flex-1 py-2 text-xs font-medium transition-colors ${isUrlMode ? 'text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                     onClick={() => setIsUrlMode(true)}
                   >
                     From URL
@@ -263,7 +297,7 @@ export default function SimpleImageEditorNew() {
                 {!isUrlMode ? (
                   <div
                     {...getRootProps()}
-                    className="flex flex-col items-center justify-center py-16 px-6 cursor-pointer hover:bg-gray-50 transition-colors"
+                    className="flex flex-col items-center justify-center py-16 px-6 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
                     <input {...getInputProps()} id="fileInput" />
                     <Upload className="h-8 w-8 text-gray-300 mb-4" />
@@ -300,16 +334,58 @@ export default function SimpleImageEditorNew() {
                   </div>
                 )}
               </div>
+            ) : transformedImage && !isProcessing ? (
+              <div
+                ref={sliderContainerRef}
+                className="relative rounded-lg overflow-hidden bg-gray-50 border border-gray-100 aspect-square cursor-col-resize select-none"
+                onMouseDown={(e) => handleSliderStart(e.clientX)}
+                onTouchStart={(e) => handleSliderStart(e.touches[0].clientX)}
+              >
+                <img
+                  src={transformedImage}
+                  alt="Transformed"
+                  className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                  draggable={false}
+                />
+                <div
+                  className="absolute inset-0 overflow-hidden pointer-events-none"
+                  style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+                >
+                  <img
+                    src={uploadedImage}
+                    alt="Original"
+                    className="absolute inset-0 w-full h-full object-contain"
+                    draggable={false}
+                  />
+                </div>
+                <div
+                  className="absolute top-0 bottom-0 pointer-events-none"
+                  style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+                >
+                  <div className="w-0.5 h-full bg-white shadow-[0_0_4px_rgba(0,0,0,0.3)]" />
+                  <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-gray-500">
+                      <path d="M4.5 3L1.5 7L4.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M9.5 3L12.5 7L9.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+                <span className="absolute top-2 left-2 text-[10px] font-medium text-gray-600 bg-white/80 px-1.5 py-0.5 rounded pointer-events-none">Original</span>
+                <span className="absolute top-2 right-2 text-[10px] font-medium text-gray-600 bg-white/80 px-1.5 py-0.5 rounded pointer-events-none">Transformed</span>
+              </div>
             ) : (
               <div className="relative rounded-lg overflow-hidden bg-gray-50 border border-gray-100 aspect-square">
                 <img
-                  src={transformedImage || uploadedImage}
+                  src={uploadedImage}
                   alt="Preview"
                   className="w-full h-full object-contain"
                 />
                 {isProcessing && (
-                  <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-300 border-t-gray-600"></div>
+                  <div className="absolute inset-0 bg-white/80 flex flex-col items-center justify-center gap-3">
+                    <div className="animate-pulse text-sm font-medium text-gray-600">Processing your image...</div>
+                    <div className="w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-gray-500 rounded-full animate-indeterminate" />
+                    </div>
                   </div>
                 )}
               </div>
@@ -317,15 +393,15 @@ export default function SimpleImageEditorNew() {
           </div>
         </div>
 
-        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
-          <div className="px-5 py-3 border-b border-gray-100">
-            <span className="text-sm font-medium text-gray-900">Settings</span>
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
+          <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800">
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Settings</span>
           </div>
 
           <div className="p-4">
             {uploadedImage ? (
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="flex flex-wrap gap-1 mb-5 h-auto p-1 bg-gray-50 rounded-md">
+                <TabsList className="flex flex-wrap gap-1 mb-5 h-auto p-1 bg-gray-50 dark:bg-gray-800 rounded-md">
                   {[
                     { value: "grid", label: "Grid" },
                     { value: "lineart", label: "Line Art" },
@@ -338,7 +414,7 @@ export default function SimpleImageEditorNew() {
                     <TabsTrigger
                       key={tab.value}
                       value={tab.value}
-                      className="text-xs px-2.5 py-1.5 rounded data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm text-gray-500"
+                      className="text-xs px-2.5 py-1.5 rounded data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 data-[state=active]:shadow-sm text-gray-500 dark:text-gray-400"
                     >
                       {tab.label}
                     </TabsTrigger>
@@ -350,7 +426,7 @@ export default function SimpleImageEditorNew() {
                   <SliderControl label="Opacity" value={gridOpacity} unit="%" min={10} max={100} step={5} onChange={setGridOpacity} />
                   <SliderControl label="Thickness" value={gridThickness} unit="px" min={1} max={5} step={0.5} onChange={setGridThickness} />
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Color</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Color</Label>
                     <div className="flex gap-2">
                       {['#000000', '#EF4444', '#3B82F6', '#10B981', '#8B5CF6'].map((c) => (
                         <button
@@ -363,7 +439,7 @@ export default function SimpleImageEditorNew() {
                     </div>
                   </div>
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
                     <StyleGrid options={[{ value: "lines", label: "Solid" }, { value: "dots", label: "Dots" }, { value: "dashed", label: "Dashed" }]} value={gridStyle} onChange={setGridStyle} />
                   </div>
                 </TabsContent>
@@ -372,19 +448,19 @@ export default function SimpleImageEditorNew() {
                   <SliderControl label="Edge Threshold" value={lineThreshold} min={20} max={200} step={1} onChange={setLineThreshold} />
                   <SliderControl label="Line Thickness" value={lineThickness} unit="px" min={0.5} max={3} step={0.1} onChange={setLineThickness} />
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
                     <StyleGrid options={lineArtStyles} value={lineStyle} onChange={setLineStyle} cols={2} />
                   </div>
                 </TabsContent>
 
                 <TabsContent value="sketch" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
                     <StyleGrid options={sketchStyles} value={sketchStyle} onChange={setSketchStyle} cols={2} />
                   </div>
                   <SliderControl label="Intensity" value={sketchIntensity} unit="%" min={10} max={100} step={1} onChange={setSketchIntensity} />
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Pencil Type</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Pencil Type</Label>
                     <StyleGrid options={pencilTypes} value={pencilType} onChange={setPencilType} cols={2} />
                   </div>
                   <SliderControl label="Shading" value={shadingLevel} unit="%" min={0} max={100} step={1} onChange={setShadingLevel} />
@@ -392,7 +468,7 @@ export default function SimpleImageEditorNew() {
 
                 <TabsContent value="coloring" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
                     <StyleGrid options={coloringStyles} value={coloringStyle} onChange={setColoringStyle} />
                   </div>
                   <SliderControl label="Line Thickness" value={coloringLineThickness} unit="px" min={1} max={5} step={1} onChange={setColoringLineThickness} />
@@ -403,18 +479,18 @@ export default function SimpleImageEditorNew() {
                   <SliderControl label="Colors" value={pbnNumColors} min={4} max={24} step={1} onChange={setPbnNumColors} />
                   <SliderControl label="Region Size" value={pbnCellSize} unit="px" min={15} max={60} step={5} onChange={setPbnCellSize} />
                   <div className="flex items-center justify-between">
-                    <Label className="text-xs text-gray-500">Show Numbers</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400">Show Numbers</Label>
                     <ToggleSwitch checked={pbnShowNumbers} onChange={() => setPbnShowNumbers(!pbnShowNumbers)} />
                   </div>
                   <div className="flex items-center justify-between">
-                    <Label className="text-xs text-gray-500">Show Outlines</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400">Show Outlines</Label>
                     <ToggleSwitch checked={pbnShowOutlines} onChange={() => setPbnShowOutlines(!pbnShowOutlines)} />
                   </div>
                 </TabsContent>
 
                 <TabsContent value="pixel" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
                     <StyleGrid options={pixelStyles} value={pixelStyle} onChange={setPixelStyle} cols={2} />
                   </div>
                   <SliderControl label="Pixel Size" value={pixelSize} unit="px" min={4} max={30} step={1} onChange={setPixelSize} />
@@ -423,7 +499,7 @@ export default function SimpleImageEditorNew() {
 
                 <TabsContent value="watercolor" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
                     <StyleGrid options={watercolorStyles} value={watercolorStyle} onChange={setWatercolorStyle} cols={2} />
                   </div>
                   <SliderControl label="Intensity" value={watercolorIntensity} unit="%" min={10} max={100} step={5} onChange={setWatercolorIntensity} />
@@ -445,9 +521,9 @@ export default function SimpleImageEditorNew() {
               </Tabs>
             ) : (
               <div className="text-center py-12">
-                <ImageIcon className="h-10 w-10 text-gray-200 mx-auto mb-4" />
-                <p className="text-sm text-gray-500 mb-1">Upload an image to get started</p>
-                <p className="text-xs text-gray-400">7 transformation tools available</p>
+                <ImageIcon className="h-10 w-10 text-gray-200 dark:text-gray-600 mx-auto mb-4" />
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Upload an image to get started</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">7 transformation tools available</p>
                 <Button
                   variant="outline"
                   size="sm"
