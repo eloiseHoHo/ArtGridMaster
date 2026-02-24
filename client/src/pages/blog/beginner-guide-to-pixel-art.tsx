@@ -16,9 +16,9 @@ export default function BeginnerGuideToPixelArt() {
         <meta property="og:title" content="Beginner's Guide to Pixel Art: From Photos to Retro Masterpieces | PhotoGrid.space" />
         <meta property="og:description" content="Master pixel art with our comprehensive tutorial for beginners. Learn techniques, tools, and creative applications for pixel art creation." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://www.photogrid.space/blog/beginner-guide-to-pixel-art" />
+        <meta property="og:url" content="https://photogrid.space/blog/beginner-guide-to-pixel-art" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/blog/beginner-guide-to-pixel-art" />
+        <link rel="canonical" href="https://photogrid.space/blog/beginner-guide-to-pixel-art" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

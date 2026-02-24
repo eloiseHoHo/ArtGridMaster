@@ -89,9 +89,9 @@ export default function ArchitecturePhotoGrid() {
         <meta property="og:title" content="Architecture Photo Grid: Create Perfect Building References | PhotoGrid.space" />
         <meta property="og:description" content="Transform architectural photos into perfect grid references. Our Architecture Photo Grid tool helps artists capture buildings with accurate perspective." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/categories/architecture-photo-grid" />
+        <meta property="og:url" content="https://photogrid.space/categories/architecture-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/categories/architecture-photo-grid" />
+        <link rel="canonical" href="https://photogrid.space/categories/architecture-photo-grid" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

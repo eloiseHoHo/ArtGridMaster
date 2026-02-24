@@ -88,9 +88,9 @@ export default function Categories() {
         <meta property="og:title" content="Photo Grid Categories for Artists | PhotoGrid.space" />
         <meta property="og:description" content="Explore our specialized Photo Grid categories for artists: Portrait, Landscape, Animal, Still Life, Architecture, and Figure grid references." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/categories" />
+        <meta property="og:url" content="https://photogrid.space/categories" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/categories" />
+        <link rel="canonical" href="https://photogrid.space/categories" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

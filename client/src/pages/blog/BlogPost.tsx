@@ -427,10 +427,10 @@ export default function BlogPost() {
         <meta property="og:title" content={post.title + " | Photo Grid Blog"} />
         <meta property="og:description" content={post.content.split('<p>')[1].split('</p>')[0].substring(0, 160) + "..."} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://www.photogrid.space/blog/${slug}`} />
+        <meta property="og:url" content={`https://photogrid.space/blog/${slug}`} />
         <meta property="og:image" content={post.featuredImage} />
         {/* Canonical URL */}
-        <link rel="canonical" href={`https://www.photogrid.space/blog/${slug}`} />
+        <link rel="canonical" href={`https://photogrid.space/blog/${slug}`} />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

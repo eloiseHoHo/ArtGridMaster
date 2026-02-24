@@ -68,9 +68,9 @@ export default function WomenPortraitPhotoGrid() {
         <meta property="og:title" content="Women Portrait Photo Grid: Create Perfect Female Portrait References" />
         <meta property="og:description" content="Transform photos into perfect grid references for female portrait art. Capture accurate facial proportions and beautiful details." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/categories/portrait-photo-grid/women-portrait-photo-grid" />
+        <meta property="og:url" content="https://photogrid.space/categories/portrait-photo-grid/women-portrait-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/categories/portrait-photo-grid/women-portrait-photo-grid" />
+        <link rel="canonical" href="https://photogrid.space/categories/portrait-photo-grid/women-portrait-photo-grid" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

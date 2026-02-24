@@ -65,9 +65,9 @@ export default function ChildrenPortraitPhotoGrid() {
         <meta property="og:title" content="Children Portrait Photo Grid: Kids Drawing Reference for Artists | PhotoGrid" />
         <meta property="og:description" content="Transform children's portrait photos into perfect grid references. Our Children Portrait Photo Grid tool helps artists capture accurate facial proportions and youthful features." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/categories/portrait-photo-grid/children-portrait-photo-grid" />
+        <meta property="og:url" content="https://photogrid.space/categories/portrait-photo-grid/children-portrait-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/categories/portrait-photo-grid/children-portrait-photo-grid" />
+        <link rel="canonical" href="https://photogrid.space/categories/portrait-photo-grid/children-portrait-photo-grid" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

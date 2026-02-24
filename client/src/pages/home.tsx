@@ -25,7 +25,7 @@ const appSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "PhotoGrid.space",
-  "url": "https://www.photogrid.space",
+  "url": "https://photogrid.space",
   "description": "Free online photo transformation tools for artists - grids, line art, sketches, coloring pages, paint by numbers, pixel art, and painting effects",
   "applicationCategory": "DesignApplication",
   "operatingSystem": "Web",
@@ -44,8 +44,8 @@ export default function Home() {
         <meta property="og:title" content="Free Photo Grid Maker, Line Art & Sketch Creator for Artists | PhotoGrid.space" />
         <meta property="og:description" content="Transform photos into artist grids, line art, sketches, coloring pages, paint by numbers, pixel art & paintings. 100% free, no signup. 7 tools for artists in one place." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space" />
-        <link rel="canonical" href="https://www.photogrid.space" />
+        <meta property="og:url" content="https://photogrid.space" />
+        <link rel="canonical" href="https://photogrid.space" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

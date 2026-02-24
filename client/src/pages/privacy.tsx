@@ -7,11 +7,11 @@ export default function PrivacyPolicy() {
       <Helmet>
         <title>Privacy Policy - PhotoGrid.space</title>
         <meta name="description" content="Privacy Policy for PhotoGrid.space. Learn how we handle your data and protect your privacy." />
-        <link rel="canonical" href="https://www.photogrid.space/privacy" />
+        <link rel="canonical" href="https://photogrid.space/privacy" />
         <meta property="og:title" content="Privacy Policy - PhotoGrid.space" />
         <meta property="og:description" content="Privacy Policy for PhotoGrid.space. Learn how we handle your data and protect your privacy." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/privacy" />
+        <meta property="og:url" content="https://photogrid.space/privacy" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

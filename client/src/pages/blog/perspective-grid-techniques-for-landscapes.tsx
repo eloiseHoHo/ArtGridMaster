@@ -16,9 +16,9 @@ export default function PerspectiveGridTechniquesForLandscapes() {
         <meta property="og:title" content="Perspective Grid Techniques for Landscape Painting | Professional Art Methods" />
         <meta property="og:description" content="Learn how to use perspective grids to create stunning landscape art with accurate depth, distance, and scale. Perfect for artists of all levels." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://www.photogrid.space/blog/perspective-grid-techniques-for-landscapes" />
+        <meta property="og:url" content="https://photogrid.space/blog/perspective-grid-techniques-for-landscapes" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/blog/perspective-grid-techniques-for-landscapes" />
+        <link rel="canonical" href="https://photogrid.space/blog/perspective-grid-techniques-for-landscapes" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

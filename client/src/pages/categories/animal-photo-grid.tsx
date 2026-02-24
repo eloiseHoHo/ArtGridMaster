@@ -89,9 +89,9 @@ export default function AnimalPhotoGrid() {
         <meta property="og:title" content="Animal Photo Grid: Transform Wildlife Photos for Artists | PhotoGrid.space" />
         <meta property="og:description" content="Transform animal photos into perfect grid references. Our Animal Photo Grid tool helps artists capture accurate proportions and details of any species." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/categories/animal-photo-grid" />
+        <meta property="og:url" content="https://photogrid.space/categories/animal-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/categories/animal-photo-grid" />
+        <link rel="canonical" href="https://photogrid.space/categories/animal-photo-grid" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

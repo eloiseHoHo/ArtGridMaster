@@ -134,8 +134,8 @@ export default function Blog() {
         <meta property="og:title" content="Photo Grid Blog: Tips, Techniques & Tutorials | PhotoGrid.space" />
         <meta property="og:description" content="Explore our Photo Grid blog with expert tips, step-by-step tutorials, and advanced techniques to enhance your artistic skills." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/blog" />
-        <link rel="canonical" href="https://www.photogrid.space/blog" />
+        <meta property="og:url" content="https://photogrid.space/blog" />
+        <link rel="canonical" href="https://photogrid.space/blog" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

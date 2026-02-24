@@ -89,9 +89,9 @@ export default function PortraitPhotoGrid() {
         <meta property="og:title" content="Portrait Photo Grid: Expert Guide for Artist References | PhotoGrid.space" />
         <meta property="og:description" content="Transform portrait photos into perfect grid references. Our Portrait Photo Grid tool helps artists capture accurate facial proportions and details." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.photogrid.space/categories/portrait-photo-grid" />
+        <meta property="og:url" content="https://photogrid.space/categories/portrait-photo-grid" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/categories/portrait-photo-grid" />
+        <link rel="canonical" href="https://photogrid.space/categories/portrait-photo-grid" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

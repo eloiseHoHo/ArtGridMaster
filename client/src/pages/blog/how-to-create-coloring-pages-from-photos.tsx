@@ -16,9 +16,9 @@ export default function HowToCreateColoringPagesFromPhotos() {
         <meta property="og:title" content="How to Create Custom Coloring Pages from Your Photos | PhotoGrid.space" />
         <meta property="og:description" content="Transform your favorite photos into stunning coloring pages with our comprehensive guide. Create custom coloring books for kids and adults using PhotoGrid.space." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://www.photogrid.space/blog/how-to-create-coloring-pages-from-photos" />
+        <meta property="og:url" content="https://photogrid.space/blog/how-to-create-coloring-pages-from-photos" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/blog/how-to-create-coloring-pages-from-photos" />
+        <link rel="canonical" href="https://photogrid.space/blog/how-to-create-coloring-pages-from-photos" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />

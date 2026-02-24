@@ -5,7 +5,7 @@ interface PageMeta {
   keywords?: string;
 }
 
-const DOMAIN = "https://www.photogrid.space";
+const DOMAIN = "https://photogrid.space";
 
 const routeMeta: Record<string, PageMeta> = {
   "/": {

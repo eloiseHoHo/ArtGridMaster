@@ -16,9 +16,9 @@ export default function LineArtVsSketchWhichStyleForYourArt() {
         <meta property="og:title" content="Line Art vs Sketch: Which Drawing Style is Right for Your Art? | PhotoGrid.space" />
         <meta property="og:description" content="Master the differences between line art and sketch styles. Learn their unique characteristics, when to use each, and how to convert photos to both formats." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://www.photogrid.space/blog/line-art-vs-sketch-which-style-for-your-art" />
+        <meta property="og:url" content="https://photogrid.space/blog/line-art-vs-sketch-which-style-for-your-art" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.photogrid.space/blog/line-art-vs-sketch-which-style-for-your-art" />
+        <link rel="canonical" href="https://photogrid.space/blog/line-art-vs-sketch-which-style-for-your-art" />
         <meta name="geo.region" content="US" />
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />
