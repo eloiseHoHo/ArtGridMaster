@@ -250,7 +250,7 @@ export default function PerspectiveGridTechniquesForLandscapes() {
           <h3>5. The PhotoGrid.space Landscape Grid</h3>
           
           <p>
-            Our PhotoGrid.space tool offers specialized landscape grid options that combine traditional perspective principles with practical reference tools:
+            Our <Link href="/photo-to-grid"><a className="text-primary hover:underline font-medium">Photo Grid Maker tool</a></Link> offers specialized landscape grid options that combine traditional perspective principles with practical reference tools:
           </p>
           
           <ul>
@@ -290,7 +290,7 @@ export default function PerspectiveGridTechniquesForLandscapes() {
           <h3>3. Apply the Grid to Your Reference</h3>
           
           <p>
-            Using PhotoGrid.space:
+            Using <Link href="/photo-to-grid"><a className="text-primary hover:underline font-medium">PhotoGrid.space</a></Link>:
           </p>
           
           <ol>
@@ -433,8 +433,14 @@ export default function PerspectiveGridTechniquesForLandscapes() {
             Ready to improve your landscape perspective? Try our PhotoGrid.space tool today to generate perfect perspective grids for your next landscape masterpiece!
           </p>
         </div>
-        
 
+        <div className="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-center">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Ready to Try the Grid Method?</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">Create your own grid overlay on any photo with our free tool.</p>
+          <Link href="/photo-to-grid">
+            <a className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium">Try Photo Grid Maker Free</a>
+          </Link>
+        </div>
         
         {/* Share and action buttons */}
         <div className="flex justify-between items-center my-8">

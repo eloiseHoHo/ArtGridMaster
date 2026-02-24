@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Check, Palette, Hash, ScanLine, BookImage, Home, Gift, GraduationCap, Heart } from "lucide-react";
+import RelatedTools from "@/components/RelatedTools";
 
 export default function PhotoToPaintByNumbers() {
   return (
@@ -28,14 +29,14 @@ export default function PhotoToPaintByNumbers() {
       </Helmet>
 
       <main>
-        <section className="bg-white py-16 sm:py-24">
+        <section className="bg-white dark:bg-gray-950 py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
                   Create <span className="text-primary">Paint by Numbers</span> from Any Photo
                 </h1>
-                <p className="mt-6 text-lg text-gray-600 max-w-3xl">
+                <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
                   Transform your favorite photos into beautiful paint by numbers templates with our free online generator. Choose your color palette, get numbered regions with a printable legend, and start painting. Perfect for beginners, hobbyists, and gift-givers — no signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -48,8 +49,8 @@ export default function PhotoToPaintByNumbers() {
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
-                <div className="w-full max-w-md mx-auto rounded-lg shadow-md overflow-hidden bg-white p-6">
-                  <div className="relative w-full h-72 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
+                <div className="w-full max-w-md mx-auto rounded-lg shadow-md dark:shadow-gray-900/50 overflow-hidden bg-white dark:bg-gray-800 p-6">
+                  <div className="relative w-full h-72 bg-gray-50 dark:bg-gray-900 rounded-lg flex items-center justify-center overflow-hidden">
                     <svg viewBox="0 0 300 250" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                       <rect width="300" height="250" fill="#fafafa" />
                       <rect x="30" y="30" width="80" height="70" fill="none" stroke="#6366f1" strokeWidth="2" rx="3" />
@@ -87,81 +88,81 @@ export default function PhotoToPaintByNumbers() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Powerful Paint by Numbers Features</h2>
-              <p className="mt-4 text-xl text-gray-600">Everything you need to create custom paint by numbers from any photo</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Powerful Paint by Numbers Features</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need to create custom paint by numbers from any photo</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Palette className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Color Palette Control</h3>
-                  <p className="text-gray-600">Choose anywhere from 4 to 24 colors for your paint by numbers template. Fewer colors for a simpler project, more for detailed artwork.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Choose anywhere from 4 to 24 colors for your paint by numbers template. Fewer colors for a simpler project, more for detailed artwork.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Hash className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Numbered Regions</h3>
-                  <p className="text-gray-600">Each region is clearly numbered to match your color legend, making it easy to know exactly which color goes where.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Each region is clearly numbered to match your color legend, making it easy to know exactly which color goes where.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <ScanLine className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Outline Detection</h3>
-                  <p className="text-gray-600">Advanced edge detection algorithms identify shapes and boundaries in your photo to create clean, paintable regions.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Advanced edge detection algorithms identify shapes and boundaries in your photo to create clean, paintable regions.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <BookImage className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Color Legend</h3>
-                  <p className="text-gray-600">Download a printable color legend that shows each numbered color with its exact shade, so you can mix or buy the right paints.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Download a printable color legend that shows each numbered color with its exact shade, so you can mix or buy the right paints.</p>
                 </CardContent>
               </Card>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">How to Turn a Photo into Paint by Numbers</h2>
-              <p className="mt-4 text-xl text-gray-600">Three simple steps to create your custom paint by numbers template</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How to Turn a Photo into Paint by Numbers</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Three simple steps to create your custom paint by numbers template</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload Your Photo</h3>
-                <p className="text-gray-600">Select any photo from your device — portraits, landscapes, pets, or any image you want to transform into a paint by numbers project</p>
+                <p className="text-gray-600 dark:text-gray-400">Select any photo from your device — portraits, landscapes, pets, or any image you want to transform into a paint by numbers project</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
                 <h3 className="text-xl font-semibold mb-2">Customize Your Palette</h3>
-                <p className="text-gray-600">Choose the number of colors (4–24), adjust detail level, and fine-tune the settings to get the perfect paint by numbers template</p>
+                <p className="text-gray-600 dark:text-gray-400">Choose the number of colors (4–24), adjust detail level, and fine-tune the settings to get the perfect paint by numbers template</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
                 <h3 className="text-xl font-semibold mb-2">Download & Paint</h3>
-                <p className="text-gray-600">Download your numbered template and color legend, print them out, and start painting your masterpiece</p>
+                <p className="text-gray-600 dark:text-gray-400">Download your numbered template and color legend, print them out, and start painting your masterpiece</p>
               </div>
             </div>
 
@@ -176,11 +177,11 @@ export default function PhotoToPaintByNumbers() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Who Uses Photo to Paint by Numbers?</h2>
-              <p className="mt-4 text-xl text-gray-600">Custom paint by numbers for every occasion and skill level</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Who Uses Photo to Paint by Numbers?</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Custom paint by numbers for every occasion and skill level</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -190,7 +191,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">DIY Home Decor</h3>
-                  <p className="text-gray-600">Turn your favorite vacation photos, family portraits, or landscape shots into stunning wall art. Paint by numbers lets you create custom artwork that matches your home decor and holds personal meaning.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Turn your favorite vacation photos, family portraits, or landscape shots into stunning wall art. Paint by numbers lets you create custom artwork that matches your home decor and holds personal meaning.</p>
                 </div>
               </div>
 
@@ -200,7 +201,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Personal Gifts</h3>
-                  <p className="text-gray-600">Create one-of-a-kind paint by numbers kits from meaningful photos. A personalized painting project makes a thoughtful gift for birthdays, anniversaries, weddings, or any special occasion.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Create one-of-a-kind paint by numbers kits from meaningful photos. A personalized painting project makes a thoughtful gift for birthdays, anniversaries, weddings, or any special occasion.</p>
                 </div>
               </div>
 
@@ -210,7 +211,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Art Learning</h3>
-                  <p className="text-gray-600">Paint by numbers is an excellent way to learn color theory, brush control, and painting techniques. Students and beginners can practice with real images while building confidence in their artistic skills.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Paint by numbers is an excellent way to learn color theory, brush control, and painting techniques. Students and beginners can practice with real images while building confidence in their artistic skills.</p>
                 </div>
               </div>
 
@@ -220,18 +221,18 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Relaxation & Mindfulness</h3>
-                  <p className="text-gray-600">Painting by numbers is a meditative activity that helps reduce stress and anxiety. Focus on one numbered section at a time and enjoy the calming, therapeutic process of bringing a photo to life with paint.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Painting by numbers is a meditative activity that helps reduce stress and anxiety. Focus on one numbered section at a time and enjoy the calming, therapeutic process of bringing a photo to life with paint.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Why Choose Our Photo to Paint by Numbers Tool</h2>
-              <p className="mt-4 text-xl text-gray-600">Everything you need, completely free</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Why Choose Our Photo to Paint by Numbers Tool</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need, completely free</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -241,7 +242,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">100% Free — No Hidden Costs</h3>
-                  <p className="text-gray-600">All features, color palettes, and downloads are completely free. No premium tier, no watermarks, no limits.</p>
+                  <p className="text-gray-600 dark:text-gray-400">All features, color palettes, and downloads are completely free. No premium tier, no watermarks, no limits.</p>
                 </div>
               </div>
 
@@ -251,7 +252,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Sign-Up Required</h3>
-                  <p className="text-gray-600">Start creating paint by numbers templates instantly without registering an account or providing any personal information.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Start creating paint by numbers templates instantly without registering an account or providing any personal information.</p>
                 </div>
               </div>
 
@@ -261,7 +262,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Print-Ready Quality</h3>
-                  <p className="text-gray-600">Download high-resolution templates and color legends that look crisp and clean when printed on standard paper sizes.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Download high-resolution templates and color legends that look crisp and clean when printed on standard paper sizes.</p>
                 </div>
               </div>
 
@@ -271,7 +272,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Works on Any Device</h3>
-                  <p className="text-gray-600">Our paint by numbers generator works perfectly on desktop, tablet, and mobile — no app download needed.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Our paint by numbers generator works perfectly on desktop, tablet, and mobile — no app download needed.</p>
                 </div>
               </div>
 
@@ -281,7 +282,7 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Privacy First</h3>
-                  <p className="text-gray-600">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
                 </div>
               </div>
 
@@ -291,44 +292,44 @@ export default function PhotoToPaintByNumbers() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Flexible Color Palettes</h3>
-                  <p className="text-gray-600">From 4 simple colors to 24 detailed shades, customize the complexity to match any skill level or artistic vision.</p>
+                  <p className="text-gray-600 dark:text-gray-400">From 4 simple colors to 24 detailed shades, customize the complexity to match any skill level or artistic vision.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
-              <p className="mt-4 text-lg text-gray-600">Everything you need to know about converting photos to paint by numbers</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need to know about converting photos to paint by numbers</p>
             </div>
 
             <div className="space-y-6">
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Is this photo to paint by numbers generator really free?</h3>
-                <p className="text-gray-600">Yes, our photo to paint by numbers generator is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited paint by numbers templates at no cost.</p>
+                <p className="text-gray-600 dark:text-gray-400">Yes, our photo to paint by numbers generator is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited paint by numbers templates at no cost.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What types of photos work best for paint by numbers?</h3>
-                <p className="text-gray-600">Photos with clear subjects, good lighting, and distinct color areas work best. Landscapes, portraits, flowers, animals, and architecture all produce excellent results. Avoid very dark, blurry, or overly busy images for the cleanest numbered regions.</p>
+                <p className="text-gray-600 dark:text-gray-400">Photos with clear subjects, good lighting, and distinct color areas work best. Landscapes, portraits, flowers, animals, and architecture all produce excellent results. Avoid very dark, blurry, or overly busy images for the cleanest numbered regions.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">How many colors can I use in my paint by numbers?</h3>
-                <p className="text-gray-600">You can choose anywhere from 4 to 24 colors. Fewer colors (4–8) create simpler projects perfect for beginners and children. More colors (12–24) produce detailed, realistic results ideal for experienced painters looking for a challenge.</p>
+                <p className="text-gray-600 dark:text-gray-400">You can choose anywhere from 4 to 24 colors. Fewer colors (4–8) create simpler projects perfect for beginners and children. More colors (12–24) produce detailed, realistic results ideal for experienced painters looking for a challenge.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What do I need to start painting after downloading?</h3>
-                <p className="text-gray-600">Print your numbered template on canvas paper or regular paper, then use the included color legend to match acrylic paints, watercolors, or any painting medium. You can find matching paint colors at any art supply store using the hex codes provided in the legend.</p>
+                <p className="text-gray-600 dark:text-gray-400">Print your numbered template on canvas paper or regular paper, then use the included color legend to match acrylic paints, watercolors, or any painting medium. You can find matching paint colors at any art supply store using the hex codes provided in the legend.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Can I print the paint by numbers template on canvas?</h3>
-                <p className="text-gray-600">Absolutely! For the best painting experience, print your template on canvas paper or have it printed on a stretched canvas at a local print shop. You can also use heavyweight paper or cardstock for a more affordable option that still works great with acrylic paints.</p>
+                <p className="text-gray-600 dark:text-gray-400">Absolutely! For the best painting experience, print your template on canvas paper or have it printed on a stretched canvas at a local print shop. You can also use heavyweight paper or cardstock for a more affordable option that still works great with acrylic paints.</p>
               </div>
             </div>
           </div>
@@ -347,9 +348,9 @@ export default function PhotoToPaintByNumbers() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
               <h2>Photo to Paint by Numbers: The Ultimate Free Online Generator</h2>
               <p>
                 Our free photo to paint by numbers generator makes it easy to transform any photograph into a beautiful, numbered painting template in just seconds. Whether you're a beginner looking for a relaxing creative activity, a parent searching for fun projects for your kids, or an experienced painter who wants to recreate your own photos on canvas, our tool delivers professional-quality results without any cost or complicated software.
@@ -384,49 +385,7 @@ export default function PhotoToPaintByNumbers() {
           </div>
         </section>
 
-        <section className="bg-gray-50 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Explore More Free Art Tools</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <Link href="/photo-to-grid">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Photo Grid</h3>
-                  <p className="text-sm text-gray-500 mt-1">Add drawing reference grids</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-lineart">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Line Art</h3>
-                  <p className="text-sm text-gray-500 mt-1">Convert to line drawings</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-sketch">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Sketch</h3>
-                  <p className="text-sm text-gray-500 mt-1">Create pencil sketches</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-coloring-page">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Coloring Page</h3>
-                  <p className="text-sm text-gray-500 mt-1">Make printable coloring pages</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-pixel-art">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Pixel Art</h3>
-                  <p className="text-sm text-gray-500 mt-1">Create retro pixel art</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-watercolor">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Watercolor & Oil</h3>
-                  <p className="text-sm text-gray-500 mt-1">Apply painting effects</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedTools currentTool="paintbynumbers" />
       </main>
     </>
   );

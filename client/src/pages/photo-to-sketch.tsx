@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Image, Check } from "lucide-react";
+import RelatedTools from "@/components/RelatedTools";
 
 export default function PhotoToSketch() {
   return (
@@ -32,14 +33,14 @@ export default function PhotoToSketch() {
       
       <main>
         {/* Hero Section */}
-        <section className="bg-white py-16 sm:py-24">
+        <section className="bg-white dark:bg-gray-950 py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
                   Transform Photos into Beautiful Sketches <span className="text-primary">Free</span>
                 </h1>
-                <p className="mt-6 text-lg text-gray-600 max-w-3xl">
+                <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
                   Create stunning pencil sketches and charcoal drawings from any photo with our easy-to-use online converter. No signup or downloads required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -59,7 +60,7 @@ export default function PhotoToSketch() {
                 <img 
                   src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=700"
                   alt="Original photo" 
-                  className="rounded-lg shadow-md w-full max-w-md mx-auto"
+                  className="rounded-lg shadow-md dark:shadow-gray-900/50 w-full max-w-md mx-auto"
                 />
                 <img 
                   src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&h=230"
@@ -73,47 +74,47 @@ export default function PhotoToSketch() {
         </section>
 
         {/* Features Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Create Stunning Sketches in Seconds</h2>
-              <p className="mt-4 text-xl text-gray-600">Our advanced AI technology transforms your photos into realistic hand-drawn sketches</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Create Stunning Sketches in Seconds</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Our advanced AI technology transforms your photos into realistic hand-drawn sketches</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
-                  <div className="rounded-full bg-primary-50 w-12 h-12 flex items-center justify-center mb-4">
+                  <div className="rounded-full bg-primary-50 dark:bg-primary-900/20 w-12 h-12 flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Multiple Sketch Styles</h3>
-                  <p className="text-gray-600">Choose from various sketch styles including graphite pencil, charcoal, and more to get the perfect look.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Choose from various sketch styles including graphite pencil, charcoal, and more to get the perfect look.</p>
                 </CardContent>
               </Card>
               
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
-                  <div className="rounded-full bg-primary-50 w-12 h-12 flex items-center justify-center mb-4">
+                  <div className="rounded-full bg-primary-50 dark:bg-primary-900/20 w-12 h-12 flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Customizable Settings</h3>
-                  <p className="text-gray-600">Fine-tune your sketch with adjustable settings for intensity, detail level, and shading to match your vision.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Fine-tune your sketch with adjustable settings for intensity, detail level, and shading to match your vision.</p>
                 </CardContent>
               </Card>
               
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
-                  <div className="rounded-full bg-primary-50 w-12 h-12 flex items-center justify-center mb-4">
+                  <div className="rounded-full bg-primary-50 dark:bg-primary-900/20 w-12 h-12 flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Instant Download</h3>
-                  <p className="text-gray-600">Download your sketches immediately in high-quality formats, perfect for printing or sharing online.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Download your sketches immediately in high-quality formats, perfect for printing or sharing online.</p>
                 </CardContent>
               </Card>
             </div>
@@ -121,30 +122,30 @@ export default function PhotoToSketch() {
         </section>
         
         {/* How It Works */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">How to Convert Photos to Sketches</h2>
-              <p className="mt-4 text-xl text-gray-600">Three simple steps to transform your photos</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How to Convert Photos to Sketches</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Three simple steps to transform your photos</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload Your Photo</h3>
-                <p className="text-gray-600">Select any photo from your device or use our sample images to get started</p>
+                <p className="text-gray-600 dark:text-gray-400">Select any photo from your device or use our sample images to get started</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
                 <h3 className="text-xl font-semibold mb-2">Choose Your Style</h3>
-                <p className="text-gray-600">Select from various sketch styles and adjust settings like intensity and shading</p>
+                <p className="text-gray-600 dark:text-gray-400">Select from various sketch styles and adjust settings like intensity and shading</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
                 <h3 className="text-xl font-semibold mb-2">Download Your Sketch</h3>
-                <p className="text-gray-600">Preview and download your finished sketch in high resolution</p>
+                <p className="text-gray-600 dark:text-gray-400">Preview and download your finished sketch in high resolution</p>
               </div>
             </div>
             
@@ -160,15 +161,15 @@ export default function PhotoToSketch() {
         </section>
         
         {/* Sketch Styles Showcase */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Different Sketch Styles Available</h2>
-              <p className="mt-4 text-xl text-gray-600">Choose the perfect artistic style for your photos</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Different Sketch Styles Available</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Choose the perfect artistic style for your photos</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="overflow-hidden rounded-lg shadow-md">
+              <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                 <img 
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=500" 
                   alt="Pencil sketch style" 
@@ -176,11 +177,11 @@ export default function PhotoToSketch() {
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Graphite Pencil</h3>
-                  <p className="text-sm text-gray-600">Classic graphite pencil look with subtle shading and clean lines</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Classic graphite pencil look with subtle shading and clean lines</p>
                 </div>
               </div>
               
-              <div className="overflow-hidden rounded-lg shadow-md">
+              <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                 <img 
                   src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=500" 
                   alt="Charcoal sketch style" 
@@ -188,11 +189,11 @@ export default function PhotoToSketch() {
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Charcoal Drawing</h3>
-                  <p className="text-sm text-gray-600">Rich, dark charcoal effect with dramatic shadows and contrast</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Rich, dark charcoal effect with dramatic shadows and contrast</p>
                 </div>
               </div>
               
-              <div className="overflow-hidden rounded-lg shadow-md">
+              <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                 <img 
                   src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=500" 
                   alt="Detailed line sketch style" 
@@ -200,7 +201,7 @@ export default function PhotoToSketch() {
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Detailed Line Sketch</h3>
-                  <p className="text-sm text-gray-600">Fine line drawing with emphasis on details and textures</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Fine line drawing with emphasis on details and textures</p>
                 </div>
               </div>
             </div>
@@ -217,11 +218,11 @@ export default function PhotoToSketch() {
         </section>
         
         {/* Benefits Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Why Use Our Photo to Sketch Converter</h2>
-              <p className="mt-4 text-xl text-gray-600">Enjoy these benefits with our free online tool</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Why Use Our Photo to Sketch Converter</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Enjoy these benefits with our free online tool</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -231,7 +232,7 @@ export default function PhotoToSketch() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">100% Free to Use</h3>
-                  <p className="text-gray-600">No hidden fees, subscriptions, or premium features. All sketch styles and options are completely free.</p>
+                  <p className="text-gray-600 dark:text-gray-400">No hidden fees, subscriptions, or premium features. All sketch styles and options are completely free.</p>
                 </div>
               </div>
               
@@ -241,7 +242,7 @@ export default function PhotoToSketch() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Sign-up Required</h3>
-                  <p className="text-gray-600">Get started immediately without creating an account or providing personal information.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Get started immediately without creating an account or providing personal information.</p>
                 </div>
               </div>
               
@@ -251,7 +252,7 @@ export default function PhotoToSketch() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Professional Quality Results</h3>
-                  <p className="text-gray-600">Our advanced algorithms produce high-quality sketches that look like they were hand-drawn by professional artists.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Our advanced algorithms produce high-quality sketches that look like they were hand-drawn by professional artists.</p>
                 </div>
               </div>
               
@@ -261,7 +262,7 @@ export default function PhotoToSketch() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Works with Any Photo</h3>
-                  <p className="text-gray-600">Convert portraits, landscapes, animals, or any other photo into beautiful sketches with equally amazing results.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Convert portraits, landscapes, animals, or any other photo into beautiful sketches with equally amazing results.</p>
                 </div>
               </div>
               
@@ -271,7 +272,7 @@ export default function PhotoToSketch() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Privacy Protected</h3>
-                  <p className="text-gray-600">Your photos are processed securely on our servers and are never stored or shared with third parties.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Your photos are processed securely on our servers and are never stored or shared with third parties.</p>
                 </div>
               </div>
               
@@ -281,7 +282,7 @@ export default function PhotoToSketch() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Software Installation</h3>
-                  <p className="text-gray-600">Everything works right in your browser - no need to download or install anything on your device.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Everything works right in your browser - no need to download or install anything on your device.</p>
                 </div>
               </div>
             </div>
@@ -289,37 +290,37 @@ export default function PhotoToSketch() {
         </section>
         
         {/* FAQ Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
-              <p className="mt-4 text-lg text-gray-600">Everything you need to know about our photo to sketch converter</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need to know about our photo to sketch converter</p>
             </div>
             
             <div className="space-y-6">
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Is this photo to sketch converter really free?</h3>
-                <p className="text-gray-600">Yes! Our photo to sketch converter is completely free to use. There are no hidden fees, in-app purchases, or premium features that require payment.</p>
+                <p className="text-gray-600 dark:text-gray-400">Yes! Our photo to sketch converter is completely free to use. There are no hidden fees, in-app purchases, or premium features that require payment.</p>
               </div>
               
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What types of photos work best?</h3>
-                <p className="text-gray-600">Our converter works well with most types of photos, but images with good lighting, clear subjects, and reasonable contrast typically produce the best results. Both color and black-and-white photos work equally well.</p>
+                <p className="text-gray-600 dark:text-gray-400">Our converter works well with most types of photos, but images with good lighting, clear subjects, and reasonable contrast typically produce the best results. Both color and black-and-white photos work equally well.</p>
               </div>
               
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Can I adjust how my sketch looks?</h3>
-                <p className="text-gray-600">Absolutely! You can customize your sketch by adjusting the intensity, shading level, and choosing between different sketch styles like graphite pencil, charcoal, and more.</p>
+                <p className="text-gray-600 dark:text-gray-400">Absolutely! You can customize your sketch by adjusting the intensity, shading level, and choosing between different sketch styles like graphite pencil, charcoal, and more.</p>
               </div>
               
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What's the maximum file size I can upload?</h3>
-                <p className="text-gray-600">You can upload images up to 10MB in size. We support common image formats including JPG, PNG, and WebP.</p>
+                <p className="text-gray-600 dark:text-gray-400">You can upload images up to 10MB in size. We support common image formats including JPG, PNG, and WebP.</p>
               </div>
               
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">How do I download my sketched image?</h3>
-                <p className="text-gray-600">After your photo has been converted to a sketch, simply click the "Download" button. Your sketch will be saved to your device in high quality.</p>
+                <p className="text-gray-600 dark:text-gray-400">After your photo has been converted to a sketch, simply click the "Download" button. Your sketch will be saved to your device in high quality.</p>
               </div>
             </div>
           </div>
@@ -340,9 +341,9 @@ export default function PhotoToSketch() {
         </section>
         
         {/* SEO Content Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
               <h2>Create Beautiful Pencil Sketches from Photos Online</h2>
               <p>
                 Our free online photo to sketch converter transforms your ordinary photos into stunning pencil sketches, charcoal drawings, and other artistic styles with just a few clicks. Whether you're looking to create a unique gift, add an artistic touch to your social media, or simply explore the creative possibilities of your photography, our sketch tool delivers professional-quality results without the need for complicated software or artistic skills.
@@ -414,49 +415,7 @@ export default function PhotoToSketch() {
           </div>
         </section>
 
-        <section className="bg-gray-50 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Explore More Free Art Tools</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <Link href="/photo-to-grid">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Photo Grid</h3>
-                  <p className="text-sm text-gray-500 mt-1">Add drawing reference grids</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-lineart">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Line Art</h3>
-                  <p className="text-sm text-gray-500 mt-1">Convert to line drawings</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-coloring-page">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Coloring Page</h3>
-                  <p className="text-sm text-gray-500 mt-1">Make printable coloring pages</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-paint-by-numbers">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Paint by Numbers</h3>
-                  <p className="text-sm text-gray-500 mt-1">Generate numbered templates</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-pixel-art">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Pixel Art</h3>
-                  <p className="text-sm text-gray-500 mt-1">Create retro pixel art</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-watercolor">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Watercolor & Oil</h3>
-                  <p className="text-sm text-gray-500 mt-1">Apply painting effects</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedTools currentTool="sketch" />
       </main>
     </>
   );

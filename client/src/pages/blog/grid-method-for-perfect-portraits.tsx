@@ -134,7 +134,7 @@ export default function GridMethodForPerfectPortraits() {
           <h3>2. Apply a Grid Overlay</h3>
           
           <p>
-            Using PhotoGrid.space, apply a grid to your reference photo:
+            Using <Link href="/photo-to-grid"><a className="text-primary hover:underline font-medium">our photo grid tool</a></Link>, apply a grid to your reference photo:
           </p>
           
           <ul>
@@ -319,7 +319,7 @@ export default function GridMethodForPerfectPortraits() {
           <h2>Enhance Your Portrait Drawing with PhotoGrid.space</h2>
           
           <p>
-            Our PhotoGrid.space tool is specifically designed for portrait artists, offering features to simplify the grid creation process:
+            Our <Link href="/photo-to-grid"><a className="text-primary hover:underline font-medium">Photo Grid Maker tool</a></Link> is specifically designed for portrait artists, offering features to simplify the grid creation process:
           </p>
           
           <ul>
@@ -347,8 +347,14 @@ export default function GridMethodForPerfectPortraits() {
             Ready to elevate your portrait drawing? Try our PhotoGrid.space tool to create your first portrait grid reference today!
           </p>
         </div>
-        
 
+        <div className="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-center">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Ready to Try the Grid Method?</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">Create your own grid overlay on any photo with our free tool.</p>
+          <Link href="/photo-to-grid">
+            <a className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium">Try Photo Grid Maker Free</a>
+          </Link>
+        </div>
         
         {/* Share and action buttons */}
         <div className="flex justify-between items-center my-8">

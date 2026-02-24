@@ -142,7 +142,7 @@ export default function HowToUseGridForPerfectPortraits() {
           <h3>2. 应用网格叠加层</h3>
           
           <p>
-            使用PhotoGrid.space工具为您的参考照片添加网格：
+            使用<Link href="/photo-to-grid"><a className="text-primary hover:underline font-medium">PhotoGrid.space网格工具</a></Link>为您的参考照片添加网格：
           </p>
           
           <ul>
@@ -327,7 +327,7 @@ export default function HowToUseGridForPerfectPortraits() {
           <h2>用PhotoGrid.space提升您的肖像绘画</h2>
           
           <p>
-            我们的PhotoGrid.space工具专为肖像艺术家设计，提供了多种功能来简化网格创建过程：
+            我们的<Link href="/photo-to-grid"><a className="text-primary hover:underline font-medium">照片网格制作工具</a></Link>专为肖像艺术家设计，提供了多种功能来简化网格创建过程：
           </p>
           
           <ul>
@@ -371,6 +371,14 @@ export default function HowToUseGridForPerfectPortraits() {
           </div>
         </div>
         
+        <div className="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-center">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Ready to Try the Grid Method?</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">Create your own grid overlay on any photo with our free tool.</p>
+          <Link href="/photo-to-grid">
+            <a className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium">Try Photo Grid Maker Free</a>
+          </Link>
+        </div>
+
         {/* Share and action buttons */}
         <div className="flex justify-between items-center my-8">
           <div className="flex space-x-4">

@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Check, Palette, Pencil, SlidersHorizontal, Download, BookOpen, Heart, Gift, GraduationCap } from "lucide-react";
+import RelatedTools from "@/components/RelatedTools";
 
 export default function PhotoToColoringPage() {
   return (
@@ -28,14 +29,14 @@ export default function PhotoToColoringPage() {
       </Helmet>
 
       <main>
-        <section className="bg-white py-16 sm:py-24">
+        <section className="bg-white dark:bg-gray-950 py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
                   Turn Any Photo into a <span className="text-primary">Coloring Page</span>
                 </h1>
-                <p className="mt-6 text-lg text-gray-600 max-w-3xl">
+                <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
                   Transform your favorite photos into beautiful, printable coloring pages with our free online converter. Choose from multiple styles, adjust detail levels, and download instantly. Perfect for kids, adults, and art therapy — no signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -48,8 +49,8 @@ export default function PhotoToColoringPage() {
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
-                <div className="w-full max-w-md mx-auto rounded-lg shadow-md overflow-hidden bg-white p-6">
-                  <div className="relative w-full h-72 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
+                <div className="w-full max-w-md mx-auto rounded-lg shadow-md dark:shadow-gray-900/50 overflow-hidden bg-white dark:bg-gray-800 p-6">
+                  <div className="relative w-full h-72 bg-gray-50 dark:bg-gray-900 rounded-lg flex items-center justify-center overflow-hidden">
                     <svg viewBox="0 0 300 250" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                       <rect width="300" height="250" fill="#fafafa" />
                       <circle cx="150" cy="90" r="40" fill="none" stroke="#6366f1" strokeWidth="2.5" />
@@ -84,81 +85,81 @@ export default function PhotoToColoringPage() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Powerful Coloring Page Features</h2>
-              <p className="mt-4 text-xl text-gray-600">Everything you need to create perfect coloring pages from any photo</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Powerful Coloring Page Features</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need to create perfect coloring pages from any photo</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <SlidersHorizontal className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Adjustable Detail Levels</h3>
-                  <p className="text-gray-600">Fine-tune the amount of detail in your coloring page — from simple outlines to intricate designs with precise edge detection.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Fine-tune the amount of detail in your coloring page — from simple outlines to intricate designs with precise edge detection.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Palette className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Multiple Coloring Styles</h3>
-                  <p className="text-gray-600">Choose from Classic, Detailed, Simple, Bold, and Kids styles to match any age group or coloring preference.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Choose from Classic, Detailed, Simple, Bold, and Kids styles to match any age group or coloring preference.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Pencil className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Line Thickness Control</h3>
-                  <p className="text-gray-600">Adjust line thickness from thin, delicate outlines to thick, bold lines perfect for younger children or bold art styles.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Adjust line thickness from thin, delicate outlines to thick, bold lines perfect for younger children or bold art styles.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Download className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Instant Download</h3>
-                  <p className="text-gray-600">Download your coloring page immediately in high resolution, ready to print on standard letter or A4 paper.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Download your coloring page immediately in high resolution, ready to print on standard letter or A4 paper.</p>
                 </CardContent>
               </Card>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">How to Convert a Photo to a Coloring Page</h2>
-              <p className="mt-4 text-xl text-gray-600">Three simple steps to create your custom coloring page</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How to Convert a Photo to a Coloring Page</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Three simple steps to create your custom coloring page</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload Your Photo</h3>
-                <p className="text-gray-600">Select any photo from your device — portraits, pets, landscapes, or any image you want to turn into a coloring page</p>
+                <p className="text-gray-600 dark:text-gray-400">Select any photo from your device — portraits, pets, landscapes, or any image you want to turn into a coloring page</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
                 <h3 className="text-xl font-semibold mb-2">Choose Your Style</h3>
-                <p className="text-gray-600">Pick a coloring style and adjust detail level, line thickness, and other settings to get the perfect coloring page</p>
+                <p className="text-gray-600 dark:text-gray-400">Pick a coloring style and adjust detail level, line thickness, and other settings to get the perfect coloring page</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
                 <h3 className="text-xl font-semibold mb-2">Download & Print</h3>
-                <p className="text-gray-600">Download your finished coloring page in high resolution and print it at home or at any print shop</p>
+                <p className="text-gray-600 dark:text-gray-400">Download your finished coloring page in high resolution and print it at home or at any print shop</p>
               </div>
             </div>
 
@@ -173,11 +174,11 @@ export default function PhotoToColoringPage() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Who Uses Photo to Coloring Page?</h2>
-              <p className="mt-4 text-xl text-gray-600">Custom coloring pages for every occasion and audience</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Who Uses Photo to Coloring Page?</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Custom coloring pages for every occasion and audience</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -187,7 +188,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">For Teachers & Parents</h3>
-                  <p className="text-gray-600">Create personalized coloring pages from educational photos, family portraits, or classroom activities. Keep kids engaged with coloring pages featuring familiar faces, favorite animals, or places they love.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Create personalized coloring pages from educational photos, family portraits, or classroom activities. Keep kids engaged with coloring pages featuring familiar faces, favorite animals, or places they love.</p>
                 </div>
               </div>
 
@@ -197,7 +198,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">For Adult Coloring Enthusiasts</h3>
-                  <p className="text-gray-600">Turn your own photography into detailed coloring pages with intricate line work. Create challenging designs from architecture, nature, or abstract photos perfect for stress relief and mindful coloring.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Turn your own photography into detailed coloring pages with intricate line work. Create challenging designs from architecture, nature, or abstract photos perfect for stress relief and mindful coloring.</p>
                 </div>
               </div>
 
@@ -207,7 +208,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">For Art Therapy</h3>
-                  <p className="text-gray-600">Use familiar, meaningful images as coloring therapy tools. Therapists and counselors can create custom coloring pages from photos that resonate with their clients for calming, expressive activities.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Use familiar, meaningful images as coloring therapy tools. Therapists and counselors can create custom coloring pages from photos that resonate with their clients for calming, expressive activities.</p>
                 </div>
               </div>
 
@@ -217,18 +218,18 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">For Custom Gifts</h3>
-                  <p className="text-gray-600">Create one-of-a-kind coloring books from vacation photos, wedding pictures, or pet portraits. A thoughtful, personalized gift for birthdays, holidays, or special occasions that anyone will enjoy.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Create one-of-a-kind coloring books from vacation photos, wedding pictures, or pet portraits. A thoughtful, personalized gift for birthdays, holidays, or special occasions that anyone will enjoy.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Why Choose Our Photo to Coloring Page Tool</h2>
-              <p className="mt-4 text-xl text-gray-600">Everything you need, completely free</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Why Choose Our Photo to Coloring Page Tool</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need, completely free</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -238,7 +239,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">100% Free — No Hidden Costs</h3>
-                  <p className="text-gray-600">All styles, features, and downloads are completely free. No premium tier, no watermarks, no limits.</p>
+                  <p className="text-gray-600 dark:text-gray-400">All styles, features, and downloads are completely free. No premium tier, no watermarks, no limits.</p>
                 </div>
               </div>
 
@@ -248,7 +249,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Sign-Up Required</h3>
-                  <p className="text-gray-600">Start creating coloring pages instantly without registering an account or providing any personal information.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Start creating coloring pages instantly without registering an account or providing any personal information.</p>
                 </div>
               </div>
 
@@ -258,7 +259,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Print-Ready Quality</h3>
-                  <p className="text-gray-600">Download high-resolution coloring pages that look crisp and clean when printed on standard paper sizes.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Download high-resolution coloring pages that look crisp and clean when printed on standard paper sizes.</p>
                 </div>
               </div>
 
@@ -268,7 +269,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Works on Any Device</h3>
-                  <p className="text-gray-600">Our coloring page converter works perfectly on desktop, tablet, and mobile — no app download needed.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Our coloring page converter works perfectly on desktop, tablet, and mobile — no app download needed.</p>
                 </div>
               </div>
 
@@ -278,7 +279,7 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Privacy First</h3>
-                  <p className="text-gray-600">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
                 </div>
               </div>
 
@@ -288,44 +289,44 @@ export default function PhotoToColoringPage() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Multiple Output Styles</h3>
-                  <p className="text-gray-600">Five distinct coloring page styles to match any age group, skill level, or creative preference.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Five distinct coloring page styles to match any age group, skill level, or creative preference.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
-              <p className="mt-4 text-lg text-gray-600">Everything you need to know about converting photos to coloring pages</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need to know about converting photos to coloring pages</p>
             </div>
 
             <div className="space-y-6">
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Is this photo to coloring page converter really free?</h3>
-                <p className="text-gray-600">Yes, our photo to coloring page converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited coloring pages at no cost.</p>
+                <p className="text-gray-600 dark:text-gray-400">Yes, our photo to coloring page converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited coloring pages at no cost.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What types of photos make the best coloring pages?</h3>
-                <p className="text-gray-600">Photos with clear subjects and good contrast work best — think portraits, animals, flowers, buildings, and landscapes. Images with strong outlines and distinct shapes produce the most satisfying coloring pages. Avoid very dark or blurry photos for the best results.</p>
+                <p className="text-gray-600 dark:text-gray-400">Photos with clear subjects and good contrast work best — think portraits, animals, flowers, buildings, and landscapes. Images with strong outlines and distinct shapes produce the most satisfying coloring pages. Avoid very dark or blurry photos for the best results.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What coloring page styles are available?</h3>
-                <p className="text-gray-600">We offer five distinct styles: Classic (clean, balanced outlines), Detailed (intricate lines for advanced colorists), Simple (bold outlines for young children), Bold (thick, prominent lines), and Kids (extra-simple designs perfect for toddlers and preschoolers).</p>
+                <p className="text-gray-600 dark:text-gray-400">We offer five distinct styles: Classic (clean, balanced outlines), Detailed (intricate lines for advanced colorists), Simple (bold outlines for young children), Bold (thick, prominent lines), and Kids (extra-simple designs perfect for toddlers and preschoolers).</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Can I print the coloring pages at home?</h3>
-                <p className="text-gray-600">Absolutely! Our coloring pages are designed to be print-ready. Simply download the image and print it on standard letter (8.5" × 11") or A4 paper using any home printer. For best results, use a slightly heavier paper stock.</p>
+                <p className="text-gray-600 dark:text-gray-400">Absolutely! Our coloring pages are designed to be print-ready. Simply download the image and print it on standard letter (8.5" × 11") or A4 paper using any home printer. For best results, use a slightly heavier paper stock.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What file formats can I upload and download?</h3>
-                <p className="text-gray-600">You can upload photos in JPG, PNG, and WebP formats up to 10MB in size. Your finished coloring page is available for download as a high-resolution image file that's ready for printing or digital use.</p>
+                <p className="text-gray-600 dark:text-gray-400">You can upload photos in JPG, PNG, and WebP formats up to 10MB in size. Your finished coloring page is available for download as a high-resolution image file that's ready for printing or digital use.</p>
               </div>
             </div>
           </div>
@@ -344,9 +345,9 @@ export default function PhotoToColoringPage() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
               <h2>Photo to Coloring Page: The Ultimate Free Online Converter</h2>
               <p>
                 Our free photo to coloring page converter makes it easy to transform any photograph into a beautiful, printable coloring page in just seconds. Whether you're a parent looking for personalized coloring activities for your kids, a teacher creating custom classroom materials, or an adult coloring enthusiast who wants to color your own photos, our tool delivers professional-quality results without any cost or complicated software.
@@ -387,49 +388,7 @@ export default function PhotoToColoringPage() {
           </div>
         </section>
 
-        <section className="bg-gray-50 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Explore More Free Art Tools</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <Link href="/photo-to-grid">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Photo Grid</h3>
-                  <p className="text-sm text-gray-500 mt-1">Add drawing reference grids</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-lineart">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Line Art</h3>
-                  <p className="text-sm text-gray-500 mt-1">Convert to line drawings</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-sketch">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Sketch</h3>
-                  <p className="text-sm text-gray-500 mt-1">Create pencil sketches</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-paint-by-numbers">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Paint by Numbers</h3>
-                  <p className="text-sm text-gray-500 mt-1">Generate numbered templates</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-pixel-art">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Pixel Art</h3>
-                  <p className="text-sm text-gray-500 mt-1">Create retro pixel art</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-watercolor">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Watercolor & Oil</h3>
-                  <p className="text-sm text-gray-500 mt-1">Apply painting effects</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedTools currentTool="coloring" />
       </main>
     </>
   );

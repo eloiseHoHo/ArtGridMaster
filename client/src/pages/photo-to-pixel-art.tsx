@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Check, Grid3X3, Palette, Layers, Download, Gamepad2, Image, SmilePlus, Gem } from "lucide-react";
+import RelatedTools from "@/components/RelatedTools";
 
 export default function PhotoToPixelArt() {
   return (
@@ -28,14 +29,14 @@ export default function PhotoToPixelArt() {
       </Helmet>
 
       <main>
-        <section className="bg-white py-16 sm:py-24">
+        <section className="bg-white dark:bg-gray-950 py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
                   Convert Photos to <span className="text-primary">Pixel Art</span> Instantly
                 </h1>
-                <p className="mt-6 text-lg text-gray-600 max-w-3xl">
+                <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
                   Transform your favorite photos into stunning pixel art with our free online converter. Choose from multiple styles, adjust pixel size and color palettes, and download instantly. Perfect for game assets, retro art, and digital creations — no signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -48,8 +49,8 @@ export default function PhotoToPixelArt() {
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
-                <div className="w-full max-w-md mx-auto rounded-lg shadow-md overflow-hidden bg-white p-6">
-                  <div className="relative w-full h-72 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
+                <div className="w-full max-w-md mx-auto rounded-lg shadow-md dark:shadow-gray-900/50 overflow-hidden bg-white dark:bg-gray-800 p-6">
+                  <div className="relative w-full h-72 bg-gray-50 dark:bg-gray-900 rounded-lg flex items-center justify-center overflow-hidden">
                     <svg viewBox="0 0 300 250" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                       <rect width="300" height="250" fill="#fafafa" />
                       <rect x="60" y="30" width="20" height="20" fill="#6366f1" />
@@ -118,81 +119,81 @@ export default function PhotoToPixelArt() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Powerful Pixel Art Features</h2>
-              <p className="mt-4 text-xl text-gray-600">Everything you need to create stunning pixel art from any photo</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Powerful Pixel Art Features</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need to create stunning pixel art from any photo</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Grid3X3 className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Adjustable Pixel Size</h3>
-                  <p className="text-gray-600">Fine-tune the pixel grid resolution from large, chunky blocks for a retro 8-bit look to small, detailed pixels for high-fidelity art.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Fine-tune the pixel grid resolution from large, chunky blocks for a retro 8-bit look to small, detailed pixels for high-fidelity art.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Palette className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Color Palette Control</h3>
-                  <p className="text-gray-600">Choose the number of colors in your palette or use preset retro palettes like NES, Game Boy, and SNES for authentic pixel art vibes.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Choose the number of colors in your palette or use preset retro palettes like NES, Game Boy, and SNES for authentic pixel art vibes.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Layers className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Multiple Pixel Styles</h3>
-                  <p className="text-gray-600">Choose from Classic, Rounded, Outline, and Isometric styles to create pixel art that matches your creative vision.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Choose from Classic, Rounded, Outline, and Isometric styles to create pixel art that matches your creative vision.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-md transition-shadow">
+              <Card className="border-0 shadow-md dark:shadow-gray-900/50 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                     <Download className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Instant Export</h3>
-                  <p className="text-gray-600">Download your pixel art instantly in high-resolution PNG format, ready for games, social media, or print projects.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Download your pixel art instantly in high-resolution PNG format, ready for games, social media, or print projects.</p>
                 </CardContent>
               </Card>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">How to Convert a Photo to Pixel Art</h2>
-              <p className="mt-4 text-xl text-gray-600">Three simple steps to create your custom pixel art</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How to Convert a Photo to Pixel Art</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Three simple steps to create your custom pixel art</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload Your Photo</h3>
-                <p className="text-gray-600">Select any photo from your device — portraits, landscapes, characters, or any image you want to pixelate</p>
+                <p className="text-gray-600 dark:text-gray-400">Select any photo from your device — portraits, landscapes, characters, or any image you want to pixelate</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
                 <h3 className="text-xl font-semibold mb-2">Customize Your Style</h3>
-                <p className="text-gray-600">Pick a pixel art style, adjust the pixel size, choose your color palette, and fine-tune the output to perfection</p>
+                <p className="text-gray-600 dark:text-gray-400">Pick a pixel art style, adjust the pixel size, choose your color palette, and fine-tune the output to perfection</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
                 <h3 className="text-xl font-semibold mb-2">Export & Use</h3>
-                <p className="text-gray-600">Download your finished pixel art in high resolution and use it in games, social media, or any creative project</p>
+                <p className="text-gray-600 dark:text-gray-400">Download your finished pixel art in high resolution and use it in games, social media, or any creative project</p>
               </div>
             </div>
 
@@ -207,11 +208,11 @@ export default function PhotoToPixelArt() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Who Uses Photo to Pixel Art?</h2>
-              <p className="mt-4 text-xl text-gray-600">Pixel art for every creative need and industry</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Who Uses Photo to Pixel Art?</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Pixel art for every creative need and industry</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -221,7 +222,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Game Development</h3>
-                  <p className="text-gray-600">Quickly generate pixel art sprites, backgrounds, and textures from reference photos. Ideal for indie game developers, retro game projects, and rapid prototyping of game assets with authentic pixel art aesthetics.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Quickly generate pixel art sprites, backgrounds, and textures from reference photos. Ideal for indie game developers, retro game projects, and rapid prototyping of game assets with authentic pixel art aesthetics.</p>
                 </div>
               </div>
 
@@ -231,7 +232,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Retro Art & Nostalgia</h3>
-                  <p className="text-gray-600">Transform modern photos into retro 8-bit and 16-bit style artwork. Perfect for creating nostalgic art prints, vintage-themed decorations, and pixel art tributes to classic gaming eras.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Transform modern photos into retro 8-bit and 16-bit style artwork. Perfect for creating nostalgic art prints, vintage-themed decorations, and pixel art tributes to classic gaming eras.</p>
                 </div>
               </div>
 
@@ -241,7 +242,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Social Media Avatars</h3>
-                  <p className="text-gray-600">Create unique, eye-catching pixel art profile pictures and avatars from your selfies. Stand out on social platforms with a distinctive pixelated look that's fun, creative, and instantly recognizable.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Create unique, eye-catching pixel art profile pictures and avatars from your selfies. Stand out on social platforms with a distinctive pixelated look that's fun, creative, and instantly recognizable.</p>
                 </div>
               </div>
 
@@ -251,18 +252,18 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">NFT & Digital Art</h3>
-                  <p className="text-gray-600">Generate pixel art for NFT collections, digital art galleries, and blockchain projects. Create unique pixelated artwork from photographs that can be minted, traded, or showcased in virtual exhibitions.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Generate pixel art for NFT collections, digital art galleries, and blockchain projects. Create unique pixelated artwork from photographs that can be minted, traded, or showcased in virtual exhibitions.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900">Why Choose Our Photo to Pixel Art Tool</h2>
-              <p className="mt-4 text-xl text-gray-600">Everything you need, completely free</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Why Choose Our Photo to Pixel Art Tool</h2>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need, completely free</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -272,7 +273,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">100% Free — No Hidden Costs</h3>
-                  <p className="text-gray-600">All styles, features, and downloads are completely free. No premium tier, no watermarks, no limits.</p>
+                  <p className="text-gray-600 dark:text-gray-400">All styles, features, and downloads are completely free. No premium tier, no watermarks, no limits.</p>
                 </div>
               </div>
 
@@ -282,7 +283,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Sign-Up Required</h3>
-                  <p className="text-gray-600">Start creating pixel art instantly without registering an account or providing any personal information.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Start creating pixel art instantly without registering an account or providing any personal information.</p>
                 </div>
               </div>
 
@@ -292,7 +293,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">High-Resolution Output</h3>
-                  <p className="text-gray-600">Export crisp pixel art at any resolution, perfect for game sprites, social media posts, or large-format prints.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Export crisp pixel art at any resolution, perfect for game sprites, social media posts, or large-format prints.</p>
                 </div>
               </div>
 
@@ -302,7 +303,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Works on Any Device</h3>
-                  <p className="text-gray-600">Our pixel art converter works perfectly on desktop, tablet, and mobile — no app download needed.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Our pixel art converter works perfectly on desktop, tablet, and mobile — no app download needed.</p>
                 </div>
               </div>
 
@@ -312,7 +313,7 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Privacy First</h3>
-                  <p className="text-gray-600">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
                 </div>
               </div>
 
@@ -322,44 +323,44 @@ export default function PhotoToPixelArt() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Multiple Pixel Art Styles</h3>
-                  <p className="text-gray-600">Four distinct pixel art styles to match any creative vision, from classic square pixels to isometric 3D effects.</p>
+                  <p className="text-gray-600 dark:text-gray-400">Four distinct pixel art styles to match any creative vision, from classic square pixels to isometric 3D effects.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
-              <p className="mt-4 text-lg text-gray-600">Everything you need to know about converting photos to pixel art</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need to know about converting photos to pixel art</p>
             </div>
 
             <div className="space-y-6">
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Is this photo to pixel art converter really free?</h3>
-                <p className="text-gray-600">Yes, our photo to pixel art converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited pixel art at no cost.</p>
+                <p className="text-gray-600 dark:text-gray-400">Yes, our photo to pixel art converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited pixel art at no cost.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What pixel art styles are available?</h3>
-                <p className="text-gray-600">We offer four distinct styles: Classic (traditional square pixels for an authentic retro look), Rounded (softer pixels with rounded edges), Outline (pixel art with emphasized outlines for a bold effect), and Isometric (3D-perspective pixel blocks for a unique dimensional look).</p>
+                <p className="text-gray-600 dark:text-gray-400">We offer four distinct styles: Classic (traditional square pixels for an authentic retro look), Rounded (softer pixels with rounded edges), Outline (pixel art with emphasized outlines for a bold effect), and Isometric (3D-perspective pixel blocks for a unique dimensional look).</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What types of photos work best for pixel art?</h3>
-                <p className="text-gray-600">Photos with clear subjects and strong colors work best for pixel art conversion. Portraits, characters, simple objects, and iconic scenes produce great results. Images with good contrast and distinct color areas will give you the most recognizable and appealing pixel art.</p>
+                <p className="text-gray-600 dark:text-gray-400">Photos with clear subjects and strong colors work best for pixel art conversion. Portraits, characters, simple objects, and iconic scenes produce great results. Images with good contrast and distinct color areas will give you the most recognizable and appealing pixel art.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Can I control the pixel size and color palette?</h3>
-                <p className="text-gray-600">Absolutely! You can adjust the pixel grid size from very large pixels (for a chunky 8-bit look) to small pixels (for more detailed artwork). You can also control the number of colors in your palette and choose from preset retro color schemes inspired by classic gaming consoles.</p>
+                <p className="text-gray-600 dark:text-gray-400">Absolutely! You can adjust the pixel grid size from very large pixels (for a chunky 8-bit look) to small pixels (for more detailed artwork). You can also control the number of colors in your palette and choose from preset retro color schemes inspired by classic gaming consoles.</p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Can I use the pixel art for commercial projects?</h3>
-                <p className="text-gray-600">Yes! The pixel art you create from your own photos is yours to use however you like, including commercial projects such as games, merchandise, social media content, and digital art sales. Just make sure you have the rights to the original photo.</p>
+                <p className="text-gray-600 dark:text-gray-400">Yes! The pixel art you create from your own photos is yours to use however you like, including commercial projects such as games, merchandise, social media content, and digital art sales. Just make sure you have the rights to the original photo.</p>
               </div>
             </div>
           </div>
@@ -378,9 +379,9 @@ export default function PhotoToPixelArt() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
               <h2>Photo to Pixel Art: The Ultimate Free Online Converter</h2>
               <p>
                 Our free photo to pixel art converter makes it easy to transform any photograph into beautiful, retro-inspired pixel art in just seconds. Whether you're a game developer looking for quick sprite assets, a digital artist exploring the pixel art aesthetic, or someone who loves the nostalgic charm of 8-bit and 16-bit graphics, our tool delivers professional-quality results without any cost or complicated software.
@@ -415,49 +416,7 @@ export default function PhotoToPixelArt() {
           </div>
         </section>
 
-        <section className="bg-gray-50 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Explore More Free Art Tools</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <Link href="/photo-to-grid">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Photo Grid</h3>
-                  <p className="text-sm text-gray-500 mt-1">Add drawing reference grids</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-lineart">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Line Art</h3>
-                  <p className="text-sm text-gray-500 mt-1">Convert to line drawings</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-sketch">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Sketch</h3>
-                  <p className="text-sm text-gray-500 mt-1">Create pencil sketches</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-coloring-page">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Coloring Page</h3>
-                  <p className="text-sm text-gray-500 mt-1">Make printable coloring pages</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-paint-by-numbers">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Paint by Numbers</h3>
-                  <p className="text-sm text-gray-500 mt-1">Generate numbered templates</p>
-                </div>
-              </Link>
-              <Link href="/photo-to-watercolor">
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer text-center">
-                  <h3 className="font-semibold text-gray-900">Watercolor & Oil</h3>
-                  <p className="text-sm text-gray-500 mt-1">Apply painting effects</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedTools currentTool="pixelart" />
       </main>
     </>
   );
