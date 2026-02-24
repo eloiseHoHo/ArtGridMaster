@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { injectMetaTags, generateSitemap, generateRobotsTxt } from "./seo";
 
 const app = express();
 app.use(express.json());
@@ -37,6 +38,16 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  app.get("/sitemap.xml", (_req, res) => {
+    res.set("Content-Type", "application/xml");
+    res.send(generateSitemap());
+  });
+
+  app.get("/robots.txt", (_req, res) => {
+    res.set("Content-Type", "text/plain");
+    res.send(generateRobotsTxt());
+  });
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -47,9 +58,23 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.path.startsWith("/api") || req.path.startsWith("/uploads") || req.path.includes(".")) {
+      return next();
+    }
+    const originalEnd = res.end.bind(res);
+    res.end = function (chunk?: any, ...args: any[]) {
+      const contentType = res.getHeader("content-type");
+      if (contentType && String(contentType).includes("text/html") && chunk) {
+        const html = typeof chunk === "string" ? chunk : chunk.toString("utf-8");
+        const injected = injectMetaTags(html, req.originalUrl);
+        return originalEnd(injected, ...args);
+      }
+      return originalEnd(chunk, ...args);
+    } as any;
+    next();
+  });
+
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {

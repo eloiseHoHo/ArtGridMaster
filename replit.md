@@ -15,7 +15,7 @@ Preferred communication style: Simple, everyday language.
 - **UI Components**: shadcn/ui (New York style) with Radix UI primitives, styled with Tailwind CSS and CSS variables for theming
 - **Image Processing (Client-side)**: Canvas API-based effects in `client/src/lib/imageEffects.ts` — grid overlays, line art edge detection, sketch effects, coloring page conversion, paint by numbers, pixel art, and watercolor. Also uses `roughjs` for hand-drawn style effects
 - **File Upload**: react-dropzone for drag-and-drop image uploads
-- **SEO**: react-helmet for per-page meta tags, structured data, Open Graph tags. Each tool has its own dedicated landing page optimized for specific keywords
+- **SEO**: react-helmet for per-page meta tags, structured data, Open Graph tags. Each tool has its own dedicated landing page optimized for specific keywords. Server-side meta tag injection via `server/seo.ts` ensures crawlers see pre-rendered meta tags (title, description, OG, canonical, GEO) in the initial HTML response before JavaScript loads. FAQPage, HowTo, BreadcrumbList, and WebApplication JSON-LD schemas on all key pages
 
 ## Backend
 - **Framework**: Express.js with TypeScript, bundled via esbuild for production
