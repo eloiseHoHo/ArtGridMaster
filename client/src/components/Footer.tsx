@@ -6,7 +6,23 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
-            <span className="text-base font-semibold text-gray-900">PhotoGrid</span>
+            <span className="flex items-center gap-2 text-base font-semibold text-gray-900">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" className="flex-shrink-0">
+                <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
+                <g fill="white" opacity="0.95">
+                  <rect x="5" y="5" width="6" height="6" rx="1.2"/>
+                  <rect x="13" y="5" width="6" height="6" rx="1.2"/>
+                  <rect x="21" y="5" width="6" height="6" rx="1.2"/>
+                  <rect x="5" y="13" width="6" height="6" rx="1.2"/>
+                  <rect x="13" y="13" width="6" height="6" rx="1.2"/>
+                  <rect x="21" y="13" width="6" height="6" rx="1.2"/>
+                  <rect x="5" y="21" width="6" height="6" rx="1.2"/>
+                  <rect x="13" y="21" width="6" height="6" rx="1.2"/>
+                  <rect x="21" y="21" width="6" height="6" rx="1.2"/>
+                </g>
+              </svg>
+              PhotoGrid
+            </span>
             <p className="mt-2 text-sm text-gray-500 leading-relaxed">Free tools for artists to transform photos into drawing references.</p>
           </div>
 

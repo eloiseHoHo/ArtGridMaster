@@ -19,7 +19,23 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
         <Link href="/">
-          <span className="text-lg font-semibold tracking-tight text-gray-900">PhotoGrid</span>
+          <span className="flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" className="flex-shrink-0">
+              <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
+              <g fill="white" opacity="0.95">
+                <rect x="5" y="5" width="6" height="6" rx="1.2"/>
+                <rect x="13" y="5" width="6" height="6" rx="1.2"/>
+                <rect x="21" y="5" width="6" height="6" rx="1.2"/>
+                <rect x="5" y="13" width="6" height="6" rx="1.2"/>
+                <rect x="13" y="13" width="6" height="6" rx="1.2"/>
+                <rect x="21" y="13" width="6" height="6" rx="1.2"/>
+                <rect x="5" y="21" width="6" height="6" rx="1.2"/>
+                <rect x="13" y="21" width="6" height="6" rx="1.2"/>
+                <rect x="21" y="21" width="6" height="6" rx="1.2"/>
+              </g>
+            </svg>
+            PhotoGrid
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
