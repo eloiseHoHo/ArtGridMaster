@@ -9,14 +9,14 @@ export default function PhotoToSketch() {
   return (
     <>
       <Helmet>
-        <title>Convert Photo to Sketch Online Free | PhotoGrid.space</title>
+        <title>Photo to Sketch Converter Free | PhotoGrid.space</title>
         <meta 
           name="description" 
-          content="Transform your photos into beautiful pencil sketches and charcoal drawings with our free online photo to sketch converter. No signup required. Try it now!"
+          content="Turn photos into pencil sketches free online. Create pencil drawings, charcoal effects, and cartoon sketches. Multiple styles. No signup."
         />
         {/* Open Graph tags */}
-        <meta property="og:title" content="Convert Photo to Sketch Online Free | PhotoGrid.space" />
-        <meta property="og:description" content="Transform your photos into beautiful sketches with our free online photo to sketch converter. No signup or installation needed." />
+        <meta property="og:title" content="Photo to Sketch Converter Free Online" />
+        <meta property="og:description" content="Transform photos into pencil sketches and charcoal drawings. Multiple styles. 100% free, no signup." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://photogrid.space/photo-to-sketch" />
         {/* Canonical URL */}
@@ -25,7 +25,7 @@ export default function PhotoToSketch() {
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />
         {/* Keywords */}
-        <meta name="keywords" content="photo to sketch, photo to drawing, picture to sketch converter, photo to pencil sketch, photo to charcoal drawing, sketch maker, sketch generator, free sketch converter, online sketch tool, turn photos into drawings" />
+        <meta name="keywords" content="photo to sketch, photo to pencil drawing, turn photo into drawing, pencil sketch converter, photo to charcoal drawing, AI sketch generator, photo to cartoon sketch, free sketch maker, convert photo to drawing, image to sketch online, photo to hand drawn effect, digital sketch from photo, pencil drawing from photo" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Sketch Converter","url":"https://photogrid.space/photo-to-sketch","description":"Free online tool to convert photos into pencil sketches and charcoal drawings","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1960"}})}</script>
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this photo to sketch converter really free?","acceptedAnswer":{"@type":"Answer","text":"Yes! Our photo to sketch converter is completely free to use. There are no hidden fees, in-app purchases, or premium features that require payment."}},{"@type":"Question","name":"What types of photos work best?","acceptedAnswer":{"@type":"Answer","text":"Our converter works well with most types of photos, but images with good lighting, clear subjects, and reasonable contrast typically produce the best results. Both color and black-and-white photos work equally well."}},{"@type":"Question","name":"Can I adjust how my sketch looks?","acceptedAnswer":{"@type":"Answer","text":"Absolutely! You can customize your sketch by adjusting the intensity, shading level, and choosing between different sketch styles like graphite pencil, charcoal, and more."}},{"@type":"Question","name":"What's the maximum file size I can upload?","acceptedAnswer":{"@type":"Answer","text":"You can upload images up to 10MB in size. We support common image formats including JPG, PNG, and WebP."}},{"@type":"Question","name":"How do I download my sketched image?","acceptedAnswer":{"@type":"Answer","text":"After your photo has been converted to a sketch, simply click the \"Download\" button. Your sketch will be saved to your device in high quality."}}]})}</script>
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":"How to Convert Photos to Sketches","description":"Learn how to convert any photo into a pencil sketch using PhotoGrid.space free online tool.","step":[{"@type":"HowToStep","name":"Upload Your Photo","text":"Select any photo from your device or use sample images to get started."},{"@type":"HowToStep","name":"Choose Your Style","text":"Select from various sketch styles like graphite pencil, charcoal, and more. Adjust settings like intensity and shading."},{"@type":"HowToStep","name":"Download Your Sketch","text":"Preview and download your finished sketch in high resolution."}],"tool":[{"@type":"HowToTool","name":"PhotoGrid.space Sketch Converter"}],"totalTime":"PT1M"})}</script>

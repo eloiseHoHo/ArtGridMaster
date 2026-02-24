@@ -9,14 +9,14 @@ export default function PhotoToGrid() {
   return (
     <>
       <Helmet>
-        <title>Add Grid to Photos Online Free | Photo Grid Generator | PhotoGrid.space</title>
+        <title>Grid Maker for Artists Free | PhotoGrid.space</title>
         <meta 
           name="description" 
-          content="Turn photos into grid references for artists with our free online grid generator. Create perfect drawing guides with customizable grid size, opacity and style. No signup required."
+          content="Add drawing grids to any photo free. Create grid overlays for proportions, scale drawings, and canvas transfers. Adjustable rows, columns, and colors."
         />
         {/* Open Graph tags */}
-        <meta property="og:title" content="Add Grid to Photos Online Free | Drawing Reference Tool | PhotoGrid.space" />
-        <meta property="og:description" content="Turn any photo into a perfect drawing reference with customizable grid overlay. Essential tool for artists, completely free to use." />
+        <meta property="og:title" content="Grid Maker for Artists Free Online" />
+        <meta property="og:description" content="Add drawing grids to photos for accurate proportions. Customize rows, columns, colors. 100% free." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://photogrid.space/photo-to-grid" />
         {/* Canonical URL */}
@@ -25,7 +25,7 @@ export default function PhotoToGrid() {
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />
         {/* Keywords */}
-        <meta name="keywords" content="photo grid generator, add grid to photo, drawing grid reference, artist grid tool, grid method drawing, grid overlay for images, photo grid maker, free grid generator, artistic grid, proportional drawing grid" />
+        <meta name="keywords" content="photo grid maker, drawing grid generator, image grid generator, grid drawing tool for artists, grid overlay for drawing, scale drawing with grid, transfer image to canvas grid, free grid maker for artists, add grid to photo, proportional grid maker, art grid tool, grid method drawing, reference grid maker, photo grid overlay" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo Grid Generator","url":"https://photogrid.space/photo-to-grid","description":"Free online tool to add grid overlays to photos for drawing reference","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"2150"}})}</script>
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the Grid Method in art?","acceptedAnswer":{"@type":"Answer","text":"The Grid Method is a technique used by artists to accurately transfer an image to their drawing surface by dividing both the reference photo and drawing surface into a grid of squares. This allows artists to focus on one square at a time, making it easier to maintain proper proportions and relationships between elements."}},{"@type":"Question","name":"What grid size should I use?","acceptedAnswer":{"@type":"Answer","text":"The ideal grid size depends on your subject and desired level of detail. For portraits and detailed subjects, a finer grid (more squares) helps capture subtle features accurately. For simpler subjects or larger works, a coarser grid might be sufficient. Our tool allows you to experiment with different grid densities to find what works best for your project."}},{"@type":"Question","name":"How do I use the grid reference for drawing?","acceptedAnswer":{"@type":"Answer","text":"First, create a proportional grid on your drawing surface that matches the grid on your reference photo. Then, focus on one square at a time, drawing the contents of each square in the corresponding square on your paper. This approach breaks down complex subjects into manageable sections while maintaining accurate proportions."}},{"@type":"Question","name":"Can I use these grid references for commercial artwork?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can use the grid references you create with our tool for both personal and commercial artwork. The grid overlay is simply a drawing aid and doesn't affect your copyright ownership of the final artwork you create."}},{"@type":"Question","name":"What file types can I upload?","acceptedAnswer":{"@type":"Answer","text":"Our tool supports common image formats including JPG, PNG, and WEBP files up to 10MB in size."}}]})}</script>
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":"How to Create a Grid Reference for Drawing","description":"Learn how to add a drawing grid overlay to any photo using PhotoGrid.space free online tool.","step":[{"@type":"HowToStep","name":"Upload Your Photo","text":"Select any photo from your device. Supports JPEG and PNG formats up to 10MB."},{"@type":"HowToStep","name":"Customize Your Grid","text":"Adjust grid size, opacity, color, and style to suit your artistic needs."},{"@type":"HowToStep","name":"Download Your Reference","text":"Save your grid reference in high resolution for printing or digital use."}],"tool":[{"@type":"HowToTool","name":"PhotoGrid.space Grid Maker"}],"totalTime":"PT1M"})}</script>

@@ -9,14 +9,14 @@ export default function PhotoToLineart() {
   return (
     <>
       <Helmet>
-        <title>Convert Photo to Line Art Online Free | PhotoGrid.space</title>
+        <title>Photo to Line Art Converter Free | PhotoGrid.space</title>
         <meta 
           name="description" 
-          content="Transform your photos into beautiful line drawings with our free online photo to line art converter. No signup required. Perfect for coloring books, illustrations, and more."
+          content="Convert photos to line art free online. Create outlines, stencils, tattoo designs, and line drawings. Multiple styles available. No signup."
         />
         {/* Open Graph tags */}
-        <meta property="og:title" content="Convert Photo to Line Art Online Free | PhotoGrid.space" />
-        <meta property="og:description" content="Transform your photos into beautiful line drawings with our free online converter. Perfect for coloring pages, illustrations, and art projects." />
+        <meta property="og:title" content="Photo to Line Art Converter Free Online" />
+        <meta property="og:description" content="Turn photos into line art, outlines, and stencils. Perfect for tattoo designs and digital art. 100% free." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://photogrid.space/photo-to-lineart" />
         {/* Canonical URL */}
@@ -25,7 +25,7 @@ export default function PhotoToLineart() {
         <meta name="geo.position" content="37.09024;-95.712891" />
         <meta name="ICBM" content="37.09024, -95.712891" />
         {/* Keywords */}
-        <meta name="keywords" content="photo to line art, photo to line drawing, picture to outline, photo to coloring page, line art generator, convert image to line drawing, online line art tool, line drawing maker, free line art converter, photo to illustration" />
+        <meta name="keywords" content="photo to line art, line art converter, photo to outline, image to line drawing, turn photo into line drawing, photo to stencil, line art for tattoo, free line art converter, photo to SVG outline, convert image to line art, line drawing from photo, photo to outline drawing, line art generator free" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Line Art Converter","url":"https://photogrid.space/photo-to-lineart","description":"Free online tool to convert photos into line art drawings","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","ratingCount":"1830"}})}</script>
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What types of photos work best for line art conversion?","acceptedAnswer":{"@type":"Answer","text":"Photos with good contrast, clear subjects, and sharp details typically produce the best line art results. Images with simple backgrounds and distinct subject outlines work particularly well."}},{"@type":"Question","name":"Can I adjust the line thickness and detail level?","acceptedAnswer":{"@type":"Answer","text":"Yes, our tool allows you to customize the line thickness, detail level, and contrast threshold to achieve your preferred line art style."}},{"@type":"Question","name":"What file formats can I use for my photos?","acceptedAnswer":{"@type":"Answer","text":"Our converter supports common image formats including JPG, PNG, and WEBP files up to 10MB in size."}},{"@type":"Question","name":"Can I use the line art for commercial projects?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can use the line art generated from your own photos for both personal and commercial purposes."}},{"@type":"Question","name":"How do I create a coloring page from my photo?","acceptedAnswer":{"@type":"Answer","text":"Upload your photo, select the line art style that works best for coloring pages (typically 'Detailed' or 'Technical'), adjust the settings for clear lines, and download the result to print."}}]})}</script>
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":"How to Convert Photos to Line Art","description":"Learn how to convert any photo into line art using PhotoGrid.space free online tool.","step":[{"@type":"HowToStep","name":"Upload Your Photo","text":"Select any photo from your device or use sample images."},{"@type":"HowToStep","name":"Customize Your Line Art","text":"Select from different line styles and adjust settings like thickness and detail level."},{"@type":"HowToStep","name":"Download Your Line Art","text":"Preview and download your finished line drawing in high resolution."}],"tool":[{"@type":"HowToTool","name":"PhotoGrid.space Line Art Converter"}],"totalTime":"PT1M"})}</script>
