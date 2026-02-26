@@ -180,6 +180,86 @@ function drawPill(
 }
 
 /**
+ * Generate an all-effects grid image: original + 7 effects in a 2×4 grid.
+ * Output is 1080×1350 (Instagram-optimized portrait).
+ */
+export async function generateAllEffectsGrid(
+  items: { label: string; dataUrl: string }[]
+): Promise<string> {
+  const W = 1080;
+  const H = 1350;
+  const cols = 2;
+  const rows = 4;
+  const topBarH = 60;
+  const bottomBarH = 50;
+  const gap = 6;
+  const padding = 6;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d")!;
+
+  // Background
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, W, H);
+
+  // Top bar
+  ctx.font = "600 22px Inter, system-ui, sans-serif";
+  ctx.fillStyle = "#ffffff";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText("7 Art Styles · One Photo", W / 2, topBarH / 2);
+
+  // Grid area
+  const gridY = topBarH;
+  const gridH = H - topBarH - bottomBarH;
+  const cellW = Math.floor((W - padding * 2 - gap * (cols - 1)) / cols);
+  const cellH = Math.floor((gridH - gap * (rows - 1)) / rows);
+
+  const images = await Promise.all(items.map((item) => loadImage(item.dataUrl)));
+
+  for (let i = 0; i < Math.min(items.length, cols * rows); i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const x = padding + col * (cellW + gap);
+    const y = gridY + row * (cellH + gap);
+
+    // Draw image cover-cropped
+    drawCroppedImage(ctx, images[i], x, y, cellW, cellH);
+
+    // Label pill at bottom-left of each cell
+    const labelFontSize = 14;
+    ctx.font = `600 ${labelFontSize}px Inter, system-ui, sans-serif`;
+    const label = items[i].label;
+    const metrics = ctx.measureText(label);
+    const pw = metrics.width + 14;
+    const ph = 24;
+    const px = x + 6;
+    const py = y + cellH - ph - 6;
+
+    ctx.fillStyle = "rgba(0,0,0,0.6)";
+    ctx.beginPath();
+    ctx.roundRect(px, py, pw, ph, 12);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    ctx.fillText(label, px + pw / 2, py + ph / 2);
+  }
+
+  // Bottom bar
+  ctx.font = "500 16px Inter, system-ui, sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,0.85)";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText("Made with PhotoGrid.space · 100% Free", W / 2, H - bottomBarH / 2);
+
+  return canvas.toDataURL("image/jpeg", 0.92);
+}
+
+/**
  * Add a small watermark to a result image.
  */
 export async function addWatermark(imageSrc: string): Promise<string> {

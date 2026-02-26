@@ -49,7 +49,7 @@ export default function PhotoToWatercolor() {
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
                   Transform Photos into <span className="text-primary">Beautiful Paintings</span>
                 </h1>
-                <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
+                <p className="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
                   Turn your favorite photos into stunning watercolor paintings, oil paintings, and impressionist artworks with our free online converter. Adjust intensity, wetness, and brush style for a truly unique result — no artistic skills or signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -96,7 +96,7 @@ export default function PhotoToWatercolor() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Powerful Painting Effect Features</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need to transform photos into beautiful paintings</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Everything you need to transform photos into beautiful paintings</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -106,7 +106,7 @@ export default function PhotoToWatercolor() {
                     <Droplets className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Watercolor Effect</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Create soft, flowing watercolor paintings with realistic paint blending, wet edges, and translucent color washes that mimic traditional watercolor techniques.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Create soft, flowing watercolor paintings with realistic paint blending, wet edges, and translucent color washes that mimic traditional watercolor techniques.</p>
                 </CardContent>
               </Card>
 
@@ -116,7 +116,7 @@ export default function PhotoToWatercolor() {
                     <Paintbrush className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Oil Painting Effect</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Transform photos into rich, textured oil paintings with visible brush strokes, vibrant colors, and the depth and dimension of classic oil on canvas.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Transform photos into rich, textured oil paintings with visible brush strokes, vibrant colors, and the depth and dimension of classic oil on canvas.</p>
                 </CardContent>
               </Card>
 
@@ -126,7 +126,7 @@ export default function PhotoToWatercolor() {
                     <Palette className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Impressionist Style</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Apply impressionist painting techniques with expressive, dappled brushwork and vibrant color palettes inspired by Monet, Renoir, and other masters.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Apply impressionist painting techniques with expressive, dappled brushwork and vibrant color palettes inspired by Monet, Renoir, and other masters.</p>
                 </CardContent>
               </Card>
 
@@ -136,7 +136,7 @@ export default function PhotoToWatercolor() {
                     <SlidersHorizontal className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Adjustable Intensity & Wetness</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Fine-tune painting intensity, brush size, wetness, and color saturation to achieve exactly the artistic look you envision for each photo.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Fine-tune painting intensity, brush size, wetness, and color saturation to achieve exactly the artistic look you envision for each photo.</p>
                 </CardContent>
               </Card>
             </div>
@@ -147,26 +147,26 @@ export default function PhotoToWatercolor() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How to Convert a Photo to a Painting</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Three simple steps to create your custom artwork</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Three simple steps to create your custom artwork</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload Your Photo</h3>
-                <p className="text-gray-600 dark:text-gray-400">Select any photo from your device — portraits, landscapes, still life, or any image you want to transform into a painting</p>
+                <p className="text-gray-600 dark:text-gray-300">Select any photo from your device — portraits, landscapes, still life, or any image you want to transform into a painting</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
                 <h3 className="text-xl font-semibold mb-2">Choose Your Painting Style</h3>
-                <p className="text-gray-600 dark:text-gray-400">Pick watercolor, oil painting, or impressionist style and adjust intensity, wetness, and brush settings to customize your artwork</p>
+                <p className="text-gray-600 dark:text-gray-300">Pick watercolor, oil painting, or impressionist style and adjust intensity, wetness, and brush settings to customize your artwork</p>
               </div>
 
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
                 <h3 className="text-xl font-semibold mb-2">Download & Share</h3>
-                <p className="text-gray-600 dark:text-gray-400">Download your finished painting in high resolution, perfect for printing on canvas, sharing on social media, or gifting to loved ones</p>
+                <p className="text-gray-600 dark:text-gray-300">Download your finished painting in high resolution, perfect for printing on canvas, sharing on social media, or gifting to loved ones</p>
               </div>
             </div>
 
@@ -185,7 +185,7 @@ export default function PhotoToWatercolor() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Creative Uses for Photo to Painting</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Turn everyday photos into stunning works of art</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Turn everyday photos into stunning works of art</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -195,7 +195,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Wall Art & Home Decor</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Transform your best photos into watercolor or oil painting prints worthy of framing. Create a personalized gallery wall with custom artwork from vacation photos, family portraits, or nature shots — all without commissioning an expensive artist.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Transform your best photos into watercolor or oil painting prints worthy of framing. Create a personalized gallery wall with custom artwork from vacation photos, family portraits, or nature shots — all without commissioning an expensive artist.</p>
                 </div>
               </div>
 
@@ -205,7 +205,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Wedding & Portrait Art</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Turn wedding photos, engagement portraits, and family pictures into romantic watercolor or classic oil painting effects. Create timeless, artistic keepsakes that capture your most cherished moments in a painterly style.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Turn wedding photos, engagement portraits, and family pictures into romantic watercolor or classic oil painting effects. Create timeless, artistic keepsakes that capture your most cherished moments in a painterly style.</p>
                 </div>
               </div>
 
@@ -215,7 +215,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Gift Ideas</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Create one-of-a-kind painted portraits, pet paintings, or landscape art from photos as thoughtful gifts for birthdays, anniversaries, holidays, or housewarmings. A personalized painting-style print is a gift that truly stands out.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Create one-of-a-kind painted portraits, pet paintings, or landscape art from photos as thoughtful gifts for birthdays, anniversaries, holidays, or housewarmings. A personalized painting-style print is a gift that truly stands out.</p>
                 </div>
               </div>
 
@@ -225,7 +225,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Social Media Content</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Stand out on Instagram, Pinterest, and other platforms with unique watercolor and oil painting versions of your photos. Create eye-catching artistic content that drives engagement and makes your feed uniquely yours.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Stand out on Instagram, Pinterest, and other platforms with unique watercolor and oil painting versions of your photos. Create eye-catching artistic content that drives engagement and makes your feed uniquely yours.</p>
                 </div>
               </div>
             </div>
@@ -236,7 +236,7 @@ export default function PhotoToWatercolor() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Why Choose Our Photo to Painting Tool</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Everything you need, completely free</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Everything you need, completely free</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -246,7 +246,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">100% Free — No Hidden Costs</h3>
-                  <p className="text-gray-600 dark:text-gray-400">All painting styles, effects, and downloads are completely free. No premium tier, no watermarks, no usage limits.</p>
+                  <p className="text-gray-600 dark:text-gray-300">All painting styles, effects, and downloads are completely free. No premium tier, no watermarks, no usage limits.</p>
                 </div>
               </div>
 
@@ -256,7 +256,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Sign-Up Required</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Start creating painting effects instantly without registering an account or providing any personal information.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Start creating painting effects instantly without registering an account or providing any personal information.</p>
                 </div>
               </div>
 
@@ -266,7 +266,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">High-Resolution Output</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Download paintings in high resolution, perfect for printing on canvas, framing, or sharing in crystal-clear quality.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Download paintings in high resolution, perfect for printing on canvas, framing, or sharing in crystal-clear quality.</p>
                 </div>
               </div>
 
@@ -276,7 +276,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Works on Any Device</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Our painting converter works perfectly on desktop, tablet, and mobile browsers — no app download needed.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Our painting converter works perfectly on desktop, tablet, and mobile browsers — no app download needed.</p>
                 </div>
               </div>
 
@@ -286,7 +286,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Privacy First</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Your photos are processed securely and never stored on our servers or shared with third parties.</p>
                 </div>
               </div>
 
@@ -296,7 +296,7 @@ export default function PhotoToWatercolor() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Multiple Painting Styles</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Watercolor, oil painting, and impressionist styles with full control over intensity, wetness, and brush effects.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Watercolor, oil painting, and impressionist styles with full control over intensity, wetness, and brush effects.</p>
                 </div>
               </div>
             </div>
@@ -307,33 +307,33 @@ export default function PhotoToWatercolor() {
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
-              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need to know about converting photos to paintings</p>
+              <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Everything you need to know about converting photos to paintings</p>
             </div>
 
             <div className="space-y-6">
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Is this photo to watercolor converter really free?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Yes, our photo to watercolor and oil painting converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited painting effects at no cost.</p>
+                <p className="text-gray-600 dark:text-gray-300">Yes, our photo to watercolor and oil painting converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited painting effects at no cost.</p>
               </div>
 
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What's the difference between watercolor and oil painting effects?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Watercolor effects produce soft, translucent washes with flowing edges and subtle color blending, similar to traditional watercolor on paper. Oil painting effects create richer, more textured results with visible brush strokes and deeper color saturation, mimicking oil paint on canvas. Both styles can be fine-tuned with our adjustable settings.</p>
+                <p className="text-gray-600 dark:text-gray-300">Watercolor effects produce soft, translucent washes with flowing edges and subtle color blending, similar to traditional watercolor on paper. Oil painting effects create richer, more textured results with visible brush strokes and deeper color saturation, mimicking oil paint on canvas. Both styles can be fine-tuned with our adjustable settings.</p>
               </div>
 
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">What types of photos work best for painting effects?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Almost any photo can be transformed into a beautiful painting. Landscapes, portraits, flowers, and architecture tend to produce especially striking results. Photos with good lighting, clear subjects, and vibrant colors work particularly well. Even everyday snapshots can become impressive artwork with the right painting style and settings.</p>
+                <p className="text-gray-600 dark:text-gray-300">Almost any photo can be transformed into a beautiful painting. Landscapes, portraits, flowers, and architecture tend to produce especially striking results. Photos with good lighting, clear subjects, and vibrant colors work particularly well. Even everyday snapshots can become impressive artwork with the right painting style and settings.</p>
               </div>
 
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Can I print the painting on canvas?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Absolutely! Our tool produces high-resolution output that's perfect for printing on canvas, fine art paper, or standard photo paper. Many users order canvas prints from online printing services to create gallery-quality wall art from their converted photos.</p>
+                <p className="text-gray-600 dark:text-gray-300">Absolutely! Our tool produces high-resolution output that's perfect for printing on canvas, fine art paper, or standard photo paper. Many users order canvas prints from online printing services to create gallery-quality wall art from their converted photos.</p>
               </div>
 
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">How do I adjust the painting intensity and wetness?</h3>
-                <p className="text-gray-600 dark:text-gray-400">After uploading your photo and selecting a painting style, you can use our intuitive slider controls to adjust intensity (how strongly the painting effect is applied), wetness (how much colors bleed and blend), and brush size. Preview changes in real time before downloading your finished artwork.</p>
+                <p className="text-gray-600 dark:text-gray-300">After uploading your photo and selecting a painting style, you can use our intuitive slider controls to adjust intensity (how strongly the painting effect is applied), wetness (how much colors bleed and blend), and brush size. Preview changes in real time before downloading your finished artwork.</p>
               </div>
             </div>
           </div>

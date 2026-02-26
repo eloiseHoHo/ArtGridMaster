@@ -67,14 +67,14 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              className="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
               {link.label}
             </Link>
           ))}
           <Link
             href="/blog"
-            className="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             Blog
           </Link>
@@ -83,14 +83,14 @@ export default function Header() {
         <div className="flex items-center gap-1">
           <button
             onClick={toggleDarkMode}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+            className="p-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
             aria-label="Toggle dark mode"
           >
             {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            className="md:hidden p-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -104,7 +104,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="py-2 px-3 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+                className="py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
@@ -113,7 +113,7 @@ export default function Header() {
             <div className="border-t border-gray-100 dark:border-gray-800 my-1" />
             <Link
               href="/blog"
-              className="py-2 px-3 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+              className="py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
               onClick={() => setMobileMenuOpen(false)}
             >
               Blog

@@ -332,7 +332,7 @@ export default function GridMethodForPerfectPortraits() {
 
         <div className="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-center">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Ready to Try the Grid Method?</h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">Create your own grid overlay on any photo with our free tool.</p>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">Create your own grid overlay on any photo with our free tool.</p>
           <Link href="/photo-to-grid">
             <a className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium">Try Photo Grid Maker Free</a>
           </Link>

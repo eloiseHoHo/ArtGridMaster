@@ -30,7 +30,7 @@ export default function PhotoToGrid() {
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
                   Add Perfect <span className="text-primary">Grid</span> to Any Photo
                 </h1>
-                <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
+                <p className="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
                   Transform your photos into professional drawing references with customizable grid overlays. The essential tool for artists to achieve perfect proportions and accurate drawings. 100% free.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -69,7 +69,7 @@ export default function PhotoToGrid() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Create Perfect Grid References</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Customize your grid with powerful options for any artistic need</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Customize your grid with powerful options for any artistic need</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -81,7 +81,7 @@ export default function PhotoToGrid() {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Adjustable Grid Size</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Customize your grid density from large squares for basic proportions to fine grids for detailed work.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Customize your grid density from large squares for basic proportions to fine grids for detailed work.</p>
                 </CardContent>
               </Card>
               
@@ -93,7 +93,7 @@ export default function PhotoToGrid() {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Custom Grid Styles</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Choose from lines, dots, or dashed grid styles and personalize colors to suit your preferences.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Choose from lines, dots, or dashed grid styles and personalize colors to suit your preferences.</p>
                 </CardContent>
               </Card>
               
@@ -105,7 +105,7 @@ export default function PhotoToGrid() {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Easy Download & Sharing</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Download your grid references in high resolution, perfect for printing or digital use.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Download your grid references in high resolution, perfect for printing or digital use.</p>
                 </CardContent>
               </Card>
             </div>
@@ -117,26 +117,26 @@ export default function PhotoToGrid() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How to Create Your Grid Reference</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Three simple steps to transform your photos</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Three simple steps to transform your photos</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload Your Photo</h3>
-                <p className="text-gray-600 dark:text-gray-400">Select any photo from your device or use one of our sample images</p>
+                <p className="text-gray-600 dark:text-gray-300">Select any photo from your device or use one of our sample images</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
                 <h3 className="text-xl font-semibold mb-2">Customize Your Grid</h3>
-                <p className="text-gray-600 dark:text-gray-400">Adjust grid size, opacity, color, and style to suit your artistic needs</p>
+                <p className="text-gray-600 dark:text-gray-300">Adjust grid size, opacity, color, and style to suit your artistic needs</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
                 <h3 className="text-xl font-semibold mb-2">Download Your Reference</h3>
-                <p className="text-gray-600 dark:text-gray-400">Save your grid reference in high resolution for printing or digital use</p>
+                <p className="text-gray-600 dark:text-gray-300">Save your grid reference in high resolution for printing or digital use</p>
               </div>
             </div>
             
@@ -156,7 +156,7 @@ export default function PhotoToGrid() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Choose Your Perfect Grid Style</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Multiple options to match your artistic preferences</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Multiple options to match your artistic preferences</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -171,7 +171,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Standard Line Grid</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Classic grid with clean lines, perfect for most drawing projects</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Classic grid with clean lines, perfect for most drawing projects</p>
                 </div>
               </div>
               
@@ -194,7 +194,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Dotted Grid</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Subtle grid with dots at intersections, less intrusive for detailed work</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Subtle grid with dots at intersections, less intrusive for detailed work</p>
                 </div>
               </div>
               
@@ -216,7 +216,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Dashed Grid</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Elegant dashed lines for a balanced view of your reference image</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Elegant dashed lines for a balanced view of your reference image</p>
                 </div>
               </div>
             </div>
@@ -237,13 +237,13 @@ export default function PhotoToGrid() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Perfect for Artists of All Levels</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">How artists use our grid tool to improve their work</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">How artists use our grid tool to improve their work</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
                 <h3 className="text-xl font-semibold mb-4">Portrait & Figure Artists</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Create accurate proportions in portraiture and figure drawing with precision grid references. Essential for capturing likeness and proper anatomical relationships.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Create accurate proportions in portraiture and figure drawing with precision grid references. Essential for capturing likeness and proper anatomical relationships.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <div className="relative">
                     <img 
@@ -258,7 +258,7 @@ export default function PhotoToGrid() {
               
               <div>
                 <h3 className="text-xl font-semibold mb-4">Landscape & Architecture Artists</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Maintain perfect perspective and proportions in landscape and architectural drawings. Ideal for complex scenes with multiple elements and perspective points.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Maintain perfect perspective and proportions in landscape and architectural drawings. Ideal for complex scenes with multiple elements and perspective points.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <div className="relative">
                     <img 
@@ -273,7 +273,7 @@ export default function PhotoToGrid() {
               
               <div>
                 <h3 className="text-xl font-semibold mb-4">Art Students & Beginners</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Learn fundamental drawing skills with the grid method, breaking complex subjects into manageable sections. Perfect for developing your eye for proportion and composition.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Learn fundamental drawing skills with the grid method, breaking complex subjects into manageable sections. Perfect for developing your eye for proportion and composition.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <div className="relative">
                     <img 
@@ -288,7 +288,7 @@ export default function PhotoToGrid() {
               
               <div>
                 <h3 className="text-xl font-semibold mb-4">Professional Illustrators</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Speed up your workflow by starting with accurate proportions and composition through grid references. Especially useful for commissioned work requiring precision.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Speed up your workflow by starting with accurate proportions and composition through grid references. Especially useful for commissioned work requiring precision.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <div className="relative">
                     <img 
@@ -309,7 +309,7 @@ export default function PhotoToGrid() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Why Use Our Photo Grid Generator</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Discover the advantages of our free online tool</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Discover the advantages of our free online tool</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -319,7 +319,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Completely Free to Use</h3>
-                  <p className="text-gray-600 dark:text-gray-400">No subscription fees, premium features, or hidden costs. All grid styles and customization options are 100% free.</p>
+                  <p className="text-gray-600 dark:text-gray-300">No subscription fees, premium features, or hidden costs. All grid styles and customization options are 100% free.</p>
                 </div>
               </div>
               
@@ -329,7 +329,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Perfect Proportions Made Easy</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Achieve accurate proportions in your artwork without advanced skills or expensive tools.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Achieve accurate proportions in your artwork without advanced skills or expensive tools.</p>
                 </div>
               </div>
               
@@ -339,7 +339,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Highly Customizable</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Adjust grid size, style, color, and opacity to perfectly suit your specific artistic needs and preferences.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Adjust grid size, style, color, and opacity to perfectly suit your specific artistic needs and preferences.</p>
                 </div>
               </div>
               
@@ -349,7 +349,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Registration Required</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Start creating grid references instantly without signing up or providing any personal information.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Start creating grid references instantly without signing up or providing any personal information.</p>
                 </div>
               </div>
               
@@ -359,7 +359,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Works on Any Device</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Our tool is fully responsive and works perfectly on desktop, tablet, or mobile devices without any installation.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Our tool is fully responsive and works perfectly on desktop, tablet, or mobile devices without any installation.</p>
                 </div>
               </div>
               
@@ -369,7 +369,7 @@ export default function PhotoToGrid() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">High-Quality Results</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Download your grid references in high resolution, perfect for printing or using digitally in any art software.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Download your grid references in high resolution, perfect for printing or using digitally in any art software.</p>
                 </div>
               </div>
             </div>
@@ -381,33 +381,33 @@ export default function PhotoToGrid() {
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
-              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need to know about our photo grid generator</p>
+              <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Everything you need to know about our photo grid generator</p>
             </div>
             
             <div className="space-y-6">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">What is the Grid Method in art?</h3>
-                <p className="text-gray-600 dark:text-gray-400">The Grid Method is a technique used by artists to accurately transfer an image to their drawing surface by dividing both the reference photo and drawing surface into a grid of squares. This allows artists to focus on one square at a time, making it easier to maintain proper proportions and relationships between elements.</p>
+                <p className="text-gray-600 dark:text-gray-300">The Grid Method is a technique used by artists to accurately transfer an image to their drawing surface by dividing both the reference photo and drawing surface into a grid of squares. This allows artists to focus on one square at a time, making it easier to maintain proper proportions and relationships between elements.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">What grid size should I use?</h3>
-                <p className="text-gray-600 dark:text-gray-400">The ideal grid size depends on your subject and desired level of detail. For portraits and detailed subjects, a finer grid (more squares) helps capture subtle features accurately. For simpler subjects or larger works, a coarser grid might be sufficient. Our tool allows you to experiment with different grid densities to find what works best for your project.</p>
+                <p className="text-gray-600 dark:text-gray-300">The ideal grid size depends on your subject and desired level of detail. For portraits and detailed subjects, a finer grid (more squares) helps capture subtle features accurately. For simpler subjects or larger works, a coarser grid might be sufficient. Our tool allows you to experiment with different grid densities to find what works best for your project.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">How do I use the grid reference for drawing?</h3>
-                <p className="text-gray-600 dark:text-gray-400">First, create a proportional grid on your drawing surface that matches the grid on your reference photo. Then, focus on one square at a time, drawing the contents of each square in the corresponding square on your paper. This approach breaks down complex subjects into manageable sections while maintaining accurate proportions.</p>
+                <p className="text-gray-600 dark:text-gray-300">First, create a proportional grid on your drawing surface that matches the grid on your reference photo. Then, focus on one square at a time, drawing the contents of each square in the corresponding square on your paper. This approach breaks down complex subjects into manageable sections while maintaining accurate proportions.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">Can I use these grid references for commercial artwork?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Yes, you can use the grid references you create with our tool for both personal and commercial artwork. The grid overlay is simply a drawing aid and doesn&apos;t affect your copyright ownership of the final artwork you create.</p>
+                <p className="text-gray-600 dark:text-gray-300">Yes, you can use the grid references you create with our tool for both personal and commercial artwork. The grid overlay is simply a drawing aid and doesn&apos;t affect your copyright ownership of the final artwork you create.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">What file types can I upload?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Our tool supports common image formats including JPG, PNG, and WEBP files up to 10MB in size.</p>
+                <p className="text-gray-600 dark:text-gray-300">Our tool supports common image formats including JPG, PNG, and WEBP files up to 10MB in size.</p>
               </div>
             </div>
           </div>

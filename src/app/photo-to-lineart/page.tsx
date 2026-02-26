@@ -30,7 +30,7 @@ export default function PhotoToLineart() {
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
                   Convert Photos to <span className="text-primary">Line Art</span> Instantly
                 </h1>
-                <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
+                <p className="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
                   Create stunning line drawings from any photo with our easy-to-use online converter. Perfect for coloring pages, illustrations, and art projects. 100% free, no signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -68,7 +68,7 @@ export default function PhotoToLineart() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Create Beautiful Line Art in Seconds</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Our advanced technology extracts clean, crisp lines from your photos</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Our advanced technology extracts clean, crisp lines from your photos</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -80,7 +80,7 @@ export default function PhotoToLineart() {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Multiple Line Styles</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Choose from various line styles including detailed, minimal, and technical drawings to match your artistic needs.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Choose from various line styles including detailed, minimal, and technical drawings to match your artistic needs.</p>
                 </CardContent>
               </Card>
               
@@ -93,7 +93,7 @@ export default function PhotoToLineart() {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Adjustable Settings</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Fine-tune your line art with controls for line thickness, detail level, and threshold to get precisely the look you want.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Fine-tune your line art with controls for line thickness, detail level, and threshold to get precisely the look you want.</p>
                 </CardContent>
               </Card>
               
@@ -105,7 +105,7 @@ export default function PhotoToLineart() {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">High-Quality Output</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Download your line art in high resolution, perfect for printing coloring pages or using in digital art projects.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Download your line art in high resolution, perfect for printing coloring pages or using in digital art projects.</p>
                 </CardContent>
               </Card>
             </div>
@@ -117,26 +117,26 @@ export default function PhotoToLineart() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How to Convert Photos to Line Art</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Three simple steps to transform your photos</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Three simple steps to transform your photos</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload Your Photo</h3>
-                <p className="text-gray-600 dark:text-gray-400">Select any photo from your device or use our sample images</p>
+                <p className="text-gray-600 dark:text-gray-300">Select any photo from your device or use our sample images</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
                 <h3 className="text-xl font-semibold mb-2">Customize Your Line Art</h3>
-                <p className="text-gray-600 dark:text-gray-400">Select from different line styles and adjust settings like thickness and detail level</p>
+                <p className="text-gray-600 dark:text-gray-300">Select from different line styles and adjust settings like thickness and detail level</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full bg-primary w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
                 <h3 className="text-xl font-semibold mb-2">Download Your Line Art</h3>
-                <p className="text-gray-600 dark:text-gray-400">Preview and download your finished line drawing in high resolution</p>
+                <p className="text-gray-600 dark:text-gray-300">Preview and download your finished line drawing in high resolution</p>
               </div>
             </div>
             
@@ -156,7 +156,7 @@ export default function PhotoToLineart() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Different Line Art Styles Available</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Choose the perfect style for your creative projects</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Choose the perfect style for your creative projects</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -168,7 +168,7 @@ export default function PhotoToLineart() {
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Detailed Line Art</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Captures intricate details with fine, precise lines for realistic representations</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Captures intricate details with fine, precise lines for realistic representations</p>
                 </div>
               </div>
               
@@ -180,7 +180,7 @@ export default function PhotoToLineart() {
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Minimal Line Art</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Clean, simplified outlines that focus on essential shapes and forms</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Clean, simplified outlines that focus on essential shapes and forms</p>
                 </div>
               </div>
               
@@ -192,7 +192,7 @@ export default function PhotoToLineart() {
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg">Technical Drawing</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Precise, architectural-style line work with emphasis on structure and perspective</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Precise, architectural-style line work with emphasis on structure and perspective</p>
                 </div>
               </div>
             </div>
@@ -213,13 +213,13 @@ export default function PhotoToLineart() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Perfect for Many Creative Projects</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Discover how our line art converter can enhance your creativity</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Discover how our line art converter can enhance your creativity</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
                 <h3 className="text-xl font-semibold mb-4">Coloring Pages</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Create custom coloring pages from any photo. Perfect for kids' activities, art therapy, or personalized gifts.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Create custom coloring pages from any photo. Perfect for kids' activities, art therapy, or personalized gifts.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <img 
                     src="https://images.unsplash.com/photo-1560421683-6856ea585c78?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
@@ -231,7 +231,7 @@ export default function PhotoToLineart() {
               
               <div>
                 <h3 className="text-xl font-semibold mb-4">Illustration Bases</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Use as a starting point for digital illustrations, saving hours of initial line work. Great for artists and designers.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Use as a starting point for digital illustrations, saving hours of initial line work. Great for artists and designers.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <img 
                     src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
@@ -243,7 +243,7 @@ export default function PhotoToLineart() {
               
               <div>
                 <h3 className="text-xl font-semibold mb-4">Embroidery Patterns</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Convert photos into line patterns perfect for embroidery, cross-stitch, or other needlecraft projects.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Convert photos into line patterns perfect for embroidery, cross-stitch, or other needlecraft projects.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <img 
                     src="https://images.unsplash.com/photo-1528249227670-9ba48616014f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
@@ -255,7 +255,7 @@ export default function PhotoToLineart() {
               
               <div>
                 <h3 className="text-xl font-semibold mb-4">Tattoo Designs</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Create line art references for custom tattoo designs from personal photographs or meaningful images.</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Create line art references for custom tattoo designs from personal photographs or meaningful images.</p>
                 <div className="overflow-hidden rounded-lg shadow-md dark:shadow-gray-900/50">
                   <img 
                     src="https://images.unsplash.com/photo-1590246814883-57764a28a773?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
@@ -273,7 +273,7 @@ export default function PhotoToLineart() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Why Use Our Photo to Line Art Converter</h2>
-              <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Experience these advantages with our free online tool</p>
+              <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">Experience these advantages with our free online tool</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -283,7 +283,7 @@ export default function PhotoToLineart() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Clean, Precise Line Extraction</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Our advanced algorithms extract clean lines even from complex images, preserving the important details.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Our advanced algorithms extract clean lines even from complex images, preserving the important details.</p>
                 </div>
               </div>
               
@@ -293,7 +293,7 @@ export default function PhotoToLineart() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">100% Free to Use</h3>
-                  <p className="text-gray-600 dark:text-gray-400">No hidden fees, subscriptions, or premium features. Every style and setting is completely free.</p>
+                  <p className="text-gray-600 dark:text-gray-300">No hidden fees, subscriptions, or premium features. Every style and setting is completely free.</p>
                 </div>
               </div>
               
@@ -303,7 +303,7 @@ export default function PhotoToLineart() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Multiple Style Options</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Choose from various line styles to match your specific artistic needs and project requirements.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Choose from various line styles to match your specific artistic needs and project requirements.</p>
                 </div>
               </div>
               
@@ -313,7 +313,7 @@ export default function PhotoToLineart() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">No Registration Required</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Start creating instantly without signing up or providing any personal information.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Start creating instantly without signing up or providing any personal information.</p>
                 </div>
               </div>
               
@@ -323,7 +323,7 @@ export default function PhotoToLineart() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Perfect for Digital & Traditional Art</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Use your line art for both digital projects and printable materials for traditional art techniques.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Use your line art for both digital projects and printable materials for traditional art techniques.</p>
                 </div>
               </div>
               
@@ -333,7 +333,7 @@ export default function PhotoToLineart() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-lg font-semibold mb-1">Works on Any Device</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Our tool works seamlessly on desktop, tablet, or mobile without requiring any software installation.</p>
+                  <p className="text-gray-600 dark:text-gray-300">Our tool works seamlessly on desktop, tablet, or mobile without requiring any software installation.</p>
                 </div>
               </div>
             </div>
@@ -345,33 +345,33 @@ export default function PhotoToLineart() {
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
-              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need to know about our photo to line art converter</p>
+              <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Everything you need to know about our photo to line art converter</p>
             </div>
             
             <div className="space-y-6">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">What types of photos work best for line art conversion?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Photos with good contrast, clear subjects, and sharp details typically produce the best line art results. Images with simple backgrounds and distinct subject outlines work particularly well.</p>
+                <p className="text-gray-600 dark:text-gray-300">Photos with good contrast, clear subjects, and sharp details typically produce the best line art results. Images with simple backgrounds and distinct subject outlines work particularly well.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">Can I adjust the line thickness and detail level?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Yes, our tool allows you to customize the line thickness, detail level, and contrast threshold to achieve your preferred line art style.</p>
+                <p className="text-gray-600 dark:text-gray-300">Yes, our tool allows you to customize the line thickness, detail level, and contrast threshold to achieve your preferred line art style.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">What file formats can I use for my photos?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Our converter supports common image formats including JPG, PNG, and WEBP files up to 10MB in size.</p>
+                <p className="text-gray-600 dark:text-gray-300">Our converter supports common image formats including JPG, PNG, and WEBP files up to 10MB in size.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">Can I use the line art for commercial projects?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Yes, you can use the line art generated from your own photos for both personal and commercial purposes.</p>
+                <p className="text-gray-600 dark:text-gray-300">Yes, you can use the line art generated from your own photos for both personal and commercial purposes.</p>
               </div>
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-2">How do I create a coloring page from my photo?</h3>
-                <p className="text-gray-600 dark:text-gray-400">Upload your photo, select the line art style that works best for coloring pages (typically 'Detailed' or 'Technical'), adjust the settings for clear lines, and download the result to print.</p>
+                <p className="text-gray-600 dark:text-gray-300">Upload your photo, select the line art style that works best for coloring pages (typically 'Detailed' or 'Technical'), adjust the settings for clear lines, and download the result to print.</p>
               </div>
             </div>
           </div>

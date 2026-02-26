@@ -23,44 +23,44 @@ export default function Footer() {
               </svg>
               PhotoGrid
             </span>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Free tools for artists to transform photos into drawing references.</p>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-300 leading-relaxed">Free tools for artists to transform photos into drawing references.</p>
           </div>
 
           <div>
-            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">Tools</h3>
+            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-400 uppercase tracking-wider mb-3">Tools</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/photo-to-grid" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Grid</Link></li>
-              <li><Link href="/photo-to-lineart" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Line Art</Link></li>
-              <li><Link href="/photo-to-sketch" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Sketch</Link></li>
-              <li><Link href="/photo-to-coloring-page" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Coloring Page</Link></li>
+              <li><Link href="/photo-to-grid" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Grid</Link></li>
+              <li><Link href="/photo-to-lineart" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Line Art</Link></li>
+              <li><Link href="/photo-to-sketch" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Sketch</Link></li>
+              <li><Link href="/photo-to-coloring-page" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Coloring Page</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">More Tools</h3>
+            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-400 uppercase tracking-wider mb-3">More Tools</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/photo-to-paint-by-numbers" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Paint by Numbers</Link></li>
-              <li><Link href="/photo-to-pixel-art" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Pixel Art</Link></li>
-              <li><Link href="/photo-to-watercolor" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Watercolor</Link></li>
+              <li><Link href="/photo-to-paint-by-numbers" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Paint by Numbers</Link></li>
+              <li><Link href="/photo-to-pixel-art" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Pixel Art</Link></li>
+              <li><Link href="/photo-to-watercolor" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Watercolor</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">Resources</h3>
+            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-400 uppercase tracking-wider mb-3">Resources</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/blog" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Blog</Link></li>
-              <li><Link href="/categories" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Categories</Link></li>
-              <li><Link href="/privacy" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Terms of Service</Link></li>
+              <li><Link href="/blog" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Blog</Link></li>
+              <li><Link href="/categories" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Categories</Link></li>
+              <li><Link href="/privacy" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row justify-between gap-2 text-xs text-gray-400 dark:text-gray-500">
+        <div className="mt-10 pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row justify-between gap-2 text-xs text-gray-400 dark:text-gray-400">
           <span>&copy; {new Date().getFullYear()} PhotoGrid.space</span>
           <div className="flex gap-4">
-            <Link href="/privacy" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-gray-600 dark:hover:text-gray-200 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-gray-600 dark:hover:text-gray-200 transition-colors">Terms</Link>
           </div>
         </div>
       </div>

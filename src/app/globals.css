@@ -58,7 +58,7 @@
   }
 
   body {
-    @apply antialiased bg-white dark:bg-gray-950 text-foreground;
+    @apply bg-white dark:bg-gray-950 text-foreground antialiased dark:subpixel-antialiased;
   }
 }
 

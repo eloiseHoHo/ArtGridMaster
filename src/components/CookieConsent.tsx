@@ -31,7 +31,7 @@ export default function CookieConsent() {
       <div className="max-w-xl mx-auto bg-white border border-gray-200 rounded-lg shadow-lg p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="flex-1 text-sm text-gray-600">
           We use cookies for analytics and advertising. By continuing to use this site, you agree to our{" "}
-          <Link href="/privacy" className="text-gray-900 underline">Privacy Policy</Link>.
+          <Link href="/privacy" className="text-gray-900 dark:text-gray-100 underline">Privacy Policy</Link>.
         </div>
         <div className="flex gap-2 flex-shrink-0">
           <button onClick={decline} className="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors">

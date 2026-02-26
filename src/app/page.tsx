@@ -167,7 +167,7 @@ export default function Home() {
                   then download the result instantly. Works perfectly for{" "}
                   <Link
                     href="/photo-to-grid"
-                    className="text-gray-900 underline"
+                    className="text-gray-900 dark:text-gray-100 underline"
                   >
                     canvas transfers
                   </Link>
@@ -179,21 +179,21 @@ export default function Home() {
                   Beyond grids, our suite includes{" "}
                   <Link
                     href="/photo-to-lineart"
-                    className="text-gray-900 underline"
+                    className="text-gray-900 dark:text-gray-100 underline"
                   >
                     line art conversion
                   </Link>
                   ,{" "}
                   <Link
                     href="/photo-to-sketch"
-                    className="text-gray-900 underline"
+                    className="text-gray-900 dark:text-gray-100 underline"
                   >
                     pencil sketch effects
                   </Link>
                   ,{" "}
                   <Link
                     href="/photo-to-coloring-page"
-                    className="text-gray-900 underline"
+                    className="text-gray-900 dark:text-gray-100 underline"
                   >
                     coloring page generation
                   </Link>

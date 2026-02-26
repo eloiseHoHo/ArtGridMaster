@@ -65,7 +65,7 @@ export default function RelatedTools({ currentTool }: RelatedToolsProps) {
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
             Explore Our Other Free Tools
           </h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
             Discover more ways to transform your photos into beautiful artwork
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function RelatedTools({ currentTool }: RelatedToolsProps) {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     {tool.name}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {tool.description}
                   </p>
                   <div className="flex items-center text-primary hover:text-primary-600 dark:hover:text-primary-400 transition-colors">

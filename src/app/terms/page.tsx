@@ -68,7 +68,7 @@ export default function TermsOfService() {
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-3">8. Data Processing</h2>
-          <p>By using the Service, you acknowledge that certain non-personal data may be collected through cookies and analytics tools as described in our <Link href="/privacy" className="text-gray-900 underline">Privacy Policy</Link>. This data is used to improve the Service and display relevant advertisements.</p>
+          <p>By using the Service, you acknowledge that certain non-personal data may be collected through cookies and analytics tools as described in our <Link href="/privacy" className="text-gray-900 dark:text-gray-100 underline">Privacy Policy</Link>. This data is used to improve the Service and display relevant advertisements.</p>
         </section>
 
         <section>

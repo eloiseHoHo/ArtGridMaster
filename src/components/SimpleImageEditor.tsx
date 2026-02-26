@@ -9,7 +9,7 @@ import { Upload, Image as ImageIcon, ArrowRight, Link, XCircle, Download, Share2
 import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input";
 import { generateGridEffect, generateLineArtEffect, generateSketchEffect, generateColoringPageEffect, generatePaintByNumbersEffect, generatePixelArtEffect, generateWatercolorEffect } from "@/lib/imageEffects";
-import { generateSocialImage, shareImage, downloadDataUrl, SOCIAL_FORMATS, type SocialFormat } from "@/lib/socialExport";
+import { generateSocialImage, shareImage, downloadDataUrl, generateAllEffectsGrid, SOCIAL_FORMATS, type SocialFormat } from "@/lib/socialExport";
 
 export default function SimpleImageEditorNew() {
   const [activeTab, setActiveTab] = useState<string>("grid");
@@ -19,12 +19,11 @@ export default function SimpleImageEditorNew() {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isUrlMode, setIsUrlMode] = useState<boolean>(false);
   const [urlError, setUrlError] = useState<string | null>(null);
-  const [sliderPosition, setSliderPosition] = useState(50);
   const [showSocialPanel, setShowSocialPanel] = useState(false);
   const [socialExporting, setSocialExporting] = useState(false);
   const [shareToast, setShareToast] = useState<string | null>(null);
-  const sliderContainerRef = useRef<HTMLDivElement>(null);
-  const isDraggingRef = useRef(false);
+  const [isComparing, setIsComparing] = useState(false);
+  const [allEffectsProgress, setAllEffectsProgress] = useState<string | null>(null);
 
   const [gridSize, setGridSize] = useState(50);
   const [gridOpacity, setGridOpacity] = useState(70);
@@ -100,37 +99,6 @@ export default function SimpleImageEditorNew() {
     { value: "impressionist", label: "Impressionist" }
   ];
 
-  const handleSliderMove = useCallback((clientX: number) => {
-    if (!sliderContainerRef.current || !isDraggingRef.current) return;
-    const rect = sliderContainerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percent);
-  }, []);
-
-  const handleSliderStart = useCallback((clientX: number) => {
-    isDraggingRef.current = true;
-    if (!sliderContainerRef.current) return;
-    const rect = sliderContainerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percent);
-
-    const onMouseMove = (e: MouseEvent) => handleSliderMove(e.clientX);
-    const onTouchMove = (e: TouchEvent) => handleSliderMove(e.touches[0].clientX);
-    const onEnd = () => {
-      isDraggingRef.current = false;
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onEnd);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onEnd);
-    };
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onEnd);
-    window.addEventListener("touchmove", onTouchMove);
-    window.addEventListener("touchend", onEnd);
-  }, [handleSliderMove]);
-
   const MAX_IMAGE_DIM = 2000;
   const resizeImageIfNeeded = (dataUrl: string): Promise<string> => {
     return new Promise((resolve) => {
@@ -191,6 +159,49 @@ export default function SimpleImageEditorNew() {
     }
   }, [imageUrl]);
 
+  const SAMPLE_IMAGES = [
+    { url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&h=800&q=80", label: "Portrait" },
+    { url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&h=533&q=80", label: "Landscape" },
+    { url: "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&h=800&q=80", label: "Cat" },
+  ];
+
+  const loadSampleImage = async (url: string) => {
+    setIsProcessing(true);
+    try {
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = () => reject();
+        img.src = url;
+      });
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      canvas.getContext("2d")!.drawImage(img, 0, 0);
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+      const resized = await resizeImageIfNeeded(dataUrl);
+      setUploadedImage(resized);
+      setTransformedImage(null);
+    } catch {
+      alert("Failed to load sample image.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  // Load sample from URL param (for "Use this photo" links)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sampleUrl = params.get("photo");
+    if (sampleUrl) {
+      loadSampleImage(decodeURIComponent(sampleUrl));
+      // Clean URL
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'] },
@@ -222,6 +233,37 @@ export default function SimpleImageEditorNew() {
   const applyTransform = () => {
     const fn = getTransformFn();
     if (fn) wrapTransform(fn);
+  };
+
+  const generateAllEffects = async () => {
+    if (!uploadedImage) return;
+    setAllEffectsProgress("Generating Grid...");
+    try {
+      const items: { label: string; dataUrl: string }[] = [
+        { label: "Original", dataUrl: uploadedImage },
+      ];
+      const effects = [
+        { label: "Grid", fn: () => generateGridEffect(uploadedImage, 50, "#000000", 0.4) },
+        { label: "Line Art", fn: () => generateLineArtEffect(uploadedImage, 12.8, 1) },
+        { label: "Sketch", fn: () => generateSketchEffect(uploadedImage, 5, "graphite") },
+        { label: "Coloring", fn: () => generateColoringPageEffect(uploadedImage, 2, 50) },
+        { label: "Paint #", fn: () => generatePaintByNumbersEffect(uploadedImage, 12, 30, true, true) },
+        { label: "Pixel Art", fn: () => generatePixelArtEffect(uploadedImage, 10, 16) },
+        { label: "Painting", fn: () => generateWatercolorEffect(uploadedImage, 50, 50) },
+      ];
+      for (const effect of effects) {
+        setAllEffectsProgress(`Generating ${effect.label}...`);
+        const result = await effect.fn();
+        items.push({ label: effect.label, dataUrl: result });
+      }
+      setAllEffectsProgress("Composing grid...");
+      const gridImage = await generateAllEffectsGrid(items);
+      downloadDataUrl(gridImage, "photogrid-all-effects.jpg");
+    } catch {
+      alert("Failed to generate all effects. Please try again.");
+    } finally {
+      setAllEffectsProgress(null);
+    }
   };
 
   // Auto-apply: debounce 600ms after any parameter change
@@ -262,7 +304,7 @@ export default function SimpleImageEditorNew() {
   const SliderControl = ({ label, value, unit, min, max, step, onChange }: { label: string; value: number; unit?: string; min: number; max: number; step: number; onChange: (v: number) => void }) => (
     <div>
       <div className="flex justify-between mb-2">
-        <Label className="text-xs text-gray-500 dark:text-gray-400">{label}</Label>
+        <Label className="text-xs text-gray-500 dark:text-gray-300">{label}</Label>
         <span className="text-xs text-gray-900 dark:text-gray-100 font-medium tabular-nums">{value}{unit}</span>
       </div>
       <Slider min={min} max={max} step={step} value={[value]} onValueChange={(v) => onChange(v[0])} />
@@ -280,7 +322,7 @@ export default function SimpleImageEditorNew() {
                 {transformedImage && (
                   <>
                     <button
-                      className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
+                      className="text-xs text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
                       onClick={() => downloadDataUrl(transformedImage, `photogrid-${activeTab}.png`)}
                     >
                       <Download className="h-3.5 w-3.5" />
@@ -296,7 +338,7 @@ export default function SimpleImageEditorNew() {
                   </>
                 )}
                 <button
-                  className="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                  className="text-xs text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
                   onClick={() => { setUploadedImage(null); setTransformedImage(null); setShowSocialPanel(false); }}
                 >
                   Clear
@@ -311,7 +353,7 @@ export default function SimpleImageEditorNew() {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Export for Social Media</span>
                 <button
-                  className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
                   onClick={() => setShowSocialPanel(false)}
                 >
                   <XCircle className="h-3.5 w-3.5" />
@@ -361,13 +403,13 @@ export default function SimpleImageEditorNew() {
               <div className="rounded-lg border border-dashed border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
                 <div className="flex gap-0 border-b border-gray-200 dark:border-gray-700">
                   <button
-                    className={`flex-1 py-2 text-xs font-medium transition-colors ${!isUrlMode ? 'text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                    className={`flex-1 py-2 text-xs font-medium transition-colors ${!isUrlMode ? 'text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'}`}
                     onClick={() => setIsUrlMode(false)}
                   >
                     Upload File
                   </button>
                   <button
-                    className={`flex-1 py-2 text-xs font-medium transition-colors ${isUrlMode ? 'text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                    className={`flex-1 py-2 text-xs font-medium transition-colors ${isUrlMode ? 'text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'}`}
                     onClick={() => setIsUrlMode(true)}
                   >
                     From URL
@@ -413,45 +455,50 @@ export default function SimpleImageEditorNew() {
                     </div>
                   </div>
                 )}
-              </div>
-            ) : transformedImage && !isProcessing ? (
-              <div
-                ref={sliderContainerRef}
-                className="relative rounded-lg overflow-hidden bg-gray-50 border border-gray-100 aspect-square cursor-col-resize select-none"
-                onMouseDown={(e) => handleSliderStart(e.clientX)}
-                onTouchStart={(e) => handleSliderStart(e.touches[0].clientX)}
-              >
-                <img
-                  src={transformedImage}
-                  alt="Transformed"
-                  className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                  draggable={false}
-                />
-                <div
-                  className="absolute inset-0 overflow-hidden pointer-events-none"
-                  style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-                >
-                  <img
-                    src={uploadedImage}
-                    alt="Original"
-                    className="absolute inset-0 w-full h-full object-contain"
-                    draggable={false}
-                  />
-                </div>
-                <div
-                  className="absolute top-0 bottom-0 pointer-events-none"
-                  style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
-                >
-                  <div className="w-0.5 h-full bg-white shadow-[0_0_4px_rgba(0,0,0,0.3)]" />
-                  <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-gray-500">
-                      <path d="M4.5 3L1.5 7L4.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M9.5 3L12.5 7L9.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                  <p className="text-[10px] text-gray-400 dark:text-gray-400 mb-2 uppercase tracking-wider font-medium">Or try a sample</p>
+                  <div className="flex gap-2">
+                    {SAMPLE_IMAGES.map((sample) => (
+                      <button
+                        key={sample.label}
+                        onClick={() => loadSampleImage(sample.url)}
+                        disabled={isProcessing}
+                        className="group relative flex-1 aspect-square rounded-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 transition-colors disabled:opacity-50"
+                      >
+                        <img src={sample.url} alt={sample.label} className="w-full h-full object-cover" loading="lazy" />
+                        <span className="absolute inset-x-0 bottom-0 bg-black/50 text-white text-[9px] py-0.5 text-center font-medium">{sample.label}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <span className="absolute top-2 left-2 text-[10px] font-medium text-gray-600 bg-white/80 px-1.5 py-0.5 rounded pointer-events-none">Original</span>
-                <span className="absolute top-2 right-2 text-[10px] font-medium text-gray-600 bg-white/80 px-1.5 py-0.5 rounded pointer-events-none">Transformed</span>
+              </div>
+            ) : transformedImage && !isProcessing ? (
+              <div className="space-y-2">
+                <div className="relative rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 aspect-square select-none">
+                  <img
+                    src={isComparing ? uploadedImage! : transformedImage}
+                    alt={isComparing ? "Original" : "Transformed"}
+                    className="w-full h-full object-contain transition-opacity duration-150"
+                    draggable={false}
+                  />
+                  <span className="absolute top-2 left-2 text-[10px] font-medium text-gray-600 dark:text-gray-300 bg-white/80 dark:bg-gray-900/80 px-1.5 py-0.5 rounded pointer-events-none">
+                    {isComparing ? 'Original' : 'Transformed'}
+                  </span>
+                </div>
+                <button
+                  className="w-full py-2 text-xs font-medium text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-700 transition-colors flex items-center justify-center gap-1.5 select-none"
+                  onMouseDown={() => setIsComparing(true)}
+                  onMouseUp={() => setIsComparing(false)}
+                  onMouseLeave={() => setIsComparing(false)}
+                  onTouchStart={() => setIsComparing(true)}
+                  onTouchEnd={() => setIsComparing(false)}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-gray-400">
+                    <path d="M4.5 3L1.5 7L4.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9.5 3L12.5 7L9.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  {isComparing ? 'Release to see result' : 'Hold to compare original'}
+                </button>
               </div>
             ) : (
               <div className="relative rounded-lg overflow-hidden bg-gray-50 border border-gray-100 aspect-square">
@@ -494,7 +541,7 @@ export default function SimpleImageEditorNew() {
                     <TabsTrigger
                       key={tab.value}
                       value={tab.value}
-                      className="text-xs px-2.5 py-1.5 rounded data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 data-[state=active]:shadow-sm text-gray-500 dark:text-gray-400"
+                      className="text-xs px-2.5 py-1.5 rounded data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 data-[state=active]:shadow-sm text-gray-500 dark:text-gray-300"
                     >
                       {tab.label}
                     </TabsTrigger>
@@ -506,7 +553,7 @@ export default function SimpleImageEditorNew() {
                   <SliderControl label="Opacity" value={gridOpacity} unit="%" min={10} max={100} step={5} onChange={setGridOpacity} />
                   <SliderControl label="Thickness" value={gridThickness} unit="px" min={1} max={5} step={0.5} onChange={setGridThickness} />
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Color</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Color</Label>
                     <div className="flex gap-2">
                       {['#000000', '#EF4444', '#3B82F6', '#10B981', '#8B5CF6'].map((c) => (
                         <button
@@ -519,7 +566,7 @@ export default function SimpleImageEditorNew() {
                     </div>
                   </div>
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Style</Label>
                     <StyleGrid options={[{ value: "lines", label: "Solid" }, { value: "dots", label: "Dots" }, { value: "dashed", label: "Dashed" }]} value={gridStyle} onChange={setGridStyle} />
                   </div>
                 </TabsContent>
@@ -528,19 +575,19 @@ export default function SimpleImageEditorNew() {
                   <SliderControl label="Edge Threshold" value={lineThreshold} min={20} max={200} step={1} onChange={setLineThreshold} />
                   <SliderControl label="Line Thickness" value={lineThickness} unit="px" min={0.5} max={3} step={0.1} onChange={setLineThickness} />
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Style</Label>
                     <StyleGrid options={lineArtStyles} value={lineStyle} onChange={setLineStyle} cols={2} />
                   </div>
                 </TabsContent>
 
                 <TabsContent value="sketch" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Style</Label>
                     <StyleGrid options={sketchStyles} value={sketchStyle} onChange={setSketchStyle} cols={2} />
                   </div>
                   <SliderControl label="Intensity" value={sketchIntensity} unit="%" min={10} max={100} step={1} onChange={setSketchIntensity} />
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Pencil Type</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Pencil Type</Label>
                     <StyleGrid options={pencilTypes} value={pencilType} onChange={setPencilType} cols={2} />
                   </div>
                   <SliderControl label="Shading" value={shadingLevel} unit="%" min={0} max={100} step={1} onChange={setShadingLevel} />
@@ -548,7 +595,7 @@ export default function SimpleImageEditorNew() {
 
                 <TabsContent value="coloring" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Style</Label>
                     <StyleGrid options={coloringStyles} value={coloringStyle} onChange={setColoringStyle} />
                   </div>
                   <SliderControl label="Line Thickness" value={coloringLineThickness} unit="px" min={1} max={5} step={1} onChange={setColoringLineThickness} />
@@ -559,18 +606,18 @@ export default function SimpleImageEditorNew() {
                   <SliderControl label="Colors" value={pbnNumColors} min={4} max={24} step={1} onChange={setPbnNumColors} />
                   <SliderControl label="Region Size" value={pbnCellSize} unit="px" min={15} max={60} step={5} onChange={setPbnCellSize} />
                   <div className="flex items-center justify-between">
-                    <Label className="text-xs text-gray-500 dark:text-gray-400">Show Numbers</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300">Show Numbers</Label>
                     <ToggleSwitch checked={pbnShowNumbers} onChange={() => setPbnShowNumbers(!pbnShowNumbers)} />
                   </div>
                   <div className="flex items-center justify-between">
-                    <Label className="text-xs text-gray-500 dark:text-gray-400">Show Outlines</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300">Show Outlines</Label>
                     <ToggleSwitch checked={pbnShowOutlines} onChange={() => setPbnShowOutlines(!pbnShowOutlines)} />
                   </div>
                 </TabsContent>
 
                 <TabsContent value="pixel" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Style</Label>
                     <StyleGrid options={pixelStyles} value={pixelStyle} onChange={setPixelStyle} cols={2} />
                   </div>
                   <SliderControl label="Pixel Size" value={pixelSize} unit="px" min={4} max={30} step={1} onChange={setPixelSize} />
@@ -579,7 +626,7 @@ export default function SimpleImageEditorNew() {
 
                 <TabsContent value="watercolor" className="space-y-4">
                   <div>
-                    <Label className="text-xs text-gray-500 dark:text-gray-400 mb-2 block">Style</Label>
+                    <Label className="text-xs text-gray-500 dark:text-gray-300 mb-2 block">Style</Label>
                     <StyleGrid options={watercolorStyles} value={watercolorStyle} onChange={setWatercolorStyle} cols={2} />
                   </div>
                   <SliderControl label="Intensity" value={watercolorIntensity} unit="%" min={10} max={100} step={5} onChange={setWatercolorIntensity} />
@@ -589,7 +636,7 @@ export default function SimpleImageEditorNew() {
                 <Button
                   className="w-full mt-5"
                   onClick={() => { hasAppliedOnce.current = true; applyTransform(); }}
-                  disabled={isProcessing}
+                  disabled={isProcessing || !!allEffectsProgress}
                 >
                   {isProcessing ? (
                     <div className="flex items-center gap-2">
@@ -598,12 +645,27 @@ export default function SimpleImageEditorNew() {
                     </div>
                   ) : transformedImage ? 'Update' : 'Apply'}
                 </Button>
+
+                <button
+                  className="w-full mt-2 py-2.5 text-xs font-medium rounded-md border border-dashed border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                  onClick={generateAllEffects}
+                  disabled={isProcessing || !!allEffectsProgress}
+                >
+                  {allEffectsProgress ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="animate-spin h-3.5 w-3.5 border-2 border-gray-400 border-t-transparent rounded-full" />
+                      {allEffectsProgress}
+                    </span>
+                  ) : (
+                    '✨ Download All 7 Effects Grid'
+                  )}
+                </button>
               </Tabs>
             ) : (
               <div className="text-center py-12">
-                <ImageIcon className="h-10 w-10 text-gray-200 dark:text-gray-600 mx-auto mb-4" />
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Upload an image to get started</p>
-                <p className="text-xs text-gray-400 dark:text-gray-500">7 transformation tools available</p>
+                <ImageIcon className="h-10 w-10 text-gray-200 dark:text-gray-500 mx-auto mb-4" />
+                <p className="text-sm text-gray-500 dark:text-gray-300 mb-1">Upload an image to get started</p>
+                <p className="text-xs text-gray-400 dark:text-gray-400">7 transformation tools available</p>
                 <Button
                   variant="outline"
                   size="sm"
