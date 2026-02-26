@@ -47,6 +47,11 @@ const allTools: Record<string, Tool> = {
     path: "/photo-to-watercolor",
     description: "Apply beautiful watercolor and oil painting effects to your photos",
   },
+  splitter: {
+    name: "Instagram Grid Splitter",
+    path: "/instagram-grid-splitter",
+    description: "Split photos into perfect grid pieces for stunning Instagram profile layouts",
+  },
 };
 
 interface RelatedToolsProps {

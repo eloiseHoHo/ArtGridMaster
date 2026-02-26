@@ -69,7 +69,7 @@ export default function RealTransformationExamples() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {examples.map((example) => (
             <div key={example.id}>
-              <div className="aspect-square rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
+              <div className="aspect-square rounded-lg overflow-hidden bg-gray-50 border border-gray-100" style={{ containIntrinsicSize: '1px 300px', contentVisibility: 'visible' }}>
                 {loading[example.id] ? (
                   <div className="w-full h-full flex items-center justify-center">
                     <div className="animate-spin rounded-full h-6 w-6 border-2 border-gray-300 border-t-gray-600"></div>

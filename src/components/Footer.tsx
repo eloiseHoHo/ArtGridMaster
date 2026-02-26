@@ -42,6 +42,7 @@ export default function Footer() {
               <li><Link href="/photo-to-paint-by-numbers" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Paint by Numbers</Link></li>
               <li><Link href="/photo-to-pixel-art" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Pixel Art</Link></li>
               <li><Link href="/photo-to-watercolor" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Watercolor</Link></li>
+              <li><Link href="/instagram-grid-splitter" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Instagram Grid Splitter</Link></li>
             </ul>
           </div>
 

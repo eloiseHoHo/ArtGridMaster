@@ -314,7 +314,7 @@ export default function SimpleImageEditorNew() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900 min-h-[500px]">
           <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Image</span>
             {uploadedImage && (
@@ -520,7 +520,7 @@ export default function SimpleImageEditorNew() {
           </div>
         </div>
 
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900 min-h-[500px]">
           <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Settings</span>
           </div>

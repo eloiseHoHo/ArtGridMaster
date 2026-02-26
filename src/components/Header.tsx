@@ -12,6 +12,7 @@ const toolLinks = [
   { href: "/photo-to-paint-by-numbers", label: "Paint by Numbers" },
   { href: "/photo-to-pixel-art", label: "Pixel Art" },
   { href: "/photo-to-watercolor", label: "Watercolor" },
+  { href: "/instagram-grid-splitter", label: "Split" },
 ];
 
 export default function Header() {

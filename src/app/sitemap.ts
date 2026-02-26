@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "photo-to-paint-by-numbers",
     "photo-to-pixel-art",
     "photo-to-watercolor",
+    "instagram-grid-splitter",
   ];
 
   const blogPages = [
