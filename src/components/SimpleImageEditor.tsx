@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useCallback, useRef, FormEvent } from "react";
+import { useState, useCallback, useRef, useEffect, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import { Upload, Image as ImageIcon, ArrowRight, Link, XCircle, Download } from "lucide-react";
+import { Upload, Image as ImageIcon, ArrowRight, Link, XCircle, Download, Share2, Instagram, Twitter, Check } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input";
 import { generateGridEffect, generateLineArtEffect, generateSketchEffect, generateColoringPageEffect, generatePaintByNumbersEffect, generatePixelArtEffect, generateWatercolorEffect } from "@/lib/imageEffects";
+import { generateSocialImage, shareImage, downloadDataUrl, SOCIAL_FORMATS, type SocialFormat } from "@/lib/socialExport";
 
 export default function SimpleImageEditorNew() {
   const [activeTab, setActiveTab] = useState<string>("grid");
@@ -19,6 +20,9 @@ export default function SimpleImageEditorNew() {
   const [isUrlMode, setIsUrlMode] = useState<boolean>(false);
   const [urlError, setUrlError] = useState<string | null>(null);
   const [sliderPosition, setSliderPosition] = useState(50);
+  const [showSocialPanel, setShowSocialPanel] = useState(false);
+  const [socialExporting, setSocialExporting] = useState(false);
+  const [shareToast, setShareToast] = useState<string | null>(null);
   const sliderContainerRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
 
@@ -201,18 +205,39 @@ export default function SimpleImageEditorNew() {
     finally { setIsProcessing(false); }
   };
 
-  const applyTransform = () => {
-    if (!uploadedImage) return;
+  const getTransformFn = useCallback(() => {
+    if (!uploadedImage) return null;
     switch (activeTab) {
-      case "grid": return wrapTransform(() => generateGridEffect(uploadedImage!, gridSize, gridColor, gridOpacity / 100, gridStyle, gridThickness));
-      case "lineart": return wrapTransform(() => generateLineArtEffect(uploadedImage!, lineThreshold / 10, lineThickness, lineStyle));
-      case "sketch": return wrapTransform(() => generateSketchEffect(uploadedImage!, sketchIntensity / 10, pencilType, shadingLevel, sketchStyle));
-      case "coloring": return wrapTransform(() => generateColoringPageEffect(uploadedImage!, coloringLineThickness, coloringDetailLevel, coloringStyle));
-      case "pbn": return wrapTransform(() => generatePaintByNumbersEffect(uploadedImage!, pbnNumColors, pbnCellSize, pbnShowNumbers, pbnShowOutlines));
-      case "pixel": return wrapTransform(() => generatePixelArtEffect(uploadedImage!, pixelSize, pixelColorCount, pixelStyle));
-      case "watercolor": return wrapTransform(() => generateWatercolorEffect(uploadedImage!, watercolorIntensity, watercolorWetness, watercolorStyle));
+      case "grid": return () => generateGridEffect(uploadedImage, gridSize, gridColor, gridOpacity / 100, gridStyle, gridThickness);
+      case "lineart": return () => generateLineArtEffect(uploadedImage, lineThreshold / 10, lineThickness, lineStyle);
+      case "sketch": return () => generateSketchEffect(uploadedImage, sketchIntensity / 10, pencilType, shadingLevel, sketchStyle);
+      case "coloring": return () => generateColoringPageEffect(uploadedImage, coloringLineThickness, coloringDetailLevel, coloringStyle);
+      case "pbn": return () => generatePaintByNumbersEffect(uploadedImage, pbnNumColors, pbnCellSize, pbnShowNumbers, pbnShowOutlines);
+      case "pixel": return () => generatePixelArtEffect(uploadedImage, pixelSize, pixelColorCount, pixelStyle);
+      case "watercolor": return () => generateWatercolorEffect(uploadedImage, watercolorIntensity, watercolorWetness, watercolorStyle);
+      default: return null;
     }
+  }, [uploadedImage, activeTab, gridSize, gridColor, gridOpacity, gridStyle, gridThickness, lineThreshold, lineThickness, lineStyle, sketchIntensity, pencilType, shadingLevel, sketchStyle, coloringLineThickness, coloringDetailLevel, coloringStyle, pbnNumColors, pbnCellSize, pbnShowNumbers, pbnShowOutlines, pixelSize, pixelColorCount, pixelStyle, watercolorIntensity, watercolorWetness, watercolorStyle]);
+
+  const applyTransform = () => {
+    const fn = getTransformFn();
+    if (fn) wrapTransform(fn);
   };
+
+  // Auto-apply: debounce 600ms after any parameter change
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasAppliedOnce = useRef(false);
+
+  useEffect(() => {
+    if (!uploadedImage || !hasAppliedOnce.current) return;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      const fn = getTransformFn();
+      if (fn) wrapTransform(fn);
+    }, 600);
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getTransformFn]);
 
   const ToggleSwitch = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
     <button onClick={onChange} className={`relative w-9 h-5 rounded-full transition-colors ${checked ? 'bg-gray-900 dark:bg-gray-100' : 'bg-gray-200 dark:bg-gray-600'}`}>
@@ -253,30 +278,83 @@ export default function SimpleImageEditorNew() {
             {uploadedImage && (
               <div className="flex items-center gap-2">
                 {transformedImage && (
-                  <button
-                    className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
-                    onClick={() => {
-                      const link = document.createElement("a");
-                      link.href = transformedImage;
-                      link.download = `photogrid-${activeTab}.png`;
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
-                    }}
-                  >
-                    <Download className="h-3.5 w-3.5" />
-                    Download
-                  </button>
+                  <>
+                    <button
+                      className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
+                      onClick={() => downloadDataUrl(transformedImage, `photogrid-${activeTab}.png`)}
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      Download
+                    </button>
+                    <button
+                      className="text-xs bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors flex items-center gap-1 px-2.5 py-1 rounded-md font-medium"
+                      onClick={() => setShowSocialPanel(!showSocialPanel)}
+                    >
+                      <Share2 className="h-3.5 w-3.5" />
+                      Share
+                    </button>
+                  </>
                 )}
                 <button
                   className="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                  onClick={() => { setUploadedImage(null); setTransformedImage(null); }}
+                  onClick={() => { setUploadedImage(null); setTransformedImage(null); setShowSocialPanel(false); }}
                 >
                   Clear
                 </button>
               </div>
             )}
           </div>
+
+          {/* Social Export Panel */}
+          {showSocialPanel && transformedImage && uploadedImage && (
+            <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Export for Social Media</span>
+                <button
+                  className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  onClick={() => setShowSocialPanel(false)}
+                >
+                  <XCircle className="h-3.5 w-3.5" />
+                </button>
+              </div>
+              <div className="flex gap-2 mb-2">
+                {(Object.entries(SOCIAL_FORMATS) as [SocialFormat, { label: string }][]).map(([key, { label }]) => (
+                  <button
+                    key={key}
+                    disabled={socialExporting}
+                    className="flex-1 text-xs py-2 px-2 rounded-md border border-gray-200 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-400 hover:bg-white dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300 disabled:opacity-50"
+                    onClick={async () => {
+                      setSocialExporting(true);
+                      try {
+                        const img = await generateSocialImage(uploadedImage!, transformedImage!, activeTab, key);
+                        downloadDataUrl(img, `photogrid-${activeTab}-${key}.jpg`);
+                      } catch { /* ignore */ }
+                      setSocialExporting(false);
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <button
+                className="w-full text-xs py-2 rounded-md bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors flex items-center justify-center gap-1.5 font-medium"
+                onClick={async () => {
+                  const native = await shareImage(transformedImage!, activeTab);
+                  if (!native) {
+                    setShareToast("Link & caption copied!");
+                    setTimeout(() => setShareToast(null), 2500);
+                  }
+                }}
+              >
+                <Share2 className="h-3.5 w-3.5" />
+                {shareToast ? (
+                  <><Check className="h-3.5 w-3.5" /> {shareToast}</>
+                ) : (
+                  "Share with caption"
+                )}
+              </button>
+            </div>
+          )}
 
           <div className="p-4">
             {!uploadedImage ? (
@@ -510,7 +588,7 @@ export default function SimpleImageEditorNew() {
 
                 <Button
                   className="w-full mt-5"
-                  onClick={applyTransform}
+                  onClick={() => { hasAppliedOnce.current = true; applyTransform(); }}
                   disabled={isProcessing}
                 >
                   {isProcessing ? (
