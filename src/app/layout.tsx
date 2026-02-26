@@ -60,7 +60,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
+      <body className={`${inter.variable} font-sans`}>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <div className="flex-1">{children}</div>
+          <Footer />
+          <CookieConsent />
+        </div>
+
         {/* Google Analytics 4 */}
         {GA_MEASUREMENT_ID && (
           <>
@@ -73,21 +80,6 @@ export default function RootLayout({
             </Script>
           </>
         )}
-        {/* Google AdSense - uncomment when approved */}
-        {/* <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        /> */}
-      </head>
-      <body className={`${inter.variable} font-sans`}>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <div className="flex-1">{children}</div>
-          <Footer />
-          <CookieConsent />
-        </div>
 
         {/* Schema.org structured data */}
         <Script
