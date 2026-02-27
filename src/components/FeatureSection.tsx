@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Grid3X3, Pencil, PenTool, BookOpen, Hash, Layers, Paintbrush, Scissors } from "lucide-react";
+import { Grid3X3, Pencil, PenTool, BookOpen, Hash, Layers, Paintbrush, Scissors, LayoutGrid } from "lucide-react";
 
 const tools = [
   { icon: Grid3X3, title: "Grid Overlay", desc: "Add customizable grids to any photo for proportional drawing reference", href: "/photo-to-grid" },
@@ -12,13 +12,14 @@ const tools = [
   { icon: Layers, title: "Pixel Art", desc: "Retro pixel art conversion with palette control and multiple render styles", href: "/photo-to-pixel-art" },
   { icon: Paintbrush, title: "Watercolor & Oil", desc: "Apply watercolor, oil painting, and impressionist effects", href: "/photo-to-watercolor" },
   { icon: Scissors, title: "Instagram Grid Splitter", desc: "Split photos into 3, 6, 9, or custom grid pieces for Instagram profiles", href: "/instagram-grid-splitter" },
+  { icon: LayoutGrid, title: "Photo Grid Collage", desc: "Combine multiple photos into a beautiful grid collage with custom layouts", href: "/photo-grid-collage" },
 ];
 
 export default function FeatureSection() {
   return (
     <section className="mb-20">
       <h2 className="text-2xl font-bold text-gray-900 mb-2">All tools</h2>
-      <p className="text-gray-500 mb-8">Eight ways to transform your photos, all free and instant.</p>
+      <p className="text-gray-500 mb-8">Nine ways to transform your photos, all free and instant.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {tools.map((tool) => (

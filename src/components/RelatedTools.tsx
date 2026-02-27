@@ -52,6 +52,11 @@ const allTools: Record<string, Tool> = {
     path: "/instagram-grid-splitter",
     description: "Split photos into perfect grid pieces for stunning Instagram profile layouts",
   },
+  collage: {
+    name: "Photo Grid Collage",
+    path: "/photo-grid-collage",
+    description: "Combine multiple photos into a beautiful grid collage with custom spacing and style",
+  },
 };
 
 interface RelatedToolsProps {

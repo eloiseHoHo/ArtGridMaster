@@ -13,6 +13,7 @@ const toolLinks = [
   { href: "/photo-to-pixel-art", label: "Pixel Art" },
   { href: "/photo-to-watercolor", label: "Watercolor" },
   { href: "/instagram-grid-splitter", label: "Split" },
+  { href: "/photo-grid-collage", label: "Collage" },
 ];
 
 export default function Header() {
