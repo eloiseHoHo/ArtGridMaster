@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Photo to Line Art Converter Free Online — Line Drawing Generator",
-  description: "Convert photo to line art free online. Create clean line drawings, outlines, stencils & tattoo designs from any image. 6 styles, adjustable thickness. No signup.",
+  description: "Convert photo to line art free online. Create clean line drawings, outlines, stencils & tattoo designs from any image. 6 styles, adjustable thickness. No app needed, no signup.",
   keywords: [
     "photo to line art",
     "photo to line drawing",

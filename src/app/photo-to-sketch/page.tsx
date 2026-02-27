@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Photo to Pencil Sketch Converter Free Online — Drawing Effect",
-  description: "Turn photo into pencil sketch free online. Create realistic pencil drawings, charcoal & pastel sketches from any image. 6 styles, adjustable shading. No signup.",
+  description: "Turn photo into pencil sketch free online. Create realistic pencil drawings, charcoal & pastel sketches from any image. 6 styles, adjustable shading. No app needed, no signup.",
   keywords: [
     "photo to sketch",
     "photo to pencil sketch",

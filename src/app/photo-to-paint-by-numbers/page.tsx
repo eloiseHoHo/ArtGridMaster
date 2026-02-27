@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Paint by Numbers Generator Free Online — Custom Photo Template",
-  description: "Create custom paint by numbers from any photo free online. Printable templates with numbered regions, color legend & 4-24 color palette. No signup.",
+  description: "Create custom paint by numbers from any photo free online. Printable templates with numbered regions, color legend & 4-24 color palette. No app needed, no signup.",
   keywords: [
     "paint by numbers generator",
     "paint by numbers from photo",

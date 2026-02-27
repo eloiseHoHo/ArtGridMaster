@@ -5,7 +5,7 @@ import ClientGridCollageWrapper from "@/components/ClientGridCollageWrapper";
 
 export const metadata: Metadata = {
   title:
-    "Photo Grid Maker Online Free (No App Needed) — Create Photo Collage Grid in Seconds",
+    "Photo Grid Collage Maker Free Online — No App, No Signup, Instant Download",
   description:
     "Make beautiful photo grid collages online for free. Upload photos, pick a grid layout (2×2, 3×3, or custom), adjust spacing and style, then download instantly. No app download required, no signup, no watermark.",
   keywords: [

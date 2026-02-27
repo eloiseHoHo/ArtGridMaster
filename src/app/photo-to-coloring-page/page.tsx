@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Photo to Coloring Page Maker Free Online — Printable Coloring Sheets",
-  description: "Turn any photo into a printable coloring page free online. Create custom coloring pages for kids and adults from any image. 5 styles, adjustable detail. No signup.",
+  description: "Turn any photo into a printable coloring page free online. Create custom coloring pages for kids and adults from any image. 5 styles, adjustable detail. No app needed, no signup.",
   keywords: [
     "photo to coloring page",
     "coloring page maker",

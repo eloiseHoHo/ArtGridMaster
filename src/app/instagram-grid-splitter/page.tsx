@@ -6,7 +6,7 @@ import ClientGridSplitterWrapper from "@/components/ClientGridSplitterWrapper";
 export const metadata: Metadata = {
   title: "Free Instagram Grid Splitter - Split Photos into 3, 6, 9 Pieces Online",
   description:
-    "Split your photos into perfect grid pieces for Instagram. Free online image splitter — create 3, 6, 9, or custom grid layouts. No signup, no watermark. Download all pieces as ZIP.",
+    "Split any photo into perfect grid pieces for Instagram. Free online image splitter — create 3, 6, or 9-tile layouts. No app needed, no signup, no watermark. Works in your browser, download as ZIP.",
   keywords: [
     "instagram grid splitter",
     "instagram grid maker",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Photo to Pixel Art Converter Free Online — Image to Pixel Art Grid",
-  description: "Convert photo to pixel art free online. Create 8-bit art, pixel avatars & retro game sprites. Image to pixel art grid with adjustable size & palette. No signup.",
+  description: "Convert photo to pixel art free online. Create 8-bit art, pixel avatars & retro game sprites. Image to pixel art grid with adjustable size & palette. No app needed, no signup.",
   keywords: [
     "photo to pixel art",
     "pixel art converter",

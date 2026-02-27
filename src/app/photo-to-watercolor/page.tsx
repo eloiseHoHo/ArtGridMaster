@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Photo to Watercolor & Oil Painting Converter Free Online",
-  description: "Turn photo into watercolor painting or oil painting free online. Apply impressionist & Van Gogh style effects to any image. Canvas-ready art. No signup.",
+  description: "Turn photo into watercolor painting or oil painting free online. Apply impressionist & Van Gogh style effects to any image. Canvas-ready art. No app needed, no signup.",
   keywords: [
     "photo to watercolor",
     "photo to watercolor painting",

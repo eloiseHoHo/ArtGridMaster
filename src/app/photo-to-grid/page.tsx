@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Add Grid to Photo Online Free — Image to Grid Converter & Drawing Grid Maker",
-  description: "Add grid to photo online free. Photo to grid converter with adjustable rows, columns, colors & styles. Free grid drawing tool for artists — grid art online, no signup.",
+  title: "Add Grid to Photo Free Online — Image to Grid Overlay Converter, No App",
+  description: "Add grid to photo free online. Photo to grid overlay converter with adjustable rows, columns, colors & styles. No app needed — works in your browser, no signup.",
   keywords: [
     "add grid to photo online free",
     "image to grid converter",
