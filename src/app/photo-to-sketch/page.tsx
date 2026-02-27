@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Photo to Sketch Converter Free",
-  description: "Turn photos into pencil sketches free online. Create pencil drawings, charcoal effects, and cartoon sketches. Multiple styles. No signup.",
+  title: "Photo to Pencil Sketch Converter Free Online — Drawing Effect",
+  description: "Turn photo into pencil sketch free online. Create realistic pencil drawings, charcoal & pastel sketches from any image. 6 styles, adjustable shading. No signup.",
   alternates: { canonical: "https://www.photogrid.space/photo-to-sketch" },
   openGraph: {
     title: "Photo to Sketch Converter Free",

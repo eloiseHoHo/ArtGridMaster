@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Paint by Numbers Generator Free",
-  description: "Create custom paint by numbers from any photo free. Printable templates with numbered regions, color legend, and 4-24 color palette.",
+  title: "Paint by Numbers Generator Free Online — Custom Photo Template",
+  description: "Create custom paint by numbers from any photo free online. Printable templates with numbered regions, color legend & 4-24 color palette. No signup.",
   alternates: { canonical: "https://www.photogrid.space/photo-to-paint-by-numbers" },
   openGraph: {
     title: "Paint by Numbers Generator Free",

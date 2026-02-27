@@ -16,20 +16,21 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.photogrid.space"),
   title: {
-    default: "PhotoGrid - Free Online Grid Maker & Photo Art Tools for Artists",
+    default: "PhotoGrid Online — Free Grid Drawing Tool & Photo Art Converter",
     template: "%s | PhotoGrid.space",
   },
   description:
-    "Transform your photos into artist reference grids, line art, and sketches 100% free. No login required. Perfect for drawing, painting, and art practice.",
+    "Add grid to photo online free. Free grid drawing tool with 8 art effects: grid overlay, line art, sketch, coloring page, paint by numbers, pixel art & paintings. No signup required.",
   keywords: [
-    "photo grid",
-    "artist grid",
-    "drawing grid",
-    "line art generator",
-    "sketch converter",
-    "free artist tools",
-    "reference grid",
-    "art grid maker",
+    "photogrid online",
+    "add grid to photo online free",
+    "grid drawing online",
+    "grid drawing tool online free",
+    "image to grid",
+    "photo to grid converter",
+    "grid art online",
+    "grid lines maker",
+    "free photo grid maker",
   ],
   openGraph: {
     type: "website",

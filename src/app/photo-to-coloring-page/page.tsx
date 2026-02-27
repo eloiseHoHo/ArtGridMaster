@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Photo to Coloring Page Maker Free",
-  description: "Turn any photo into a printable coloring page free. Create custom coloring pages for kids and adults. Multiple styles. No signup required.",
+  title: "Photo to Coloring Page Maker Free Online — Printable Coloring Sheets",
+  description: "Turn any photo into a printable coloring page free online. Create custom coloring pages for kids and adults from any image. 5 styles, adjustable detail. No signup.",
   alternates: { canonical: "https://www.photogrid.space/photo-to-coloring-page" },
   openGraph: {
     title: "Photo to Coloring Page Maker Free",

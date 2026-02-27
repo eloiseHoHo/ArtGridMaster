@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Photo to Pixel Art Converter Free",
-  description: "Convert photos to pixel art free. Create 8-bit art, pixel avatars, and retro game sprites. Adjustable pixel size and color palette. No signup required.",
+  title: "Photo to Pixel Art Converter Free Online — Image to Pixel Art Grid",
+  description: "Convert photo to pixel art free online. Create 8-bit art, pixel avatars & retro game sprites. Image to pixel art grid with adjustable size & palette. No signup.",
   alternates: { canonical: "https://www.photogrid.space/photo-to-pixel-art" },
   openGraph: {
     title: "Photo to Pixel Art Converter Free",

@@ -8,26 +8,29 @@ import ClientEditorWrapper from "@/components/ClientEditorWrapper";
 
 export const metadata: Metadata = {
   title:
-    "Free Photo Grid Maker, Line Art & Sketch Creator for Artists | PhotoGrid.space",
+    "PhotoGrid Online — Free Grid Drawing Tool & Photo Art Converter",
   description:
-    "Transform photos into artist grids, line art, sketches, coloring pages, paint by numbers, pixel art & paintings. 100% free online tool, no signup required. Used by 10,000+ artists worldwide.",
+    "Add grid to photo online free. Transform photos into drawing grids, line art, sketches, coloring pages, pixel art & paintings. Free grid drawing tool for artists, no signup. Used by 10,000+ artists.",
   keywords: [
+    "photogrid online",
+    "add grid to photo online free",
+    "grid drawing online",
+    "grid drawing tool online free",
+    "grid art online",
+    "image to grid",
+    "photo to grid converter",
+    "grid image online",
     "free photo grid maker",
+    "grid lines maker",
     "photo to line art",
     "photo to sketch",
-    "grid drawing tool",
-    "artist grid generator",
-    "coloring page maker",
-    "paint by numbers generator",
     "pixel art converter",
-    "free drawing grid",
-    "grid method drawing",
   ],
   openGraph: {
     title:
-      "Free Photo Grid Maker, Line Art & Sketch Creator for Artists | PhotoGrid.space",
+      "PhotoGrid Online — Free Grid Drawing Tool & Photo Art Converter",
     description:
-      "Transform photos into artist grids, line art, sketches, coloring pages, paint by numbers, pixel art & paintings. 100% free, no signup.",
+      "Add grid to photo online free. 8 free art tools: grid overlay, line art, sketch, coloring page, paint by numbers, pixel art & painting effects.",
     url: "https://www.photogrid.space",
   },
   alternates: { canonical: "https://www.photogrid.space" },
@@ -108,12 +111,12 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-10">
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
-                Free Online Grid Maker & Photo Art Tools for Artists
+                Free Online Grid Drawing Tool — Add Grid to Photo & Art Converter
               </h1>
               <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-                Transform your reference photos into drawing grids, line art,
-                sketches, coloring pages, paint by numbers, pixel art, and
-                watercolor paintings. 100% free, no signup needed.
+                Add grid to any photo online free. Convert photos into drawing
+                grids, line art, sketches, coloring pages, paint by numbers,
+                pixel art, and paintings. No signup needed.
               </p>
             </div>
 
