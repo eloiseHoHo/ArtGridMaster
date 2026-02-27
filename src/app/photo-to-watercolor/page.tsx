@@ -3,6 +3,18 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Photo to Watercolor & Oil Painting Converter Free Online",
   description: "Turn photo into watercolor painting or oil painting free online. Apply impressionist & Van Gogh style effects to any image. Canvas-ready art. No signup.",
+  keywords: [
+    "photo to watercolor",
+    "photo to watercolor painting",
+    "watercolor effect online free",
+    "photo to oil painting",
+    "watercolor filter online",
+    "photo to painting",
+    "impressionist photo effect",
+    "Van Gogh style photo",
+    "oil painting effect from photo",
+    "photo to canvas art",
+  ],
   alternates: { canonical: "https://www.photogrid.space/photo-to-watercolor" },
   openGraph: {
     title: "Photo to Painting Converter Free",

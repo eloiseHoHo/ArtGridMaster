@@ -1,7 +1,24 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Share2, Bookmark, ThumbsUp } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "How to Create Custom Coloring Pages from Your Photos",
+  description:
+    "Turn any photo into a printable coloring page. Step-by-step guide to making custom coloring books for kids and adults using free online tools — no signup required.",
+  keywords: [
+    "how to create coloring pages from photos",
+    "custom coloring pages",
+    "printable coloring page from photo",
+    "coloring page tutorial",
+    "coloring book from photos",
+    "coloring page for kids",
+    "free coloring page generator",
+  ],
+  alternates: { canonical: "https://www.photogrid.space/blog/how-to-create-coloring-pages-from-photos" },
+};
 
 export default function HowToCreateColoringPagesFromPhotos() {
   return (

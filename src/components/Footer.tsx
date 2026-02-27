@@ -23,7 +23,7 @@ export default function Footer() {
               </svg>
               PhotoGrid
             </span>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-300 leading-relaxed">Free tools for artists to transform photos into drawing references.</p>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-300 leading-relaxed">Free photo grid maker, Instagram splitter, and art transformation tools — all in your browser.</p>
           </div>
 
           <div>

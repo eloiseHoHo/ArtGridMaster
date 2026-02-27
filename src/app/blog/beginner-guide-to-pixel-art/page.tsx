@@ -1,7 +1,24 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Share2, Bookmark, ThumbsUp } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Beginner's Guide to Pixel Art: From Photos to Retro Masterpieces",
+  description:
+    "Learn how to create pixel art from photos with our complete beginner's guide. Covers pixel art fundamentals, photo conversion techniques, and creative uses for retro-style art.",
+  keywords: [
+    "beginner pixel art guide",
+    "photo to pixel art",
+    "pixel art tutorial",
+    "how to make pixel art",
+    "pixel art from photo",
+    "retro pixel art tutorial",
+    "8 bit art beginner guide",
+  ],
+  alternates: { canonical: "https://www.photogrid.space/blog/beginner-guide-to-pixel-art" },
+};
 
 export default function BeginnerGuideToPixelArt() {
   return (

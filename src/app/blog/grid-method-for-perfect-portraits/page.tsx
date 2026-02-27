@@ -1,7 +1,24 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Share2, Bookmark, ThumbsUp } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "How to Use the Grid Method for Perfect Portraits",
+  description:
+    "Learn the grid method for portrait drawing. Step-by-step guide to achieving perfect proportions and accurate likeness in portrait art using a grid overlay.",
+  keywords: [
+    "grid method portrait drawing",
+    "how to draw portraits with grid",
+    "portrait grid technique",
+    "grid method for beginners",
+    "accurate portrait drawing",
+    "grid overlay portrait",
+    "portrait proportions grid",
+  ],
+  alternates: { canonical: "https://www.photogrid.space/blog/grid-method-for-perfect-portraits" },
+};
 
 export default function GridMethodForPerfectPortraits() {
   return (

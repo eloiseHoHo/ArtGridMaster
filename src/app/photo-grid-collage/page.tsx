@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Shield, Download, LayoutGrid, Smartphone } from "lucide-react";
 import ClientGridCollageWrapper from "@/components/ClientGridCollageWrapper";
 
 export const metadata: Metadata = {
   title:
-    "Photo Grid Maker Online Free — Create Photo Collage Grid in Seconds",
+    "Photo Grid Maker Online Free (No App Needed) — Create Photo Collage Grid in Seconds",
   description:
-    "Make beautiful photo grid collages online for free. Upload photos, pick a grid layout (2×2, 3×3, or custom), adjust spacing and style, then download instantly. No signup, no watermark.",
+    "Make beautiful photo grid collages online for free. Upload photos, pick a grid layout (2×2, 3×3, or custom), adjust spacing and style, then download instantly. No app download required, no signup, no watermark.",
   keywords: [
     "photo grid maker",
     "photo grid collage",
@@ -20,6 +21,10 @@ export const metadata: Metadata = {
     "grid collage maker",
     "photo grid layout",
     "combine photos into grid",
+    "photo grid no app",
+    "photo grid without app",
+    "photo grid no download",
+    "photogrid online alternative",
   ],
   alternates: {
     canonical: "https://www.photogrid.space/photo-grid-collage",
@@ -114,6 +119,63 @@ export default function PhotoGridCollage() {
             </div>
           </div>
 
+          {/* Visual Examples — shown before tool so users know what to expect */}
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-2 pb-10">
+            <h2 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-4">
+              Example layouts
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {/* 2x2 layout */}
+              <div>
+                <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden mb-3 aspect-square">
+                  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&auto=format" alt="landscape" className="w-full h-full object-cover"/>
+                  <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=400&h=400&fit=crop&auto=format" alt="flowers" className="w-full h-full object-cover"/>
+                  <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400&h=400&fit=crop&auto=format" alt="city" className="w-full h-full object-cover"/>
+                  <img src="https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=400&h=400&fit=crop&auto=format" alt="beach" className="w-full h-full object-cover"/>
+                </div>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center">2×2 Square Grid</p>
+                <p className="text-xs text-gray-400 text-center mt-0.5">4 photos, equal cells</p>
+              </div>
+
+              {/* 1x3 horizontal strip */}
+              <div>
+                <div className="grid grid-cols-3 gap-1 rounded-xl overflow-hidden mb-3" style={{aspectRatio:"3/1"}}>
+                  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&auto=format" alt="landscape" className="w-full h-full object-cover"/>
+                  <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=400&h=400&fit=crop&auto=format" alt="lake" className="w-full h-full object-cover"/>
+                  <img src="https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=400&h=400&fit=crop&auto=format" alt="beach" className="w-full h-full object-cover"/>
+                </div>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center">1×3 Horizontal Strip</p>
+                <p className="text-xs text-gray-400 text-center mt-0.5">3 photos in a row</p>
+              </div>
+
+              {/* 3x3 layout */}
+              <div>
+                <div className="grid grid-cols-3 gap-0.5 rounded-xl overflow-hidden mb-3 aspect-square">
+                  {[
+                    "photo-1506905925346-21bda4d32df4",
+                    "photo-1518173946687-a4c8892bbd9f",
+                    "photo-1477959858617-67f85cf4f1df",
+                    "photo-1470770841072-f978cf4d019e",
+                    "photo-1505144808419-1957a94ca61e",
+                    "photo-1444703686981-a3abbc4d4fe3",
+                    "photo-1431440869543-efaf3388c585",
+                    "photo-1447752875215-b2761acb3c5d",
+                    "photo-1439853949212-36089060cc84",
+                  ].map((id, i) => (
+                    <img
+                      key={i}
+                      src={`https://images.unsplash.com/${id}?w=200&h=200&fit=crop&auto=format`}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  ))}
+                </div>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center">3×3 Grid</p>
+                <p className="text-xs text-gray-400 text-center mt-0.5">9 photos, compact layout</p>
+              </div>
+            </div>
+          </div>
+
           <ClientGridCollageWrapper />
         </div>
 
@@ -164,6 +226,51 @@ export default function PhotoGridCollage() {
                   Preview your collage and download it as a high-quality image
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-14 border-t border-gray-100 dark:border-gray-800">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-5 text-center">
+              Learn More & Related Tools
+            </h2>
+            <div className="space-y-3 text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+              <p>
+                Need to split one large image into tiles instead of combining
+                photos? Try
+                {" "}
+                <Link
+                  href="/instagram-grid-splitter"
+                  className="text-gray-900 dark:text-white underline"
+                >
+                  Instagram Grid Splitter
+                </Link>
+                .
+              </p>
+              <p>
+                Posting to TikTok? Read our
+                {" "}
+                <Link
+                  href="/blog/tiktok-photo-grid-guide"
+                  className="text-gray-900 dark:text-white underline"
+                >
+                  TikTok Photo Grid Guide
+                </Link>
+                {" "}
+                for layout ideas and publishing tips.
+              </p>
+              <p>
+                Comparing tools first? See
+                {" "}
+                <Link
+                  href="/blog/best-photo-grid-makers"
+                  className="text-gray-900 dark:text-white underline"
+                >
+                  Best Photo Grid Makers in 2026
+                </Link>
+                .
+              </p>
             </div>
           </div>
         </section>

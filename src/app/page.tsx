@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Shield, Download, Sliders, Users, ArrowRight } from "lucide-react";
-import FeatureSection from "@/components/FeatureSection";
+import { Shield, Download, Sliders, Users } from "lucide-react";
 import FAQSection from "@/components/FAQSection";
-import RealTransformationExamples from "@/components/RealTransformationExamples";
-import ClientEditorWrapper from "@/components/ClientEditorWrapper";
+import VisualToolShowcase from "@/components/VisualToolShowcase";
+import ClientGridCollageWrapper from "@/components/ClientGridCollageWrapper";
 
 export const metadata: Metadata = {
   title:
-    "PhotoGrid Online — Free Grid Drawing Tool & Photo Art Converter",
+    "PhotoGrid Online — Free Photo Collage & Instagram Grid Splitter",
   description:
-    "Add grid to photo online free. Transform photos into drawing grids, line art, sketches, coloring pages, pixel art & paintings. Free grid drawing tool for artists, no signup. Used by 10,000+ artists.",
+    "Create social-ready photo grids online free. Make collages, split images for Instagram puzzle posts, and use art tools like grid overlay, line art, and sketch. No app, no signup, no watermark.",
   keywords: [
     "photogrid online",
     "add grid to photo online free",
@@ -25,12 +23,14 @@ export const metadata: Metadata = {
     "photo to line art",
     "photo to sketch",
     "pixel art converter",
+    "photo grid collage",
+    "photo grid maker online",
   ],
   openGraph: {
     title:
-      "PhotoGrid Online — Free Grid Drawing Tool & Photo Art Converter",
+      "PhotoGrid Online — Free Photo Collage & Instagram Grid Splitter",
     description:
-      "Add grid to photo online free. 8 free art tools: grid overlay, line art, sketch, coloring page, paint by numbers, pixel art & painting effects.",
+      "Create photo collages, split images for Instagram grids, and transform photos with free art tools — all in your browser.",
     url: "https://www.photogrid.space",
   },
   alternates: { canonical: "https://www.photogrid.space" },
@@ -42,10 +42,10 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "How does the grid transformation work?",
+      name: "How do PhotoGrid collage and splitter tools work?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Our grid tool overlays a customizable grid pattern on your image. You can adjust grid size, opacity, color, and style to create the perfect reference for transferring to canvas or paper. All processing happens in your browser for instant results.",
+        text: "Choose Photo Grid Collage to combine multiple photos into one layout, or Instagram Grid Splitter to cut one image into grid tiles. You can customize layout and export instantly. All processing happens in your browser.",
       },
     },
     {
@@ -53,7 +53,7 @@ const faqSchema = {
       name: "Is PhotoGrid.space really 100% free?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, all 7 tools are completely free with no usage limits, no signup required, no watermarks, and no hidden fees.",
+        text: "Yes, all 9 tools are completely free with no usage limits, no signup required, no watermarks, and no hidden fees.",
       },
     },
     {
@@ -81,7 +81,7 @@ const appSchema = {
   name: "PhotoGrid.space",
   url: "https://www.photogrid.space",
   description:
-    "Free online photo transformation tools for artists - grids, line art, sketches, coloring pages, paint by numbers, pixel art, and painting effects",
+    "Free online photo grid platform for social creators: collage maker, Instagram grid splitter, and art transformation tools",
   applicationCategory: "DesignApplication",
   operatingSystem: "Web",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -91,7 +91,7 @@ const appSchema = {
     ratingCount: "5200",
   },
   featureList:
-    "Grid Overlay, Line Art Converter, Pencil Sketch, Coloring Page Generator, Paint by Numbers, Pixel Art Converter, Watercolor & Oil Painting Effects",
+    "Photo Grid Collage, Instagram Grid Splitter, Grid Overlay, Line Art Converter, Pencil Sketch, Coloring Page Generator, Paint by Numbers, Pixel Art Converter, Watercolor & Oil Painting Effects",
 };
 
 export default function Home() {
@@ -107,20 +107,20 @@ export default function Home() {
       />
 
       <main>
-        <div className="pt-12 pb-16">
+        {/* Hero */}
+        <div className="pt-12 pb-10">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="text-center mb-10">
+            <div className="text-center mb-8">
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
-                Free Online Grid Drawing Tool — Add Grid to Photo & Art Converter
+                Free Photo Grid Maker Online — Collage, Splitter & Art Tools
               </h1>
               <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-                Add grid to any photo online free. Convert photos into drawing
-                grids, line art, sketches, coloring pages, paint by numbers,
-                pixel art, and paintings. No signup needed.
+                Build social-ready photo grids in seconds, then explore drawing
+                and art effects in one place. No app, no signup, no watermark.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-6 mb-10 text-sm text-gray-500">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4" />
                 <span>No registration</span>
@@ -135,85 +135,28 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
-                <span>10,000+ artists use it</span>
+                <span>10,000+ creators use it</span>
               </div>
             </div>
+
           </div>
-          <ClientEditorWrapper />
         </div>
 
-        <RealTransformationExamples />
+        {/* Visual tool gallery — hero の直下で全ツールを視覚的に紹介 */}
+        <div className="pb-8 pt-6">
+          <VisualToolShowcase />
+        </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-          <section className="mb-20">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Why Artists Use the Grid Drawing Method
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="text-gray-600 space-y-4 leading-relaxed">
-                <p>
-                  The <strong>grid drawing method</strong> is one of the most
-                  powerful techniques in an artist&apos;s toolkit, used by master
-                  artists for centuries — from Renaissance painters like{" "}
-                  <strong>Albrecht Durer</strong> and{" "}
-                  <strong>Leonardo da Vinci</strong> to modern hyperrealists.
-                </p>
-                <p>
-                  By overlaying a grid on a reference photo, you can focus on
-                  reproducing one small section at a time, rather than being
-                  overwhelmed by the whole image.
-                </p>
-                <p>
-                  PhotoGrid.space transforms this traditional technique for the
-                  digital age. Upload any photo, customize your{" "}
-                  <strong>grid density, color, opacity, and line style</strong>,
-                  then download the result instantly. Works perfectly for{" "}
-                  <Link
-                    href="/photo-to-grid"
-                    className="text-gray-900 dark:text-gray-100 underline"
-                  >
-                    canvas transfers
-                  </Link>
-                  , mural planning, and art education.
-                </p>
-              </div>
-              <div className="text-gray-600 space-y-4 leading-relaxed">
-                <p>
-                  Beyond grids, our suite includes{" "}
-                  <Link
-                    href="/photo-to-lineart"
-                    className="text-gray-900 dark:text-gray-100 underline"
-                  >
-                    line art conversion
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/photo-to-sketch"
-                    className="text-gray-900 dark:text-gray-100 underline"
-                  >
-                    pencil sketch effects
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/photo-to-coloring-page"
-                    className="text-gray-900 dark:text-gray-100 underline"
-                  >
-                    coloring page generation
-                  </Link>
-                  , and more — all processed instantly in your browser with zero
-                  uploads to external servers.
-                </p>
-                <p>
-                  Whether you&apos;re a professional illustrator, art student, or
-                  hobbyist, these tools help you create accurate reference
-                  materials for any medium: pencil, charcoal, watercolor, oil
-                  painting, or digital art.
-                </p>
-              </div>
-            </div>
-          </section>
+        {/* Quick-try collage tool */}
+        <div className="pt-10 pb-16 border-t border-gray-100">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-6">
+            <h2 className="text-xl font-bold text-gray-900">Try Photo Grid Collage</h2>
+            <p className="text-sm text-gray-500 mt-1">Upload photos, pick a layout, download instantly — no signup.</p>
+          </div>
+          <ClientGridCollageWrapper />
+        </div>
 
-          <FeatureSection />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
           <FAQSection />
         </div>
       </main>

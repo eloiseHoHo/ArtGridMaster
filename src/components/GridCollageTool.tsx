@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useEffect, useRef } from "react";
 import {
   Upload,
@@ -31,13 +32,45 @@ const LAYOUT_PRESETS = [
 const ASPECT_PRESETS = [
   { label: "Square", w: 1, h: 1 },
   { label: "4:5", w: 4, h: 5 },
+  { label: "9:16", w: 9, h: 16 },
   { label: "3:2", w: 3, h: 2 },
+  { label: "16:9", w: 16, h: 9 },
 ];
 
 const BG_COLORS = [
   { label: "White", value: "#ffffff" },
   { label: "Black", value: "#000000" },
   { label: "Light Gray", value: "#f0f0f0" },
+];
+
+const PLATFORM_PRESETS = [
+  {
+    label: "TikTok Grid 2×2",
+    note: "Vertical storytelling set",
+    rows: 2,
+    cols: 2,
+    aspectW: 9,
+    aspectH: 16,
+    gap: 6,
+  },
+  {
+    label: "Instagram Feed 4:5",
+    note: "Portrait feed-friendly collage",
+    rows: 2,
+    cols: 2,
+    aspectW: 4,
+    aspectH: 5,
+    gap: 8,
+  },
+  {
+    label: "Instagram Square 3×3",
+    note: "Classic square collage grid",
+    rows: 3,
+    cols: 3,
+    aspectW: 1,
+    aspectH: 1,
+    gap: 6,
+  },
 ];
 
 const SAMPLE_URLS = [
@@ -69,6 +102,7 @@ export default function GridCollageTool() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [isLoadingSamples, setIsLoadingSamples] = useState(false);
+  const [showAfterDownloadGuide, setShowAfterDownloadGuide] = useState(false);
   const genRef = useRef(0);
 
   const MAX_DIM = 2000;
@@ -210,12 +244,36 @@ export default function GridCollageTool() {
         cornerRadius: Math.round(cornerRadius * scale),
       });
       downloadCollage(url, `photo-grid-${rows}x${cols}`);
+      setShowAfterDownloadGuide(true);
     } finally {
       setIsDownloading(false);
     }
   };
 
   const maxCells = rows * cols;
+
+  const applyPlatformPreset = (preset: (typeof PLATFORM_PRESETS)[number]) => {
+    setRows(preset.rows);
+    setCols(preset.cols);
+    setAspectW(preset.aspectW);
+    setAspectH(preset.aspectH);
+    setGap(preset.gap);
+  };
+
+  const fitLayoutToImages = () => {
+    if (images.length === 0) return;
+    const count = Math.min(images.length, 25);
+    if (count >= 25) {
+      setRows(5);
+      setCols(5);
+      return;
+    }
+
+    const idealCols = Math.min(5, Math.max(1, Math.ceil(Math.sqrt(count))));
+    const idealRows = Math.min(5, Math.max(1, Math.ceil(count / idealCols)));
+    setRows(idealRows);
+    setCols(idealCols);
+  };
 
   /* ── render ── */
 
@@ -313,6 +371,16 @@ export default function GridCollageTool() {
                 >
                   Clear all
                 </button>
+
+                {images.length > 0 && (
+                  <p className="mt-2 text-[11px] text-gray-400 dark:text-gray-500">
+                    {images.length < maxCells
+                      ? `Add ${maxCells - images.length} more photo${maxCells - images.length > 1 ? "s" : ""} to fill every cell.`
+                      : images.length > maxCells
+                        ? `${images.length - maxCells} extra photo${images.length - maxCells > 1 ? "s are" : " is"} currently unused.`
+                        : "Great: every uploaded photo will be used in this layout."}
+                  </p>
+                )}
               </>
             )}
           </div>
@@ -325,8 +393,48 @@ export default function GridCollageTool() {
 
             <div className="mb-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                Platform quick starts
+              </p>
+              <div className="space-y-1.5">
+                {PLATFORM_PRESETS.map((preset) => {
+                  const active =
+                    rows === preset.rows &&
+                    cols === preset.cols &&
+                    aspectW === preset.aspectW &&
+                    aspectH === preset.aspectH &&
+                    gap === preset.gap;
+
+                  return (
+                    <button
+                      key={preset.label}
+                      onClick={() => applyPlatformPreset(preset)}
+                      className={`w-full text-left px-3 py-2 rounded-md border transition-colors ${
+                        active
+                          ? "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-gray-900 dark:border-gray-100"
+                          : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+                      }`}
+                    >
+                      <p className="text-xs font-medium">{preset.label}</p>
+                      <p className={`text-[11px] ${active ? "text-gray-100 dark:text-gray-700" : "text-gray-400 dark:text-gray-500"}`}>
+                        {preset.note}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                 Presets
               </p>
+              <button
+                onClick={fitLayoutToImages}
+                disabled={images.length === 0}
+                className="w-full mb-2 px-3 py-2 text-xs rounded-md border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Auto-fit layout to uploaded photo count
+              </button>
               <div className="grid grid-cols-4 gap-1.5">
                 {LAYOUT_PRESETS.map((p) => (
                   <button
@@ -398,7 +506,7 @@ export default function GridCollageTool() {
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                 Cell shape
               </p>
-              <div className="flex gap-1.5">
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5">
                 {ASPECT_PRESETS.map((a) => (
                   <button
                     key={a.label}
@@ -416,6 +524,10 @@ export default function GridCollageTool() {
                   </button>
                 ))}
               </div>
+              <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-2">
+                Social tip: Instagram feed usually performs best with 1:1 or 4:5.
+                TikTok-oriented visuals often use 9:16.
+              </p>
             </div>
 
             {/* Gap */}
@@ -492,33 +604,66 @@ export default function GridCollageTool() {
         {/* ──────── Right: Preview ──────── */}
         <div className="lg:col-span-2 space-y-4">
           {previewUrl ? (
-            <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
-              <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Preview — {rows}×{cols} Grid
-                  {isGenerating && (
-                    <span className="ml-2 text-xs text-gray-400">
-                      (updating…)
-                    </span>
-                  )}
-                </span>
-                <button
-                  onClick={handleDownload}
-                  disabled={isDownloading}
-                  className="text-xs bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium transition-colors disabled:opacity-50 flex items-center gap-1.5"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  {isDownloading ? "Saving…" : "Download"}
-                </button>
+            <>
+              <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
+                <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    Preview — {rows}×{cols} Grid
+                    {isGenerating && (
+                      <span className="ml-2 text-xs text-gray-400">
+                        (updating…)
+                      </span>
+                    )}
+                  </span>
+                  <button
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                    className="text-xs bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    {isDownloading ? "Saving…" : "Download"}
+                  </button>
+                </div>
+                <div className="p-5">
+                  <img
+                    src={previewUrl}
+                    alt="Collage preview"
+                    className="w-full rounded-md"
+                  />
+                </div>
               </div>
-              <div className="p-5">
-                <img
-                  src={previewUrl}
-                  alt="Collage preview"
-                  className="w-full rounded-md"
-                />
-              </div>
-            </div>
+
+              {showAfterDownloadGuide && (
+                <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-5 bg-white dark:bg-gray-900">
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    Download complete. What do you want to do next?
+                  </h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                    Use these quick paths to publish faster or continue editing.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Link
+                      href="/blog/tiktok-photo-grid-guide"
+                      className="text-xs px-3 py-2 rounded-md border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500"
+                    >
+                      View TikTok posting guide
+                    </Link>
+                    <Link
+                      href="/instagram-grid-splitter"
+                      className="text-xs px-3 py-2 rounded-md border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500"
+                    >
+                      Need puzzle posts? Open Splitter
+                    </Link>
+                    <button
+                      onClick={() => setShowAfterDownloadGuide(false)}
+                      className="text-xs px-3 py-2 rounded-md text-gray-500 hover:text-gray-700"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-12 bg-white dark:bg-gray-900 text-center min-h-[400px] flex flex-col items-center justify-center">
               <Grid3X3 className="h-12 w-12 text-gray-200 dark:text-gray-700 mb-4" />

@@ -16,11 +16,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.photogrid.space"),
   title: {
-    default: "PhotoGrid Online — Free Grid Drawing Tool & Photo Art Converter",
+    default: "PhotoGrid Online — Free Photo Collage & Instagram Grid Splitter",
     template: "%s | PhotoGrid.space",
   },
   description:
-    "Add grid to photo online free. Free grid drawing tool with 8 art effects: grid overlay, line art, sketch, coloring page, paint by numbers, pixel art & paintings. No signup required.",
+    "Create social-ready photo grids online free. Make collages, split images for Instagram puzzle posts, and use art tools like grid overlay, line art, and sketch. No app, no signup, no watermark.",
   keywords: [
     "photogrid online",
     "add grid to photo online free",
@@ -31,6 +31,8 @@ export const metadata: Metadata = {
     "grid art online",
     "grid lines maker",
     "free photo grid maker",
+    "photo grid collage",
+    "photo grid maker online",
   ],
   openGraph: {
     type: "website",
@@ -61,7 +63,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans`}>
+      <body suppressHydrationWarning className={`${inter.variable} font-sans`}>
         <div className="flex flex-col min-h-screen">
           <Header />
           <div className="flex-1">{children}</div>
@@ -82,32 +84,7 @@ export default function RootLayout({
           </>
         )}
 
-        {/* Schema.org structured data */}
-        <Script
-          id="schema-org"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebApplication",
-              name: "PhotoGrid",
-              url: "https://www.photogrid.space",
-              description:
-                "Free online tool for artists to transform images into grids, line art, and sketches",
-              applicationCategory: "MultimediaApplication",
-              operatingSystem: "All",
-              offers: {
-                "@type": "Offer",
-                price: "0",
-                priceCurrency: "USD",
-              },
-              author: {
-                "@type": "Organization",
-                name: "PhotoGrid",
-              },
-            }),
-          }}
-        />
+
       </body>
     </html>
   );

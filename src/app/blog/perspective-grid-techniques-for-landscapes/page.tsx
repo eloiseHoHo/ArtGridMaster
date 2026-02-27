@@ -1,7 +1,24 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Share2, Bookmark, ThumbsUp } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Perspective Grid Techniques for Landscape Painting",
+  description:
+    "Master perspective in landscape art with grid techniques. Learn how to capture depth, distance, and scale in landscape paintings and drawings using the grid method.",
+  keywords: [
+    "perspective grid techniques",
+    "landscape painting grid",
+    "perspective drawing landscapes",
+    "grid method landscape art",
+    "how to draw perspective landscapes",
+    "landscape perspective tutorial",
+    "grid overlay for landscapes",
+  ],
+  alternates: { canonical: "https://www.photogrid.space/blog/perspective-grid-techniques-for-landscapes" },
+};
 
 export default function PerspectiveGridTechniquesForLandscapes() {
   return (
