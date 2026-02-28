@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -84,7 +85,34 @@ export default function RootLayout({
           </>
         )}
 
-
+        {/* Schema.org structured data */}
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "PhotoGrid",
+              url: "https://www.photogrid.space",
+              description:
+                "Free online tool for artists to transform images into grids, line art, and sketches",
+              applicationCategory: "MultimediaApplication",
+              operatingSystem: "All",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+              },
+              author: {
+                "@type": "Organization",
+                name: "PhotoGrid",
+              },
+            }),
+          }}
+        />
+        
+        <Analytics />
       </body>
     </html>
   );
