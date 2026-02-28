@@ -1,7 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Share2, Bookmark, ThumbsUp } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Line Art vs Sketch: Which Drawing Style is Right for Your Art?",
+  description:
+    "Compare line art and pencil sketch drawing styles. Learn the key differences, when to use each, and how to convert photos to both styles for free online.",
+  keywords: [
+    "line art vs sketch",
+    "line art vs pencil sketch",
+    "drawing style comparison",
+    "photo to line art",
+    "photo to sketch",
+    "which drawing style to use",
+    "line art tutorial",
+    "sketch tutorial",
+  ],
+  alternates: { canonical: "https://www.photogrid.space/blog/line-art-vs-sketch-which-style-for-your-art" },
+};
 
 export default function LineArtVsSketchWhichStyleForYourArt() {
   return (

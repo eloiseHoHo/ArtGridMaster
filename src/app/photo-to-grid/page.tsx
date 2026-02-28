@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Grid Maker for Artists Free",
-  description: "Add drawing grids to any photo free. Create grid overlays for proportions, scale drawings, and canvas transfers. Adjustable rows, columns, and colors.",
+  title: "Add Grid to Photo Free Online — Image to Grid Overlay Converter, No App",
+  description: "Add grid to photo free online. Photo to grid overlay converter with adjustable rows, columns, colors & styles. No app needed — works in your browser, no signup.",
+  keywords: [
+    "add grid to photo online free",
+    "image to grid converter",
+    "photo to grid converter",
+    "grid drawing tool online free",
+    "grid maker online for drawing",
+    "grid lines maker",
+    "grid generator png",
+    "gridding pictures",
+    "grid art online",
+  ],
   alternates: { canonical: "https://www.photogrid.space/photo-to-grid" },
   openGraph: {
-    title: "Grid Maker for Artists Free",
-    description: "Add drawing grids to any photo free. Create grid overlays for proportions, scale drawings, and canvas transfers. Adjustable rows, columns, and colors.",
+    title: "Add Grid to Photo Online Free — Image to Grid Converter",
+    description: "Add grid to any photo free online. Create drawing grid overlays with adjustable rows, columns, colors & styles. No signup required.",
     url: "https://www.photogrid.space/photo-to-grid",
   },
 };
@@ -28,10 +39,10 @@ export default function PhotoToGrid() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                  Add Perfect <span className="text-primary">Grid</span> to Any Photo
+                  Add <span className="text-primary">Grid</span> to Photo Online Free — Image to Grid Converter
                 </h1>
                 <p className="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-                  Transform your photos into professional drawing references with customizable grid overlays. The essential tool for artists to achieve perfect proportions and accurate drawings. 100% free.
+                  Free grid drawing tool to add customizable grid overlays to any photo. Convert images to grid references with adjustable rows, columns, colors, and styles. Perfect for proportional drawing. 100% free.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
                   <Link href="/">

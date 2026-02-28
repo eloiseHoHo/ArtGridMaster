@@ -4,7 +4,12 @@ import Link from "next/link";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 
-const toolLinks = [
+const socialLinks = [
+  { href: "/photo-grid-collage", label: "Collage" },
+  { href: "/instagram-grid-splitter", label: "Split" },
+];
+
+const artLinks = [
   { href: "/photo-to-grid", label: "Grid" },
   { href: "/photo-to-lineart", label: "Line Art" },
   { href: "/photo-to-sketch", label: "Sketch" },
@@ -12,7 +17,6 @@ const toolLinks = [
   { href: "/photo-to-paint-by-numbers", label: "Paint by Numbers" },
   { href: "/photo-to-pixel-art", label: "Pixel Art" },
   { href: "/photo-to-watercolor", label: "Watercolor" },
-  { href: "/instagram-grid-splitter", label: "Split" },
 ];
 
 export default function Header() {
@@ -63,16 +67,36 @@ export default function Header() {
           PhotoGrid
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1">
-          {toolLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="hidden md:flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <span className="px-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+              Social
+            </span>
+            {socialLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-2.5 py-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <div className="w-px h-5 bg-gray-200 dark:bg-gray-700" />
+          <div className="flex items-center gap-1">
+            <span className="px-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+              Art
+            </span>
+            {artLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-2.5 py-1.5 text-sm text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
           <Link
             href="/blog"
             className="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
@@ -101,7 +125,10 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
           <nav className="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1">
-            {toolLinks.map((link) => (
+            <p className="px-3 pt-1 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+              For Social
+            </p>
+            {socialLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -111,7 +138,21 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-            <div className="border-t border-gray-100 dark:border-gray-800 my-1" />
+
+            <p className="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+              For Art
+            </p>
+            {artLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="border-t border-gray-100 dark:border-gray-800 my-2" />
             <Link
               href="/blog"
               className="py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"

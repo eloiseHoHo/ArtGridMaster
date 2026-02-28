@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Share2, Bookmark, ThumbsUp } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "如何使用网格法绘制完美肖像画",
+  description: "网格法绘制肖像教程：使用网格叠加法精确复制比例，轻松绘制完美肖像画。适合初学者的分步骤指南。",
+  robots: { index: false, follow: false },
+};
 
 export default function HowToUseGridForPerfectPortraits() {
   return (

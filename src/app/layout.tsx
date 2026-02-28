@@ -17,20 +17,23 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.photogrid.space"),
   title: {
-    default: "PhotoGrid - Free Online Grid Maker & Photo Art Tools for Artists",
+    default: "PhotoGrid Online — Free Photo Collage & Instagram Grid Splitter",
     template: "%s | PhotoGrid.space",
   },
   description:
-    "Transform your photos into artist reference grids, line art, and sketches 100% free. No login required. Perfect for drawing, painting, and art practice.",
+    "Create social-ready photo grids online free. Make collages, split images for Instagram puzzle posts, and use art tools like grid overlay, line art, and sketch. No app, no signup, no watermark.",
   keywords: [
-    "photo grid",
-    "artist grid",
-    "drawing grid",
-    "line art generator",
-    "sketch converter",
-    "free artist tools",
-    "reference grid",
-    "art grid maker",
+    "photogrid online",
+    "add grid to photo online free",
+    "grid drawing online",
+    "grid drawing tool online free",
+    "image to grid",
+    "photo to grid converter",
+    "grid art online",
+    "grid lines maker",
+    "free photo grid maker",
+    "photo grid collage",
+    "photo grid maker online",
   ],
   openGraph: {
     type: "website",
@@ -61,7 +64,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans`}>
+      <body suppressHydrationWarning className={`${inter.variable} font-sans`}>
         <div className="flex flex-col min-h-screen">
           <Header />
           <div className="flex-1">{children}</div>

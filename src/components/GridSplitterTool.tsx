@@ -1,17 +1,18 @@
 "use client";
 
+import NextLink from "next/link";
 import { useState, useCallback, FormEvent } from "react";
-import { Upload, Download, Grid3X3, Image as ImageIcon, Link, XCircle, Package } from "lucide-react";
+import { Upload, Download, Grid3X3, Image as ImageIcon, Link as LinkIcon, XCircle, Package, Copy } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { splitImage, downloadSlicesAsZip, downloadSingleSlice, type GridSlice } from "@/lib/gridSplitter";
 
 const PRESETS = [
-  { label: "1×3 Horizontal", rows: 1, cols: 3 },
-  { label: "3×1 Vertical", rows: 3, cols: 1 },
-  { label: "2×3 (6 pieces)", rows: 2, cols: 3 },
-  { label: "3×3 (9 pieces)", rows: 3, cols: 3 },
-  { label: "3×4 (12 pieces)", rows: 3, cols: 4 },
-  { label: "4×3 (12 pieces)", rows: 4, cols: 3 },
+  { label: "IG Puzzle 3×3", rows: 3, cols: 3 },
+  { label: "IG Puzzle 2×3", rows: 2, cols: 3 },
+  { label: "Row Banner 1×3", rows: 1, cols: 3 },
+  { label: "Column Strip 3×1", rows: 3, cols: 1 },
+  { label: "Wide Puzzle 3×4", rows: 3, cols: 4 },
+  { label: "Tall Puzzle 4×3", rows: 4, cols: 3 },
 ];
 
 const SAMPLE_IMAGES = [
@@ -27,6 +28,8 @@ export default function GridSplitterTool() {
   const [slices, setSlices] = useState<GridSlice[]>([]);
   const [isSplitting, setIsSplitting] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "done" | "error">("idle");
+  const [showAfterZipGuide, setShowAfterZipGuide] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [isUrlMode, setIsUrlMode] = useState(false);
   const [urlError, setUrlError] = useState<string | null>(null);
@@ -117,6 +120,7 @@ export default function GridSplitterTool() {
     setIsDownloading(true);
     try {
       await downloadSlicesAsZip(slices, `instagram-grid-${rows}x${cols}`);
+      setShowAfterZipGuide(true);
     } finally {
       setIsDownloading(false);
     }
@@ -126,6 +130,21 @@ export default function GridSplitterTool() {
     setRows(preset.rows);
     setCols(preset.cols);
     setSlices([]);
+    setCopyStatus("idle");
+  };
+
+  const postingOrder = Array.from({ length: rows * cols }, (_, i) => rows * cols - i).join(" -> ");
+
+  const copyPostingOrder = async () => {
+    const text = `Instagram posting order for ${rows}x${cols}: ${postingOrder}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus("done");
+    } catch {
+      setCopyStatus("error");
+    }
+
+    setTimeout(() => setCopyStatus("idle"), 1800);
   };
 
   return (
@@ -173,7 +192,7 @@ export default function GridSplitterTool() {
                     onClick={() => setIsUrlMode(!isUrlMode)}
                     className="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 flex items-center gap-1"
                   >
-                    {isUrlMode ? <ImageIcon className="h-3 w-3" /> : <Link className="h-3 w-3" />}
+                    {isUrlMode ? <ImageIcon className="h-3 w-3" /> : <LinkIcon className="h-3 w-3" />}
                     {isUrlMode ? "Upload file" : "Import from URL"}
                   </button>
                 </div>
@@ -283,15 +302,33 @@ export default function GridSplitterTool() {
                   Preview — {rows}×{cols} Grid ({rows * cols} pieces)
                 </span>
                 {slices.length > 0 && (
-                  <button
-                    onClick={handleDownloadAll}
-                    disabled={isDownloading}
-                    className="text-xs bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium transition-colors disabled:opacity-50 flex items-center gap-1.5"
-                  >
-                    <Package className="h-3.5 w-3.5" />
-                    {isDownloading ? "Zipping..." : "Download All (.zip)"}
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={copyPostingOrder}
+                      className="text-xs px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1.5"
+                    >
+                      <Copy className="h-3.5 w-3.5" />
+                      {copyStatus === "done"
+                        ? "Order copied"
+                        : copyStatus === "error"
+                          ? "Copy failed"
+                          : "Copy post order"}
+                    </button>
+                    <button
+                      onClick={handleDownloadAll}
+                      disabled={isDownloading}
+                      className="text-xs bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                    >
+                      <Package className="h-3.5 w-3.5" />
+                      {isDownloading ? "Zipping..." : "Download All (.zip)"}
+                    </button>
+                  </div>
                 )}
+              </div>
+              <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-800/40 text-xs text-gray-600 dark:text-gray-300">
+                Posting tip: for Instagram puzzle grids, publish pieces in reverse
+                order from the last tile to the first (for example, 9 → 1 on 3×3).
+                Suggested order for current setup: {postingOrder}
               </div>
               <div className="p-5">
                 {slices.length === 0 ? (
@@ -373,6 +410,34 @@ export default function GridSplitterTool() {
                 <li>Post in <strong>reverse order</strong> — start with piece #{rows * cols}, then #{rows * cols - 1}, etc.</li>
                 <li>Your profile grid will display the complete image perfectly</li>
               </ol>
+
+              {showAfterZipGuide && (
+                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                    ZIP downloaded. Continue with planning or create supporting collage posts.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <NextLink
+                      href="/blog/instagram-grid-layout-guide"
+                      className="text-xs px-3 py-2 rounded-md border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500"
+                    >
+                      Open Instagram layout guide
+                    </NextLink>
+                    <NextLink
+                      href="/photo-grid-collage"
+                      className="text-xs px-3 py-2 rounded-md border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500"
+                    >
+                      Create matching collage post
+                    </NextLink>
+                    <button
+                      onClick={() => setShowAfterZipGuide(false)}
+                      className="text-xs px-3 py-2 rounded-md text-gray-500 hover:text-gray-700"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

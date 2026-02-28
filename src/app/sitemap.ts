@@ -14,13 +14,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "photo-to-pixel-art",
     "photo-to-watercolor",
     "instagram-grid-splitter",
+    "photo-grid-collage",
   ];
 
   const blogPages = [
+    "tiktok-photo-grid-guide",
+    "best-photo-grid-makers",
+    "instagram-grid-layout-guide",
     "beginner-guide-to-pixel-art",
     "line-art-vs-sketch-which-style-for-your-art",
     "how-to-create-coloring-pages-from-photos",
-    "how-to-use-grid-for-perfect-portraits",
     "grid-method-for-perfect-portraits",
     "perspective-grid-techniques-for-landscapes",
   ];

@@ -23,7 +23,7 @@ export default function Footer() {
               </svg>
               PhotoGrid
             </span>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-300 leading-relaxed">Free tools for artists to transform photos into drawing references.</p>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-300 leading-relaxed">Free photo grid maker, Instagram splitter, and art transformation tools — all in your browser.</p>
           </div>
 
           <div>
@@ -43,6 +43,7 @@ export default function Footer() {
               <li><Link href="/photo-to-pixel-art" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Pixel Art</Link></li>
               <li><Link href="/photo-to-watercolor" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Watercolor</Link></li>
               <li><Link href="/instagram-grid-splitter" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Instagram Grid Splitter</Link></li>
+              <li><Link href="/photo-grid-collage" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Photo Grid Collage</Link></li>
             </ul>
           </div>
 
