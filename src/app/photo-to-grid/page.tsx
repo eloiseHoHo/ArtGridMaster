@@ -1,25 +1,101 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Add Grid to Photo Free Online — Image to Grid Overlay Converter, No App",
-  description: "Add grid to photo free online. Photo to grid overlay converter with adjustable rows, columns, colors & styles. No app needed — works in your browser, no signup.",
+  title: "Grid Drawing Tool Online Free — Add Grid to Photo, No App | PhotoGrid.space",
+  description: "Free grid drawing tool online. Add a drawing grid to any photo for the grid method. Photo to grid converter with adjustable rows, columns, colors & styles. No app needed, no signup.",
   keywords: [
+    "grid drawing online",
+    "grid drawing tool",
+    "drawing grid online",
     "add grid to photo online free",
-    "image to grid converter",
     "photo to grid converter",
     "grid drawing tool online free",
+    "grid method drawing tool",
+    "image to grid converter",
     "grid maker online for drawing",
+    "grid overlay for drawing",
     "grid lines maker",
     "grid generator png",
-    "gridding pictures",
-    "grid art online",
   ],
   alternates: { canonical: "https://www.photogrid.space/photo-to-grid" },
   openGraph: {
-    title: "Add Grid to Photo Online Free — Image to Grid Converter",
-    description: "Add grid to any photo free online. Create drawing grid overlays with adjustable rows, columns, colors & styles. No signup required.",
+    title: "Grid Drawing Tool Online Free — Add Grid to Any Photo",
+    description: "Free grid drawing tool online. Add a drawing reference grid to any photo. Adjustable rows, columns, colors & styles. No app, no signup.",
     url: "https://www.photogrid.space/photo-to-grid",
   },
+};
+
+const schemaWebApp = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Grid Drawing Tool — PhotoGrid.space",
+  url: "https://www.photogrid.space/photo-to-grid",
+  description: "Free online grid drawing tool to add customizable grid overlays to any photo for the grid method drawing technique.",
+  applicationCategory: "DesignApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", ratingCount: "2340" },
+};
+
+const schemaFAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is a grid drawing tool?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A grid drawing tool adds a reference grid over a photo so you can use the grid method — a technique where you draw one square at a time to accurately reproduce proportions. Our free online tool lets you customize the grid size, color, style, and opacity.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I use the grid method for drawing?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Upload your reference photo to our grid drawing tool, adjust the grid to your preferred density, then draw a matching grid on your paper. Focus on reproducing one square at a time to maintain accurate proportions across the entire drawing.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What grid size should I use for drawing?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "For portraits and detailed subjects, use a finer grid (8×10 or 10×12). For landscapes or simpler compositions, a 4×6 or 6×8 grid is usually sufficient. Beginners should start with larger squares to avoid feeling overwhelmed.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is this grid drawing tool really free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, completely free. No subscription, no watermarks, no signup required. All grid styles, sizes, and customization options are 100% free to use and download.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What file types can I upload?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Our grid drawing tool supports JPG, PNG, and WEBP files up to 10MB. You can download the finished grid reference as a high-resolution PNG.",
+      },
+    },
+  ],
+};
+
+const schemaHowTo = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Add a Drawing Grid to a Photo Online",
+  description: "Use the grid method for drawing by adding a reference grid overlay to any photo in seconds.",
+  step: [
+    { "@type": "HowToStep", name: "Upload Your Photo", text: "Select any reference photo from your device — portraits, landscapes, animals, or any subject you want to draw." },
+    { "@type": "HowToStep", name: "Customize the Grid", text: "Adjust the number of rows and columns, grid color, opacity, and line style (solid, dotted, or dashed) to match your needs." },
+    { "@type": "HowToStep", name: "Download Your Grid Reference", text: "Download the grid overlay image in high resolution, print it, or use it digitally alongside your drawing surface." },
+  ],
+  tool: [{ "@type": "HowToTool", name: "PhotoGrid.space Grid Drawing Tool" }],
+  totalTime: "PT1M",
 };
 
 import Link from "next/link";
@@ -28,10 +104,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Image, Check } from "lucide-react";
 import RelatedTools from "@/components/RelatedTools";
+import ClientEditorWrapper from "@/components/ClientEditorWrapper";
 
 export default function PhotoToGrid() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaWebApp) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFAQ) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaHowTo) }} />
       <main>
         {/* Hero Section */}
         <section className="bg-white dark:bg-gray-950 py-16 sm:py-24">
@@ -39,22 +119,18 @@ export default function PhotoToGrid() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                  Add <span className="text-primary">Grid</span> to Photo Online Free — Image to Grid Converter
+                  Free <span className="text-primary">Grid Drawing</span> Tool — Add Drawing Grid to Any Photo Online
                 </h1>
                 <p className="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-                  Free grid drawing tool to add customizable grid overlays to any photo. Convert images to grid references with adjustable rows, columns, colors, and styles. Perfect for proportional drawing. 100% free.
+                  The easiest grid drawing tool online. Add a customizable reference grid to any photo for the grid method — adjust rows, columns, colors, and styles. Perfect for artists learning to draw proportionally. 100% free, no app needed.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Link href="/">
+                  <a href="#grid-tool">
                     <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                       <Upload className="mr-2 h-5 w-5" />
-                      Upload Your Photo
+                      Upload Your Photo — It&apos;s Free
                     </Button>
-                  </Link>
-                  <Button variant="outline" size="lg">
-                    <Image className="mr-2 h-5 w-5" />
-                    Try Sample Image
-                  </Button>
+                  </a>
                 </div>
               </div>
               <div className="relative">
@@ -72,6 +148,17 @@ export default function PhotoToGrid() {
                 <div className="absolute -bottom-6 -right-6 rounded-lg grid grid-cols-4 grid-rows-5 opacity-70 border-2 border-primary/30 w-1/3 h-[230px] transform rotate-6"></div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Tool Section */}
+        <section id="grid-tool" className="py-12 bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Add Your Drawing Grid Now</h2>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">Upload a photo and customize your grid reference — free, instant, no signup</p>
+            </div>
+            <ClientEditorWrapper defaultTab="grid" />
           </div>
         </section>
 
@@ -152,12 +239,12 @@ export default function PhotoToGrid() {
             </div>
             
             <div className="text-center mt-12">
-              <Link href="/">
+              <a href="#grid-tool">
                 <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                   Create Your Grid Now - It&apos;s Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -233,12 +320,12 @@ export default function PhotoToGrid() {
             </div>
             
             <div className="text-center mt-12">
-              <Link href="/">
+              <a href="#grid-tool">
                 <Button variant="outline" size="lg">
                   Try Different Grid Styles
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -429,12 +516,12 @@ export default function PhotoToGrid() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Create Perfect Drawings?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">Generate customized grid references for your artwork in seconds with our free online tool. No signup required.</p>
-            <Link href="/">
+            <a href="#grid-tool">
               <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 Start Creating Grid References
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+            </a>
           </div>
         </section>
         

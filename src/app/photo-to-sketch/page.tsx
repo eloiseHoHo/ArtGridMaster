@@ -23,12 +23,11 @@ export const metadata: Metadata = {
   },
 };
 
-import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Image, Check } from "lucide-react";
 import RelatedTools from "@/components/RelatedTools";
+import ClientEditorWrapper from "@/components/ClientEditorWrapper";
 
 export default function PhotoToSketch() {
   return (
@@ -46,12 +45,12 @@ export default function PhotoToSketch() {
                   Create stunning pencil sketches and charcoal drawings from any photo with our easy-to-use online converter. No signup or downloads required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Link href="/">
+                  <a href="#sketch-tool">
                     <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                       <Upload className="mr-2 h-5 w-5" />
                       Upload Your Photo
                     </Button>
-                  </Link>
+                  </a>
                   <Button variant="outline" size="lg">
                     <Image className="mr-2 h-5 w-5" />
                     Try Sample Image
@@ -74,6 +73,17 @@ export default function PhotoToSketch() {
             </div>
           </div>
         </section>
+
+{/* Tool Section */}
+<section id="sketch-tool" className="py-12 bg-gray-50 dark:bg-gray-900">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Convert Your Photo to a Pencil Sketch Now</h2>
+      <p className="mt-2 text-gray-600 dark:text-gray-300">Upload a photo and transform it into a pencil sketch — free, instant, no signup</p>
+    </div>
+    <ClientEditorWrapper defaultTab="sketch" />
+  </div>
+</section>
 
         {/* Features Section */}
         <section className="py-16 bg-white dark:bg-gray-950">
@@ -152,12 +162,12 @@ export default function PhotoToSketch() {
             </div>
             
             <div className="text-center mt-12">
-              <Link href="/">
+              <a href="#sketch-tool">
                 <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                   Try It Now - It&apos;s Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -209,12 +219,12 @@ export default function PhotoToSketch() {
             </div>
             
             <div className="text-center mt-12">
-              <Link href="/">
+              <a href="#sketch-tool">
                 <Button variant="outline" size="lg">
                   View More Sketch Styles
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -333,12 +343,12 @@ export default function PhotoToSketch() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Photos into Sketches?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">Create beautiful sketch art from your photos in seconds with our free online tool. No signup required.</p>
-            <Link href="/">
+            <a href="#sketch-tool">
               <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 Get Started Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+            </a>
           </div>
         </section>
         

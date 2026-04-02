@@ -22,6 +22,16 @@ const GridCollageTool = dynamic(
   }
 );
 
-export default function ClientGridCollageWrapper() {
-  return <GridCollageTool />;
+interface Props {
+  initialTemplate?: {
+    rows: number;
+    cols: number;
+    aspectW: number;
+    aspectH: number;
+    gap: number;
+  };
+}
+
+export default function ClientGridCollageWrapper({ initialTemplate }: Props) {
+  return <GridCollageTool initialTemplate={initialTemplate} />;
 }

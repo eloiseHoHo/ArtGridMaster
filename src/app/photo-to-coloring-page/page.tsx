@@ -23,12 +23,11 @@ export const metadata: Metadata = {
   },
 };
 
-import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Check, Palette, Pencil, SlidersHorizontal, Download, BookOpen, Heart, Gift, GraduationCap } from "lucide-react";
 import RelatedTools from "@/components/RelatedTools";
+import ClientEditorWrapper from "@/components/ClientEditorWrapper";
 
 export default function PhotoToColoringPage() {
   return (
@@ -46,12 +45,12 @@ export default function PhotoToColoringPage() {
                   Transform your favorite photos into beautiful, printable coloring pages with our free online converter. Choose from multiple styles, adjust detail levels, and download instantly. Perfect for kids, adults, and art therapy — no signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Link href="/">
+                  <a href="#coloring-tool">
                     <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                       <Upload className="mr-2 h-5 w-5" />
                       Create Your Coloring Page
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
@@ -90,6 +89,17 @@ export default function PhotoToColoringPage() {
             </div>
           </div>
         </section>
+
+{/* Tool Section */}
+<section id="coloring-tool" className="py-12 bg-gray-50 dark:bg-gray-900">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Create Your Coloring Page Now</h2>
+      <p className="mt-2 text-gray-600 dark:text-gray-300">Upload a photo and turn it into a printable coloring page — free, instant, no signup</p>
+    </div>
+    <ClientEditorWrapper defaultTab="coloring" />
+  </div>
+</section>
 
         <section className="py-16 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -170,12 +180,12 @@ export default function PhotoToColoringPage() {
             </div>
 
             <div className="text-center mt-12">
-              <Link href="/">
+              <a href="#coloring-tool">
                 <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                   Make a Coloring Page Now — It&apos;s Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -342,12 +352,12 @@ export default function PhotoToColoringPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Create Your Custom Coloring Page?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">Turn any photo into a printable coloring page in seconds. Free, fast, and no signup required.</p>
-            <Link href="/">
+            <a href="#coloring-tool">
               <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 Start Creating Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+            </a>
           </div>
         </section>
 

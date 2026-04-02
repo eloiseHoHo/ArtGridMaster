@@ -29,29 +29,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Check, Grid3X3, Palette, Layers, Download, Gamepad2, Image, SmilePlus, Gem } from "lucide-react";
 import RelatedTools from "@/components/RelatedTools";
+import ClientEditorWrapper from "@/components/ClientEditorWrapper";
 
 export default function PhotoToPixelArt() {
   return (
     <>
-{/*
-        <title>Photo to Pixel Art Converter Free | PhotoGrid.space</title>
-        <meta
-          name="description"
-          content="Convert photos to pixel art free. Create 8-bit art, pixel avatars, and retro game sprites. Adjustable pixel size and color palette. No signup required."
-        />
-        <meta property="og:title" content="Photo to Pixel Art Converter Free Online" />
-        <meta property="og:description" content="Turn photos into pixel art. Create 8-bit art, avatars, and retro game sprites. Adjustable settings. 100% free." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://photogrid.space/photo-to-pixel-art" />
-        <link rel="canonical" href="https://photogrid.space/photo-to-pixel-art" />
-        <meta name="geo.region" content="US" />
-        <meta name="geo.position" content="37.09024;-95.712891" />
-        <meta name="ICBM" content="37.09024, -95.712891" />
-        <meta name="keywords" content="photo to pixel art, pixel art converter, pixel art maker, photo to 8 bit art, pixel art avatar maker, retro pixel art generator, photo to minecraft pixel art, convert image to pixel art, pixel art from photo free, pixelate photo online, 8-bit art converter, pixel art generator free, turn photo into pixel art" />
-        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Pixel Art Converter","url":"https://photogrid.space/photo-to-pixel-art","description":"Free online tool to convert photos into retro pixel art","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1670"}})}</script>
-        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this photo to pixel art converter really free?","acceptedAnswer":{"@type":"Answer","text":"Yes, our photo to pixel art converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited pixel art at no cost."}},{"@type":"Question","name":"What pixel art styles are available?","acceptedAnswer":{"@type":"Answer","text":"We offer four distinct styles: Classic (traditional square pixels for an authentic retro look), Rounded (softer pixels with rounded edges), Outline (pixel art with emphasized outlines for a bold effect), and Isometric (3D-perspective pixel blocks for a unique dimensional look)."}},{"@type":"Question","name":"What types of photos work best for pixel art?","acceptedAnswer":{"@type":"Answer","text":"Photos with clear subjects and strong colors work best for pixel art conversion. Portraits, characters, simple objects, and iconic scenes produce great results. Images with good contrast and distinct color areas will give you the most recognizable and appealing pixel art."}},{"@type":"Question","name":"Can I control the pixel size and color palette?","acceptedAnswer":{"@type":"Answer","text":"Absolutely! You can adjust the pixel grid size from very large pixels (for a chunky 8-bit look) to small pixels (for more detailed artwork). You can also control the number of colors in your palette and choose from preset retro color schemes inspired by classic gaming consoles."}},{"@type":"Question","name":"Can I use the pixel art for commercial projects?","acceptedAnswer":{"@type":"Answer","text":"Yes! The pixel art you create from your own photos is yours to use however you like, including commercial projects such as games, merchandise, social media content, and digital art sales. Just make sure you have the rights to the original photo."}}]})}</script>
-        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":"How to Convert a Photo to Pixel Art","description":"Three simple steps to create your custom pixel art from any photo","step":[{"@type":"HowToStep","name":"Upload Your Photo","text":"Select any photo from your device — portraits, landscapes, characters, or any image you want to pixelate"},{"@type":"HowToStep","name":"Customize Your Style","text":"Pick a pixel art style, adjust the pixel size, choose your color palette, and fine-tune the output to perfection"},{"@type":"HowToStep","name":"Export & Use","text":"Download your finished pixel art in high resolution and use it in games, social media, or any creative project"}],"tool":[{"@type":"HowToTool","name":"PhotoGrid.space Pixel Art Converter"}],"totalTime":"PT1M"})}</script>
-      */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Pixel Art Converter","url":"https://www.photogrid.space/photo-to-pixel-art","description":"Free online tool to convert photos into retro pixel art","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1670"}}) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this photo to pixel art converter really free?","acceptedAnswer":{"@type":"Answer","text":"Yes, our photo to pixel art converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited pixel art at no cost."}},{"@type":"Question","name":"What pixel art styles are available?","acceptedAnswer":{"@type":"Answer","text":"We offer four distinct styles: Classic (traditional square pixels for an authentic retro look), Rounded (softer pixels with rounded edges), Outline (pixel art with emphasized outlines for a bold effect), and Isometric (3D-perspective pixel blocks for a unique dimensional look)."}},{"@type":"Question","name":"What types of photos work best for pixel art?","acceptedAnswer":{"@type":"Answer","text":"Photos with clear subjects and strong colors work best for pixel art conversion. Portraits, characters, simple objects, and iconic scenes produce great results. Images with good contrast and distinct color areas will give you the most recognizable and appealing pixel art."}},{"@type":"Question","name":"Can I control the pixel size and color palette?","acceptedAnswer":{"@type":"Answer","text":"Absolutely! You can adjust the pixel grid size from very large pixels (for a chunky 8-bit look) to small pixels (for more detailed artwork). You can also control the number of colors in your palette and choose from preset retro color schemes inspired by classic gaming consoles."}},{"@type":"Question","name":"Can I use the pixel art for commercial projects?","acceptedAnswer":{"@type":"Answer","text":"Yes! The pixel art you create from your own photos is yours to use however you like, including commercial projects such as games, merchandise, social media content, and digital art sales. Just make sure you have the rights to the original photo."}}]}) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":"How to Convert a Photo to Pixel Art","description":"Three simple steps to create your custom pixel art from any photo","step":[{"@type":"HowToStep","name":"Upload Your Photo","text":"Select any photo from your device — portraits, landscapes, characters, or any image you want to pixelate"},{"@type":"HowToStep","name":"Customize Your Style","text":"Pick a pixel art style, adjust the pixel size, choose your color palette, and fine-tune the output to perfection"},{"@type":"HowToStep","name":"Export & Use","text":"Download your finished pixel art in high resolution and use it in games, social media, or any creative project"}],"tool":[{"@type":"HowToTool","name":"PhotoGrid.space Pixel Art Converter"}],"totalTime":"PT1M"}) }} />
 
       <main>
         <section className="bg-white dark:bg-gray-950 py-16 sm:py-24">
@@ -65,12 +50,12 @@ export default function PhotoToPixelArt() {
                   Transform your favorite photos into stunning pixel art with our free online converter. Choose from multiple styles, adjust pixel size and color palettes, and download instantly. Perfect for game assets, retro art, and digital creations — no signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Link href="/">
+                  <a href="#pixel-art-tool">
                     <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                       <Upload className="mr-2 h-5 w-5" />
-                      Create Your Pixel Art
+                      Create Your Pixel Art — It&apos;s Free
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
@@ -141,6 +126,17 @@ export default function PhotoToPixelArt() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Tool Section */}
+        <section id="pixel-art-tool" className="py-12 bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Convert Your Photo to Pixel Art Now</h2>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">Upload a photo and transform it into pixel art — free, instant, no signup</p>
+            </div>
+            <ClientEditorWrapper defaultTab="pixel" />
           </div>
         </section>
 
@@ -223,12 +219,12 @@ export default function PhotoToPixelArt() {
             </div>
 
             <div className="text-center mt-12">
-              <Link href="/">
+              <a href="#pixel-art-tool">
                 <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                   Make Pixel Art Now — It&apos;s Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -395,12 +391,12 @@ export default function PhotoToPixelArt() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Create Your Own Pixel Art?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">Turn any photo into stunning pixel art in seconds. Free, fast, and no signup required.</p>
-            <Link href="/">
+            <a href="#pixel-art-tool">
               <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 Start Creating Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+            </a>
           </div>
         </section>
 

@@ -11,8 +11,8 @@ import { Input } from "@/components/ui/input";
 import { generateGridEffect, generateLineArtEffect, generateSketchEffect, generateColoringPageEffect, generatePaintByNumbersEffect, generatePixelArtEffect, generateWatercolorEffect } from "@/lib/imageEffects";
 import { generateSocialImage, shareImage, downloadDataUrl, generateAllEffectsGrid, SOCIAL_FORMATS, type SocialFormat } from "@/lib/socialExport";
 
-export default function SimpleImageEditorNew() {
-  const [activeTab, setActiveTab] = useState<string>("grid");
+export default function SimpleImageEditorNew({ defaultTab = "grid" }: { defaultTab?: string }) {
+  const [activeTab, setActiveTab] = useState<string>(defaultTab);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [transformedImage, setTransformedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);

@@ -16,6 +16,6 @@ const SimpleImageEditor = dynamic(
   }
 );
 
-export default function ClientEditorWrapper() {
-  return <SimpleImageEditor />;
+export default function ClientEditorWrapper({ defaultTab = "grid" }: { defaultTab?: string }) {
+  return <SimpleImageEditor defaultTab={defaultTab} />;
 }

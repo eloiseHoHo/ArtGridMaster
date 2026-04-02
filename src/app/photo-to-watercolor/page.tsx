@@ -23,35 +23,19 @@ export const metadata: Metadata = {
   },
 };
 
-import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Upload, Check, Droplets, Paintbrush, Palette, SlidersHorizontal, Download, Frame, Heart, Gift, Share2 } from "lucide-react";
 import RelatedTools from "@/components/RelatedTools";
+import ClientEditorWrapper from "@/components/ClientEditorWrapper";
 
 export default function PhotoToWatercolor() {
   return (
     <>
-{/*
-        <title>Photo to Painting Converter Free | PhotoGrid.space</title>
-        <meta
-          name="description"
-          content="Turn photos into watercolor, oil painting, and canvas art free online. Apply Van Gogh style effects and impressionist filters. No signup needed."
-        />
-        <meta property="og:title" content="Photo to Painting Converter Free Online" />
-        <meta property="og:description" content="Transform photos into watercolor and oil paintings. Canvas-ready wall art. 100% free, no signup." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://photogrid.space/photo-to-watercolor" />
-        <link rel="canonical" href="https://photogrid.space/photo-to-watercolor" />
-        <meta name="geo.region" content="US" />
-        <meta name="geo.position" content="37.09024;-95.712891" />
-        <meta name="ICBM" content="37.09024, -95.712891" />
-        <meta name="keywords" content="photo to watercolor, photo to oil painting, photo to painting converter, turn photo into painting free, watercolor effect online, oil painting effect, photo to canvas painting, Van Gogh style photo filter, photo to acrylic painting, impressionist photo effect, painting converter free, turn picture into painting, photo to art converter" />
-        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Watercolor Converter","url":"https://photogrid.space/photo-to-watercolor","description":"Free online tool to convert photos into watercolor and oil painting effects","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1420"}})}</script>
-        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this photo to watercolor converter really free?","acceptedAnswer":{"@type":"Answer","text":"Yes, our photo to watercolor and oil painting converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited painting effects at no cost."}},{"@type":"Question","name":"What's the difference between watercolor and oil painting effects?","acceptedAnswer":{"@type":"Answer","text":"Watercolor effects produce soft, translucent washes with flowing edges and subtle color blending, similar to traditional watercolor on paper. Oil painting effects create richer, more textured results with visible brush strokes and deeper color saturation, mimicking oil paint on canvas. Both styles can be fine-tuned with our adjustable settings."}},{"@type":"Question","name":"What types of photos work best for painting effects?","acceptedAnswer":{"@type":"Answer","text":"Almost any photo can be transformed into a beautiful painting. Landscapes, portraits, flowers, and architecture tend to produce especially striking results. Photos with good lighting, clear subjects, and vibrant colors work particularly well. Even everyday snapshots can become impressive artwork with the right painting style and settings."}},{"@type":"Question","name":"Can I print the painting on canvas?","acceptedAnswer":{"@type":"Answer","text":"Absolutely! Our tool produces high-resolution output that's perfect for printing on canvas, fine art paper, or standard photo paper. Many users order canvas prints from online printing services to create gallery-quality wall art from their converted photos."}},{"@type":"Question","name":"How do I adjust the painting intensity and wetness?","acceptedAnswer":{"@type":"Answer","text":"After uploading your photo and selecting a painting style, you can use our intuitive slider controls to adjust intensity (how strongly the painting effect is applied), wetness (how much colors bleed and blend), and brush size. Preview changes in real time before downloading your finished artwork."}}]})}</script>
-        <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":"How to Convert a Photo to a Painting","description":"Three simple steps to create your custom watercolor or oil painting artwork from any photo","step":[{"@type":"HowToStep","name":"Upload Your Photo","text":"Select any photo from your device — portraits, landscapes, still life, or any image you want to transform into a painting"},{"@type":"HowToStep","name":"Choose Your Painting Style","text":"Pick watercolor, oil painting, or impressionist style and adjust intensity, wetness, and brush settings to customize your artwork"},{"@type":"HowToStep","name":"Download & Share","text":"Download your finished painting in high resolution, perfect for printing on canvas, sharing on social media, or gifting to loved ones"}],"tool":[{"@type":"HowToTool","name":"PhotoGrid.space Painting Converter"}],"totalTime":"PT1M"})}</script>
-      */}
+      {/* Meta tags handled by metadata export above */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context":"https://schema.org","@type":"WebApplication","name":"Photo to Watercolor Converter","url":"https://photogrid.space/photo-to-watercolor","description":"Free online tool to convert photos into watercolor and oil painting effects","applicationCategory":"DesignApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"1420"}}) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this photo to watercolor converter really free?","acceptedAnswer":{"@type":"Answer","text":"Yes, our photo to watercolor and oil painting converter is completely free to use. There are no hidden fees, watermarks, or premium features behind a paywall. You can create and download unlimited painting effects at no cost."}},{"@type":"Question","name":"What's the difference between watercolor and oil painting effects?","acceptedAnswer":{"@type":"Answer","text":"Watercolor effects produce soft, translucent washes with flowing edges and subtle color blending, similar to traditional watercolor on paper. Oil painting effects create richer, more textured results with visible brush strokes and deeper color saturation, mimicking oil paint on canvas. Both styles can be fine-tuned with our adjustable settings."}},{"@type":"Question","name":"What types of photos work best for painting effects?","acceptedAnswer":{"@type":"Answer","text":"Almost any photo can be transformed into a beautiful painting. Landscapes, portraits, flowers, and architecture tend to produce especially striking results. Photos with good lighting, clear subjects, and vibrant colors work particularly well. Even everyday snapshots can become impressive artwork with the right painting style and settings."}},{"@type":"Question","name":"Can I print the painting on canvas?","acceptedAnswer":{"@type":"Answer","text":"Absolutely! Our tool produces high-resolution output that's perfect for printing on canvas, fine art paper, or standard photo paper. Many users order canvas prints from online printing services to create gallery-quality wall art from their converted photos."}},{"@type":"Question","name":"How do I adjust the painting intensity and wetness?","acceptedAnswer":{"@type":"Answer","text":"After uploading your photo and selecting a painting style, you can use our intuitive slider controls to adjust intensity (how strongly the painting effect is applied), wetness (how much colors bleed and blend), and brush size. Preview changes in real time before downloading your finished artwork."}}]}) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":"How to Convert a Photo to a Painting","description":"Three simple steps to create your custom watercolor or oil painting artwork from any photo","step":[{"@type":"HowToStep","name":"Upload Your Photo","text":"Select any photo from your device — portraits, landscapes, still life, or any image you want to transform into a painting"},{"@type":"HowToStep","name":"Choose Your Painting Style","text":"Pick watercolor, oil painting, or impressionist style and adjust intensity, wetness, and brush settings to customize your artwork"},{"@type":"HowToStep","name":"Download & Share","text":"Download your finished painting in high resolution, perfect for printing on canvas, sharing on social media, or gifting to loved ones"}],"tool":[{"@type":"HowToTool","name":"PhotoGrid.space Painting Converter"}],"totalTime":"PT1M"}) }} />
 
       <main>
         <section className="bg-white dark:bg-gray-950 py-16 sm:py-24">
@@ -65,12 +49,12 @@ export default function PhotoToWatercolor() {
                   Turn your favorite photos into stunning watercolor paintings, oil paintings, and impressionist artworks with our free online converter. Adjust intensity, wetness, and brush style for a truly unique result — no artistic skills or signup required.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Link href="/">
+                  <a href="#watercolor-tool">
                     <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                       <Upload className="mr-2 h-5 w-5" />
                       Create Your Painting
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
@@ -183,12 +167,12 @@ export default function PhotoToWatercolor() {
             </div>
 
             <div className="text-center mt-12">
-              <Link href="/">
+              <a href="#watercolor-tool">
                 <Button size="lg" className="bg-primary hover:bg-primary-600 text-white">
                   Create Your Painting Now — It&apos;s Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -355,12 +339,12 @@ export default function PhotoToWatercolor() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Turn Your Photos into Paintings?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">Transform any photo into a watercolor, oil painting, or impressionist masterpiece in seconds. Free, fast, and no signup required.</p>
-            <Link href="/">
+            <a href="#watercolor-tool">
               <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 Start Creating Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+            </a>
           </div>
         </section>
 

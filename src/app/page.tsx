@@ -1,36 +1,34 @@
 import type { Metadata } from "next";
-import { Shield, Download, Sliders, Users } from "lucide-react";
+import { Shield, Download, Zap, Users } from "lucide-react";
 import FAQSection from "@/components/FAQSection";
-import VisualToolShowcase from "@/components/VisualToolShowcase";
-import ClientGridCollageWrapper from "@/components/ClientGridCollageWrapper";
+import SocialProofStrip from "@/components/SocialProofStrip";
+import MoreToolsSection from "@/components/MoreToolsSection";
+import HomeHero from "@/components/HomeHero";
 
 export const metadata: Metadata = {
   title:
-    "PhotoGrid Online — Free Photo Collage & Instagram Grid Splitter",
+    "Photo Grid Maker Online Free — Create Photo Grids in Seconds",
   description:
-    "Create social-ready photo grids online free. Make collages, split images for Instagram puzzle posts, and use art tools like grid overlay, line art, and sketch. No app, no signup, no watermark.",
+    "Make photo grid collages online for free. Upload photos, pick a grid layout, and download instantly. No app needed, no signup, no watermark.",
   keywords: [
-    "photogrid online",
-    "add grid to photo online free",
-    "grid drawing online",
-    "grid drawing tool online free",
-    "grid art online",
-    "image to grid",
-    "photo to grid converter",
-    "grid image online",
-    "free photo grid maker",
-    "grid lines maker",
-    "photo to line art",
-    "photo to sketch",
-    "pixel art converter",
+    "photo grid",
+    "grid photo",
+    "photo grid maker",
+    "photo grid online",
+    "photo grid maker online free",
+    "photo collage grid",
+    "make photo grid",
+    "photo grid free",
+    "grid collage maker",
     "photo grid collage",
-    "photo grid maker online",
+    "instagram grid maker",
+    "photo grid app online",
   ],
   openGraph: {
     title:
-      "PhotoGrid Online — Free Photo Collage & Instagram Grid Splitter",
+      "Photo Grid Maker Online Free — Create Photo Grids in Seconds",
     description:
-      "Create photo collages, split images for Instagram grids, and transform photos with free art tools — all in your browser.",
+      "Make photo grid collages online for free. Upload photos, pick a layout, download instantly. No app, no signup, no watermark.",
     url: "https://www.photogrid.space",
   },
   alternates: { canonical: "https://www.photogrid.space" },
@@ -42,10 +40,10 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "How do PhotoGrid collage and splitter tools work?",
+      name: "How do I make a photo grid online?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Choose Photo Grid Collage to combine multiple photos into one layout, or Instagram Grid Splitter to cut one image into grid tiles. You can customize layout and export instantly. All processing happens in your browser.",
+        text: "Upload your photos, choose a grid layout (2×2, 3×3, or custom), adjust spacing and style, then download your grid as a PNG. All processing happens in your browser — no signup required.",
       },
     },
     {
@@ -53,7 +51,7 @@ const faqSchema = {
       name: "Is PhotoGrid.space really 100% free?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, all 9 tools are completely free with no usage limits, no signup required, no watermarks, and no hidden fees.",
+        text: "Yes, all tools are completely free with no usage limits, no signup required, no watermarks, and no hidden fees.",
       },
     },
     {
@@ -66,10 +64,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "What image formats are supported?",
+      name: "What image formats and sizes are supported?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We support JPEG, JPG, and PNG formats up to 10MB. All output can be downloaded as PNG files.",
+        text: "We support JPEG, PNG, and WebP formats up to 10MB. Output is downloaded as high-quality PNG at 1080px resolution.",
       },
     },
   ],
@@ -81,7 +79,7 @@ const appSchema = {
   name: "PhotoGrid.space",
   url: "https://www.photogrid.space",
   description:
-    "Free online photo grid platform for social creators: collage maker, Instagram grid splitter, and art transformation tools",
+    "Free online photo grid maker for creating collages, splitting images for Instagram, and art transformation tools.",
   applicationCategory: "DesignApplication",
   operatingSystem: "Web",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -91,7 +89,7 @@ const appSchema = {
     ratingCount: "5200",
   },
   featureList:
-    "Photo Grid Collage, Instagram Grid Splitter, Grid Overlay, Line Art Converter, Pencil Sketch, Coloring Page Generator, Paint by Numbers, Pixel Art Converter, Watercolor & Oil Painting Effects",
+    "Photo Grid Collage, Instagram Grid Splitter, Grid Overlay, Line Art Converter, Pencil Sketch, Coloring Page Generator, Paint by Numbers, Pixel Art Converter, Watercolor Effects",
 };
 
 export default function Home() {
@@ -107,55 +105,46 @@ export default function Home() {
       />
 
       <main>
-        {/* Hero */}
-        <div className="pt-12 pb-10">
+        {/* Compact Hero */}
+        <div className="pt-6 pb-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
-                Free Photo Grid Maker Online — Collage, Splitter & Art Tools
+            <div className="text-center mb-5">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight mb-2">
+                Photo Grid Maker — Free Online
               </h1>
-              <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-                Build social-ready photo grids in seconds, then explore drawing
-                and art effects in one place. No app, no signup, no watermark.
+              <p className="text-base text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+                Upload photos, pick a layout, download your grid. No app, no signup, no watermark.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                <span>No registration</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Download className="h-4 w-4" />
-                <span>Instant downloads</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Sliders className="h-4 w-4" />
-                <span>Fully customizable</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                <span>10,000+ creators use it</span>
-              </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+              {[
+                { icon: Shield, text: "No registration" },
+                { icon: Download, text: "Instant download" },
+                { icon: Zap, text: "Browser-based" },
+                { icon: Users, text: "50,000+ grids made" },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 dark:bg-gray-800/60 text-sm text-gray-600 dark:text-gray-300">
+                  <Icon className="h-3.5 w-3.5 text-violet-500" />
+                  <span>{text}</span>
+                </div>
+              ))}
             </div>
-
           </div>
         </div>
 
-        {/* Visual tool gallery — hero の直下で全ツールを視覚的に紹介 */}
-        <div className="pb-8 pt-6">
-          <VisualToolShowcase />
+        {/* Template strip + Collage tool (above the fold) */}
+        <HomeHero />
+
+        {/* Social proof */}
+        <SocialProofStrip />
+
+        {/* More tools (Splitter, Grid Overlay, Art tools collapsed) */}
+        <div className="py-16 bg-gray-50/50 dark:bg-gray-900/30">
+          <MoreToolsSection />
         </div>
 
-        {/* Quick-try collage tool */}
-        <div className="pt-10 pb-16 border-t border-gray-100">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Try Photo Grid Collage</h2>
-            <p className="text-sm text-gray-500 mt-1">Upload photos, pick a layout, download instantly — no signup.</p>
-          </div>
-          <ClientGridCollageWrapper />
-        </div>
-
+        {/* FAQ */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
           <FAQSection />
         </div>

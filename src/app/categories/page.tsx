@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -110,7 +109,7 @@ export default function Categories() {
                   <ul className="list-disc pl-5 text-gray-600 text-sm">
                     {category.subcategories.map((sub, index) => (
                       <li key={index}>
-                        <Link href={`/transform/new?type=grid&preset=${sub.toLowerCase().replace(/\s+/g, '-')}`}>
+                        <Link href="/photo-to-grid">
                           <span className="hover:text-primary hover:underline">{sub}</span>
                         </Link>
                       </li>
@@ -127,7 +126,7 @@ export default function Categories() {
                     </Button>
                   </Link>
                 ) : (
-                  <Link href={`/transform/new?type=grid&preset=${category.id}`}>
+                  <Link href="/photo-to-grid">
                     <Button className="w-full">
                       Create {category.title}
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -176,13 +175,14 @@ export default function Categories() {
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">Ready to Transform Your Photos?</h2>
             <p className="text-white/90 mb-8">Create custom photo grids for any artistic subject with our easy-to-use tools.</p>
-            <Button 
-              variant="secondary" 
-              className="px-6 py-3 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all font-medium"
-              onClick={() => window.location.href = "/transform/new"}
-            >
-              Create Your First Photo Grid
-            </Button>
+            <Link href="/photo-to-grid">
+              <Button
+                variant="secondary"
+                className="px-6 py-3 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all font-medium"
+              >
+                Create Your First Photo Grid
+              </Button>
+            </Link>
           </div>
         </div>
       </main>

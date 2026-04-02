@@ -9,12 +9,16 @@ import {
   XCircle,
   ImagePlus,
   Sparkles,
+  Share2,
+  Copy,
+  Check,
 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import {
   generateCollage,
   downloadCollage,
 } from "@/lib/gridCollage";
+import { getRecentLayouts, saveRecentLayout } from "@/lib/recentWorks";
 
 /* ───── constants ───── */
 
@@ -89,7 +93,17 @@ interface CollageImage {
 
 /* ───── component ───── */
 
-export default function GridCollageTool() {
+interface GridCollageToolProps {
+  initialTemplate?: {
+    rows: number;
+    cols: number;
+    aspectW: number;
+    aspectH: number;
+    gap: number;
+  };
+}
+
+export default function GridCollageTool({ initialTemplate }: GridCollageToolProps) {
   const [images, setImages] = useState<CollageImage[]>([]);
   const [rows, setRows] = useState(2);
   const [cols, setCols] = useState(2);
@@ -103,7 +117,23 @@ export default function GridCollageTool() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [isLoadingSamples, setIsLoadingSamples] = useState(false);
   const [showAfterDownloadGuide, setShowAfterDownloadGuide] = useState(false);
+  const [recentLayouts, setRecentLayouts] = useState<ReturnType<typeof getRecentLayouts>>([]);
+  const [copied, setCopied] = useState(false);
   const genRef = useRef(0);
+
+  useEffect(() => {
+    if (initialTemplate) {
+      setRows(initialTemplate.rows);
+      setCols(initialTemplate.cols);
+      setAspectW(initialTemplate.aspectW);
+      setAspectH(initialTemplate.aspectH);
+      setGap(initialTemplate.gap);
+    }
+  }, [initialTemplate]);
+
+  useEffect(() => {
+    setRecentLayouts(getRecentLayouts());
+  }, []);
 
   const MAX_DIM = 2000;
 
@@ -244,6 +274,11 @@ export default function GridCollageTool() {
         cornerRadius: Math.round(cornerRadius * scale),
       });
       downloadCollage(url, `photo-grid-${rows}x${cols}`);
+      saveRecentLayout({
+        rows, cols, gap, aspectW, aspectH, bgColor, cornerRadius,
+        label: `${rows}×${cols} ${ASPECT_PRESETS.find(a => a.w === aspectW && a.h === aspectH)?.label || "Custom"}`,
+      });
+      setRecentLayouts(getRecentLayouts());
       setShowAfterDownloadGuide(true);
     } finally {
       setIsDownloading(false);
@@ -295,14 +330,14 @@ export default function GridCollageTool() {
               <>
                 <div
                   {...getRootProps()}
-                  className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+                  className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
                     isDragActive
-                      ? "border-gray-400 bg-gray-50 dark:bg-gray-800"
-                      : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+                      ? "border-violet-400 bg-violet-50 dark:bg-violet-900/20 scale-[1.01]"
+                      : "border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-500/40 hover:bg-violet-50/30 dark:hover:bg-violet-900/10"
                   }`}
                 >
                   <input {...getInputProps()} />
-                  <Upload className="h-8 w-8 mx-auto text-gray-300 dark:text-gray-500 mb-2" />
+                  <Upload className="h-8 w-8 mx-auto text-violet-300 dark:text-violet-600 mb-2" />
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Drop photos here or click to upload
                   </p>
@@ -385,6 +420,33 @@ export default function GridCollageTool() {
             )}
           </div>
 
+          {recentLayouts.length > 0 && (
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-900">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Recent Layouts</h3>
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {recentLayouts.slice(0, 4).map((layout, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setRows(layout.rows);
+                      setCols(layout.cols);
+                      setGap(layout.gap);
+                      setAspectW(layout.aspectW);
+                      setAspectH(layout.aspectH);
+                      setBgColor(layout.bgColor);
+                      setCornerRadius(layout.cornerRadius);
+                    }}
+                    className="flex-shrink-0 px-3 py-2 text-xs rounded-lg border border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-500 transition-colors text-gray-600 dark:text-gray-300"
+                  >
+                    {layout.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Grid Layout */}
           <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-5 bg-white dark:bg-gray-900">
             <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">
@@ -410,7 +472,7 @@ export default function GridCollageTool() {
                       onClick={() => applyPlatformPreset(preset)}
                       className={`w-full text-left px-3 py-2 rounded-md border transition-colors ${
                         active
-                          ? "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-gray-900 dark:border-gray-100"
+                          ? "bg-violet-600 dark:bg-violet-500 text-white dark:text-white border-violet-600 dark:border-violet-500"
                           : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
                       }`}
                     >
@@ -445,7 +507,7 @@ export default function GridCollageTool() {
                     }}
                     className={`px-2.5 py-1.5 text-xs rounded-md border transition-colors ${
                       rows === p.rows && cols === p.cols
-                        ? "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-gray-900 dark:border-gray-100"
+                        ? "bg-violet-600 dark:bg-violet-500 text-white dark:text-white border-violet-600 dark:border-violet-500"
                         : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
                     }`}
                   >
@@ -471,7 +533,7 @@ export default function GridCollageTool() {
                   max={5}
                   value={rows}
                   onChange={(e) => setRows(+e.target.value)}
-                  className="w-full accent-gray-900 dark:accent-gray-100"
+                  className="w-full accent-violet-600 dark:accent-violet-500"
                 />
               </div>
               <div>
@@ -489,7 +551,7 @@ export default function GridCollageTool() {
                   max={5}
                   value={cols}
                   onChange={(e) => setCols(+e.target.value)}
-                  className="w-full accent-gray-900 dark:accent-gray-100"
+                  className="w-full accent-violet-600 dark:accent-violet-500"
                 />
               </div>
             </div>
@@ -516,7 +578,7 @@ export default function GridCollageTool() {
                     }}
                     className={`flex-1 px-2.5 py-1.5 text-xs rounded-md border transition-colors ${
                       aspectW === a.w && aspectH === a.h
-                        ? "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-gray-900 dark:border-gray-100"
+                        ? "bg-violet-600 dark:bg-violet-500 text-white dark:text-white border-violet-600 dark:border-violet-500"
                         : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
                     }`}
                   >
@@ -546,7 +608,7 @@ export default function GridCollageTool() {
                 max={30}
                 value={gap}
                 onChange={(e) => setGap(+e.target.value)}
-                className="w-full accent-gray-900 dark:accent-gray-100"
+                className="w-full accent-violet-600 dark:accent-violet-500"
               />
             </div>
 
@@ -566,7 +628,7 @@ export default function GridCollageTool() {
                 max={20}
                 value={cornerRadius}
                 onChange={(e) => setCornerRadius(+e.target.value)}
-                className="w-full accent-gray-900 dark:accent-gray-100"
+                className="w-full accent-violet-600 dark:accent-violet-500"
               />
             </div>
 
@@ -615,14 +677,32 @@ export default function GridCollageTool() {
                       </span>
                     )}
                   </span>
-                  <button
-                    onClick={handleDownload}
-                    disabled={isDownloading}
-                    className="text-xs bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium transition-colors disabled:opacity-50 flex items-center gap-1.5"
-                  >
-                    <Download className="h-3.5 w-3.5" />
-                    {isDownloading ? "Saving…" : "Download"}
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleDownload}
+                      disabled={isDownloading}
+                      className="text-xs bg-violet-600 dark:bg-violet-500 text-white hover:bg-violet-700 dark:hover:bg-violet-400 px-3 py-1.5 rounded-md font-medium transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      {isDownloading ? "Saving…" : "Download Grid"}
+                    </button>
+                    {typeof navigator !== "undefined" && navigator.share && (
+                      <button
+                        onClick={() => {
+                          if (previewUrl) {
+                            fetch(previewUrl).then(r => r.blob()).then(blob => {
+                              const file = new File([blob], "photo-grid.png", { type: "image/png" });
+                              navigator.share({ files: [file], title: "My Photo Grid" }).catch(() => {});
+                            });
+                          }
+                        }}
+                        className="p-1.5 text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+                        title="Share"
+                      >
+                        <Share2 className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="p-5">
                   <img
@@ -665,14 +745,15 @@ export default function GridCollageTool() {
               )}
             </>
           ) : (
-            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-12 bg-white dark:bg-gray-900 text-center min-h-[400px] flex flex-col items-center justify-center">
-              <Grid3X3 className="h-12 w-12 text-gray-200 dark:text-gray-700 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+            <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-10 bg-gradient-to-b from-violet-50/40 to-white dark:from-violet-950/20 dark:to-gray-900 text-center min-h-[280px] flex flex-col items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center mb-4">
+                <Grid3X3 className="h-8 w-8 text-violet-400 dark:text-violet-500" />
+              </div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                 Upload photos to create a collage
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                Add multiple photos, choose your grid layout, and create a
-                beautiful photo grid collage instantly.
+              <p className="text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+                Add photos on the left, pick a layout, and preview your grid here.
               </p>
             </div>
           )}

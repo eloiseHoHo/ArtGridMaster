@@ -27,23 +27,23 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-400 uppercase tracking-wider mb-3">Tools</h3>
+            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-400 uppercase tracking-wider mb-3">Grid Tools</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/photo-to-grid" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Grid</Link></li>
-              <li><Link href="/photo-to-lineart" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Line Art</Link></li>
-              <li><Link href="/photo-to-sketch" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Sketch</Link></li>
-              <li><Link href="/photo-to-coloring-page" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Coloring Page</Link></li>
+              <li><Link href="/photo-grid-collage" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Photo Grid Collage</Link></li>
+              <li><Link href="/instagram-grid-splitter" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Instagram Grid Splitter</Link></li>
+              <li><Link href="/photo-to-grid" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Grid Drawing Overlay</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-400 uppercase tracking-wider mb-3">More Tools</h3>
+            <h3 className="text-xs font-medium text-gray-400 dark:text-gray-400 uppercase tracking-wider mb-3">Art Tools</h3>
             <ul className="space-y-2 text-sm">
+              <li><Link href="/photo-to-lineart" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Line Art</Link></li>
+              <li><Link href="/photo-to-sketch" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Sketch</Link></li>
+              <li><Link href="/photo-to-coloring-page" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Coloring Page</Link></li>
               <li><Link href="/photo-to-paint-by-numbers" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Paint by Numbers</Link></li>
               <li><Link href="/photo-to-pixel-art" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Pixel Art</Link></li>
               <li><Link href="/photo-to-watercolor" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Watercolor</Link></li>
-              <li><Link href="/instagram-grid-splitter" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Instagram Grid Splitter</Link></li>
-              <li><Link href="/photo-grid-collage" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Photo Grid Collage</Link></li>
             </ul>
           </div>
 
