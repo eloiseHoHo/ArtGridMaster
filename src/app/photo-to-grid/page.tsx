@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Grid Drawing Tool Online Free — Add Grid to Photo, No App | PhotoGrid.space",
-  description: "Free grid drawing tool online. Add a drawing grid to any photo for the grid method. Photo to grid converter with adjustable rows, columns, colors & styles. No app needed, no signup.",
+  title: "Add Grid to Photo — Free Online Grid Drawing Tool, No Signup",
+  description: "Add a drawing grid to any photo in 10 seconds. Free online tool for the grid method — adjustable rows, columns, colors & line styles. Photo stays in your browser, no upload, no signup, no watermark.",
   keywords: [
+    "add grid to photo online free",
     "grid drawing online",
     "grid drawing tool",
     "drawing grid online",
-    "add grid to photo online free",
     "photo to grid converter",
     "grid drawing tool online free",
     "grid method drawing tool",
@@ -16,11 +16,13 @@ export const metadata: Metadata = {
     "grid overlay for drawing",
     "grid lines maker",
     "grid generator png",
+    "3x3 grid on photo",
+    "4x4 grid photo",
   ],
   alternates: { canonical: "https://photogrid.space/photo-to-grid" },
   openGraph: {
-    title: "Grid Drawing Tool Online Free — Add Grid to Any Photo",
-    description: "Free grid drawing tool online. Add a drawing reference grid to any photo. Adjustable rows, columns, colors & styles. No app, no signup.",
+    title: "Add a Drawing Grid to Any Photo — Free, In-Browser, No Signup",
+    description: "Free grid drawing tool. Adjustable rows, columns, colors & styles. Photo stays in your browser — no upload, no signup, no watermark.",
     url: "https://photogrid.space/photo-to-grid",
   },
 };

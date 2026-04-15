@@ -5,9 +5,9 @@ import ClientGridCollageWrapper from "@/components/ClientGridCollageWrapper";
 
 export const metadata: Metadata = {
   title:
-    "Photo Grid Collage Maker Free Online — No App, No Signup, Instant Download",
+    "Photo Grid Collage Maker — Free 2×2, 3×3, 4×4 Layouts, No App",
   description:
-    "Make beautiful photo grid collages online for free. Upload photos, pick a grid layout (2×2, 3×3, or custom), adjust spacing and style, then download instantly. No app download required, no signup, no watermark.",
+    "Make beautiful photo grid collages in 10 seconds. Free online tool — pick a 2×2, 3×3, or 4×4 layout, adjust spacing & borders, then download as PNG. No app download, no signup, no watermark.",
   keywords: [
     "photo grid maker",
     "photo grid collage",
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      "Photo Grid Maker Online Free — Create Photo Collage Grid in Seconds",
+      "Photo Grid Collage Maker — Free 2×2, 3×3, 4×4 Layouts, No App",
     description:
-      "Make beautiful photo grid collages for free. Upload photos, choose grid layout, download instantly.",
+      "Make beautiful photo grid collages in 10 seconds. Pick a layout, adjust spacing, download as PNG. No app, no signup.",
     url: "https://photogrid.space/photo-grid-collage",
   },
 };

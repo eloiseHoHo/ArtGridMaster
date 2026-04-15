@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "photo-to-watercolor",
     "instagram-grid-splitter",
     "photo-grid-collage",
+    "3x3-photo-grid-maker",
+    "tiktok-photo-grid-maker",
   ];
 
   const blogPages = [
