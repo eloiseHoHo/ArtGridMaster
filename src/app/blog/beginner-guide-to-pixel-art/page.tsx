@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "retro pixel art tutorial",
     "8 bit art beginner guide",
   ],
-  alternates: { canonical: "https://www.photogrid.space/blog/beginner-guide-to-pixel-art" },
+  alternates: { canonical: "https://photogrid.space/blog/beginner-guide-to-pixel-art" },
 };
 
 export default function BeginnerGuideToPixelArt() {

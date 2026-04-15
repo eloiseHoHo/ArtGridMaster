@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "paint by number kit from photo",
     "numbered painting from photo",
   ],
-  alternates: { canonical: "https://www.photogrid.space/photo-to-paint-by-numbers" },
+  alternates: { canonical: "https://photogrid.space/photo-to-paint-by-numbers" },
   openGraph: {
     title: "Paint by Numbers Generator Free",
     description: "Create custom paint by numbers from any photo free. Printable templates with numbered regions, color legend, and 4-24 color palette.",
-    url: "https://www.photogrid.space/photo-to-paint-by-numbers",
+    url: "https://photogrid.space/photo-to-paint-by-numbers",
   },
 };
 

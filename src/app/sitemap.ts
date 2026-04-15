@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const DOMAIN = "https://www.photogrid.space";
+const DOMAIN = "https://photogrid.space";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "line-art-vs-sketch-which-style-for-your-art",
     "how-to-create-coloring-pages-from-photos",
     "grid-method-for-perfect-portraits",
+    "how-to-use-grid-for-perfect-portraits",
     "perspective-grid-techniques-for-landscapes",
   ];
 

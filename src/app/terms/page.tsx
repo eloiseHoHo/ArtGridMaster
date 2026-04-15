@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "Terms of Service for PhotoGrid.space. Read the terms and conditions for using our free photo transformation tools.",
-  alternates: { canonical: "https://www.photogrid.space/terms" },
+  alternates: { canonical: "https://photogrid.space/terms" },
 };
 
 export default function TermsOfService() {

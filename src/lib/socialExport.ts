@@ -337,7 +337,7 @@ export async function shareImage(
 
   // Fallback: copy text to clipboard
   try {
-    await navigator.clipboard.writeText(shareText + "\nhttps://www.photogrid.space");
+    await navigator.clipboard.writeText(shareText + "\nhttps://photogrid.space");
   } catch {
     // Ignore clipboard errors
   }

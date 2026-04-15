@@ -29,9 +29,9 @@ export const metadata: Metadata = {
       "Photo Grid Maker Online Free — Create Photo Grids in Seconds",
     description:
       "Make photo grid collages online for free. Upload photos, pick a layout, download instantly. No app, no signup, no watermark.",
-    url: "https://www.photogrid.space",
+    url: "https://photogrid.space",
   },
-  alternates: { canonical: "https://www.photogrid.space" },
+  alternates: { canonical: "https://photogrid.space" },
 };
 
 const faqSchema = {
@@ -77,7 +77,7 @@ const appSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "PhotoGrid.space",
-  url: "https://www.photogrid.space",
+  url: "https://photogrid.space",
   description:
     "Free online photo grid maker for creating collages, splitting images for Instagram, and art transformation tools.",
   applicationCategory: "DesignApplication",

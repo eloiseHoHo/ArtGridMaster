@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://www.photogrid.space/sitemap.xml",
+    sitemap: "https://photogrid.space/sitemap.xml",
   };
 }

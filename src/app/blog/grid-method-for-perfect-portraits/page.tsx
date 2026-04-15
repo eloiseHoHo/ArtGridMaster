@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "grid overlay portrait",
     "portrait proportions grid",
   ],
-  alternates: { canonical: "https://www.photogrid.space/blog/grid-method-for-perfect-portraits" },
+  alternates: { canonical: "https://photogrid.space/blog/grid-method-for-perfect-portraits" },
 };
 
 export default function GridMethodForPerfectPortraits() {

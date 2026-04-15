@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "oil painting effect from photo",
     "photo to canvas art",
   ],
-  alternates: { canonical: "https://www.photogrid.space/photo-to-watercolor" },
+  alternates: { canonical: "https://photogrid.space/photo-to-watercolor" },
   openGraph: {
     title: "Photo to Painting Converter Free",
     description: "Turn photos into watercolor, oil painting, and canvas art free online. Apply Van Gogh style effects and impressionist filters. No signup needed.",
-    url: "https://www.photogrid.space/photo-to-watercolor",
+    url: "https://photogrid.space/photo-to-watercolor",
   },
 };
 

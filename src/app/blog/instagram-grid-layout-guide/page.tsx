@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "split photo for instagram",
   ],
   alternates: {
-    canonical: "https://www.photogrid.space/blog/instagram-grid-layout-guide",
+    canonical: "https://photogrid.space/blog/instagram-grid-layout-guide",
   },
 };
 

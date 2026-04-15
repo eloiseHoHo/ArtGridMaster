@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.photogrid.space"),
+  metadataBase: new URL("https://photogrid.space"),
   title: {
     template: "%s | PhotoGrid",
     default: "PhotoGrid — Free Photo Grid Maker Online",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.photogrid.space",
+    url: "https://photogrid.space",
     siteName: "PhotoGrid.space",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
@@ -93,7 +93,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "PhotoGrid",
-              url: "https://www.photogrid.space",
+              url: "https://photogrid.space",
               description:
                 "Free online tool for artists to transform images into grids, line art, and sketches",
               applicationCategory: "MultimediaApplication",

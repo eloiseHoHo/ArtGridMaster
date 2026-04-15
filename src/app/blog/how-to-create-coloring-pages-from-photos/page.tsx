@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "coloring page for kids",
     "free coloring page generator",
   ],
-  alternates: { canonical: "https://www.photogrid.space/blog/how-to-create-coloring-pages-from-photos" },
+  alternates: { canonical: "https://photogrid.space/blog/how-to-create-coloring-pages-from-photos" },
 };
 
 export default function HowToCreateColoringPagesFromPhotos() {

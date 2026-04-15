@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy Policy for PhotoGrid.space. Learn how we handle your data and protect your privacy.",
-  alternates: { canonical: "https://www.photogrid.space/privacy" },
+  alternates: { canonical: "https://photogrid.space/privacy" },
 };
 
 export default function PrivacyPolicy() {

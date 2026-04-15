@@ -21,12 +21,12 @@ export const metadata: Metadata = {
     "instagram profile grid",
     "photo grid splitter online",
   ],
-  alternates: { canonical: "https://www.photogrid.space/instagram-grid-splitter" },
+  alternates: { canonical: "https://photogrid.space/instagram-grid-splitter" },
   openGraph: {
     title: "Free Instagram Grid Splitter - Split Photos into 3, 6, 9 Pieces Online",
     description:
       "Split photos into perfect grid pieces for Instagram. Create stunning profile layouts with our free online splitter tool.",
-    url: "https://www.photogrid.space/instagram-grid-splitter",
+    url: "https://photogrid.space/instagram-grid-splitter",
   },
 };
 

@@ -27,14 +27,14 @@ export const metadata: Metadata = {
     "photogrid online alternative",
   ],
   alternates: {
-    canonical: "https://www.photogrid.space/photo-grid-collage",
+    canonical: "https://photogrid.space/photo-grid-collage",
   },
   openGraph: {
     title:
       "Photo Grid Maker Online Free — Create Photo Collage Grid in Seconds",
     description:
       "Make beautiful photo grid collages for free. Upload photos, choose grid layout, download instantly.",
-    url: "https://www.photogrid.space/photo-grid-collage",
+    url: "https://photogrid.space/photo-grid-collage",
   },
 };
 

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "tiktok photo grid 2026",
   ],
   alternates: {
-    canonical: "https://www.photogrid.space/blog/tiktok-photo-grid-guide",
+    canonical: "https://photogrid.space/blog/tiktok-photo-grid-guide",
   },
 };
 

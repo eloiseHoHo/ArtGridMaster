@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "tattoo design from photo",
     "photo to coloring outline",
   ],
-  alternates: { canonical: "https://www.photogrid.space/photo-to-lineart" },
+  alternates: { canonical: "https://photogrid.space/photo-to-lineart" },
   openGraph: {
     title: "Photo to Line Art Converter Free",
     description: "Convert photos to line art free online. Create outlines, stencils, tattoo designs, and line drawings. Multiple styles available. No signup.",
-    url: "https://www.photogrid.space/photo-to-lineart",
+    url: "https://photogrid.space/photo-to-lineart",
   },
 };
 

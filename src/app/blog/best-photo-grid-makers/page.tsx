@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "photo grid no download",
   ],
   alternates: {
-    canonical: "https://www.photogrid.space/blog/best-photo-grid-makers",
+    canonical: "https://photogrid.space/blog/best-photo-grid-makers",
   },
 };
 

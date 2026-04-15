@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Photo Grid Blog: Tutorials, Social Media Tips & Tool Guides",
   description:
     "Explore photo grid tutorials, TikTok and Instagram grid guides, plus practical tool comparisons and creator workflows.",
-  alternates: { canonical: "https://www.photogrid.space/blog" },
+  alternates: { canonical: "https://photogrid.space/blog" },
 };
 
 type BlogPost = {

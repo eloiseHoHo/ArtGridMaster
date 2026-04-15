@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "turn photo into coloring page",
     "coloring page from image",
   ],
-  alternates: { canonical: "https://www.photogrid.space/photo-to-coloring-page" },
+  alternates: { canonical: "https://photogrid.space/photo-to-coloring-page" },
   openGraph: {
     title: "Photo to Coloring Page Maker Free",
     description: "Turn any photo into a printable coloring page free. Create custom coloring pages for kids and adults. Multiple styles. No signup required.",
-    url: "https://www.photogrid.space/photo-to-coloring-page",
+    url: "https://photogrid.space/photo-to-coloring-page",
   },
 };
 

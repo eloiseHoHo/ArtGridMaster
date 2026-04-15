@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "line art tutorial",
     "sketch tutorial",
   ],
-  alternates: { canonical: "https://www.photogrid.space/blog/line-art-vs-sketch-which-style-for-your-art" },
+  alternates: { canonical: "https://photogrid.space/blog/line-art-vs-sketch-which-style-for-your-art" },
 };
 
 export default function LineArtVsSketchWhichStyleForYourArt() {

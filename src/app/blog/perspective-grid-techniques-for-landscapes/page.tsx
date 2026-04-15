@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "landscape perspective tutorial",
     "grid overlay for landscapes",
   ],
-  alternates: { canonical: "https://www.photogrid.space/blog/perspective-grid-techniques-for-landscapes" },
+  alternates: { canonical: "https://photogrid.space/blog/perspective-grid-techniques-for-landscapes" },
 };
 
 export default function PerspectiveGridTechniquesForLandscapes() {

@@ -17,11 +17,11 @@ export const metadata: Metadata = {
     "grid lines maker",
     "grid generator png",
   ],
-  alternates: { canonical: "https://www.photogrid.space/photo-to-grid" },
+  alternates: { canonical: "https://photogrid.space/photo-to-grid" },
   openGraph: {
     title: "Grid Drawing Tool Online Free — Add Grid to Any Photo",
     description: "Free grid drawing tool online. Add a drawing reference grid to any photo. Adjustable rows, columns, colors & styles. No app, no signup.",
-    url: "https://www.photogrid.space/photo-to-grid",
+    url: "https://photogrid.space/photo-to-grid",
   },
 };
 
@@ -29,7 +29,7 @@ const schemaWebApp = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "Grid Drawing Tool — PhotoGrid.space",
-  url: "https://www.photogrid.space/photo-to-grid",
+  url: "https://photogrid.space/photo-to-grid",
   description: "Free online grid drawing tool to add customizable grid overlays to any photo for the grid method drawing technique.",
   applicationCategory: "DesignApplication",
   operatingSystem: "Web",

@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "pencil sketch from photo",
     "photo to pastel sketch",
   ],
-  alternates: { canonical: "https://www.photogrid.space/photo-to-sketch" },
+  alternates: { canonical: "https://photogrid.space/photo-to-sketch" },
   openGraph: {
     title: "Photo to Sketch Converter Free",
     description: "Turn photos into pencil sketches free online. Create pencil drawings, charcoal effects, and cartoon sketches. Multiple styles. No signup.",
-    url: "https://www.photogrid.space/photo-to-sketch",
+    url: "https://photogrid.space/photo-to-sketch",
   },
 };
 
