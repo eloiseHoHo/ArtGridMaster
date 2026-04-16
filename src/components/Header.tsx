@@ -57,7 +57,7 @@ export default function Header() {
             <g fill="white" opacity="0.95">
               <rect x="5" y="5" width="6" height="6" rx="1.2"/>
               <rect x="13" y="5" width="6" height="6" rx="1.2"/>
-              <rect x="21" y="5" width="6" height="6" rx="1.2"/>
+              <rect x="21" y="5" width="6" height="6" rx="1.2" transform="rotate(15 24 8)"/>
               <rect x="5" y="13" width="6" height="6" rx="1.2"/>
               <rect x="13" y="13" width="6" height="6" rx="1.2"/>
               <rect x="21" y="13" width="6" height="6" rx="1.2"/>
