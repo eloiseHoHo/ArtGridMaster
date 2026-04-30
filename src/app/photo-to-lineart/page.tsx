@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Photo to Line Art Converter Free Online — Line Drawing Generator",
-  description: "Convert photo to line art free online. Create clean line drawings, outlines, stencils & tattoo designs from any image. 6 styles, adjustable thickness. No app needed, no signup.",
+  title: "Photo to Line Art Converter | Free Online",
+  description: "Convert a photo to line art online. Make clean outlines, stencils, tattoo references, or coloring-page lines with adjustable thickness. Free, no signup.",
   keywords: [
     "photo to line art",
     "photo to line drawing",
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://photogrid.space/photo-to-lineart" },
   openGraph: {
-    title: "Photo to Line Art Converter Free",
-    description: "Convert photos to line art free online. Create outlines, stencils, tattoo designs, and line drawings. Multiple styles available. No signup.",
+    title: "Photo to Line Art Converter | Free Online",
+    description: "Convert photos to clean line art, outlines, stencils, or tattoo references with adjustable thickness. Free, no signup.",
     url: "https://photogrid.space/photo-to-lineart",
   },
 };

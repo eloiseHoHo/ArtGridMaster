@@ -7,9 +7,9 @@ import HomeHero from "@/components/HomeHero";
 
 export const metadata: Metadata = {
   title:
-    "Photo Grid Maker Online Free — Create Photo Grids in Seconds",
+    "Photo Grid Maker Online | Free, No Watermark",
   description:
-    "Make photo grid collages online for free. Upload photos, pick a grid layout, and download instantly. No app needed, no signup, no watermark.",
+    "Create a photo grid online in seconds. Upload photos, choose 2x2, 3x3, or custom layouts, and download PNG. Free, no signup, no watermark.",
   keywords: [
     "photo grid",
     "grid photo",
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title:
-      "Photo Grid Maker Online Free — Create Photo Grids in Seconds",
+      "Photo Grid Maker Online | Free, No Watermark",
     description:
-      "Make photo grid collages online for free. Upload photos, pick a layout, download instantly. No app, no signup, no watermark.",
+      "Create a photo grid online in seconds. Choose a layout, adjust spacing, and download PNG. Free, no signup, no watermark.",
     url: "https://photogrid.space",
   },
   alternates: { canonical: "https://photogrid.space" },
@@ -110,7 +110,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-5">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight mb-2">
-                Photo Grid Maker — Free Online
+                Free Photo Grid Maker Online
               </h1>
               <p className="text-base text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
                 Upload photos, pick a layout, download your grid. No app, no signup, no watermark.

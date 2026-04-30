@@ -421,7 +421,7 @@ export default function SimpleImageEditorNew({ defaultTab = "grid" }: { defaultT
                     {...getRootProps()}
                     className="flex flex-col items-center justify-center py-16 px-6 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
-                    <input {...getInputProps()} id="fileInput" />
+                    <input {...getInputProps({ id: "fileInput", "aria-label": "Upload image" })} />
                     <Upload className="h-8 w-8 text-gray-300 mb-4" />
                     <p className="text-sm text-gray-500 mb-1">
                       {isDragActive ? "Drop here" : "Drop an image or click to browse"}

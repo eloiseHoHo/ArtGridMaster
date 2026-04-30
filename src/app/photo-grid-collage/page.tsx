@@ -5,9 +5,9 @@ import ClientGridCollageWrapper from "@/components/ClientGridCollageWrapper";
 
 export const metadata: Metadata = {
   title:
-    "Photo Grid Collage Maker — Free 2×2, 3×3, 4×4 Layouts, No App",
+    "Photo Grid Collage Maker | Free Online",
   description:
-    "Make beautiful photo grid collages in 10 seconds. Free online tool — pick a 2×2, 3×3, or 4×4 layout, adjust spacing & borders, then download as PNG. No app download, no signup, no watermark.",
+    "Make photo grid collages online. Combine photos into 2x2, 3x3, 4x4, or custom layouts, adjust spacing, and download PNG. Free, no signup.",
   keywords: [
     "photo grid maker",
     "photo grid collage",
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      "Photo Grid Collage Maker — Free 2×2, 3×3, 4×4 Layouts, No App",
+      "Photo Grid Collage Maker | Free Online",
     description:
-      "Make beautiful photo grid collages in 10 seconds. Pick a layout, adjust spacing, download as PNG. No app, no signup.",
+      "Make photo grid collages online. Combine photos into 2x2, 3x3, 4x4, or custom layouts and download PNG. Free, no signup.",
     url: "https://photogrid.space/photo-grid-collage",
   },
 };
@@ -90,12 +90,12 @@ export default function PhotoGridCollage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-10">
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight mb-3">
-                Free Photo Grid Maker Online
+                Photo Grid Collage Maker
               </h1>
               <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                Combine multiple photos into a beautiful grid collage. Choose
-                your layout, customize spacing and style, then download
-                instantly.
+                Combine multiple photos into a beautiful 2x2, 3x3, or custom
+                collage. Choose your layout, customize spacing and style, then
+                download instantly.
               </p>
             </div>
 

@@ -4,9 +4,9 @@ import { Shield, Download, Scissors, Smartphone } from "lucide-react";
 import ClientGridSplitterWrapper from "@/components/ClientGridSplitterWrapper";
 
 export const metadata: Metadata = {
-  title: "Free Instagram Grid Splitter - Split Photos into 3, 6, 9 Pieces Online",
+  title: "Instagram Grid Splitter | Free 3x3 Cutter",
   description:
-    "Split any photo into perfect grid pieces for Instagram. Free online image splitter — create 3, 6, or 9-tile layouts. No app needed, no signup, no watermark. Works in your browser, download as ZIP.",
+    "Split a photo into 3, 6, or 9 Instagram grid tiles online. Preview the layout, get posting order, and download a ZIP. Free, no signup, no watermark.",
   keywords: [
     "instagram grid splitter",
     "instagram grid maker",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://photogrid.space/instagram-grid-splitter" },
   openGraph: {
-    title: "Free Instagram Grid Splitter - Split Photos into 3, 6, 9 Pieces Online",
+    title: "Instagram Grid Splitter | Free 3x3 Cutter",
     description:
-      "Split photos into perfect grid pieces for Instagram. Create stunning profile layouts with our free online splitter tool.",
+      "Split photos into 3, 6, or 9 Instagram grid tiles online. Preview the layout, get posting order, and download a ZIP.",
     url: "https://photogrid.space/instagram-grid-splitter",
   },
 };
@@ -115,7 +115,7 @@ export default function InstagramGridSplitter() {
             <h2 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-1">
               How it looks on your profile
             </h2>
-            <p className="text-sm text-gray-400 mb-6">One image → split into tiles → post in reverse order.</p>
+            <p className="text-sm text-gray-500 mb-6">One image → split into tiles → post in reverse order.</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 items-start">
               {/* 3x3 split */}
               <div>
@@ -135,7 +135,7 @@ export default function InstagramGridSplitter() {
                   ))}
                 </div>
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center">3×3 — 9 tiles</p>
-                <p className="text-xs text-gray-400 text-center mt-0.5">Post tile 9 first, tile 1 last</p>
+                <p className="text-xs text-gray-500 text-center mt-0.5">Post tile 9 first, tile 1 last</p>
               </div>
 
               {/* 1x3 horizontal strip */}
@@ -156,7 +156,7 @@ export default function InstagramGridSplitter() {
                   ))}
                 </div>
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center">1×3 — 3 tiles</p>
-                <p className="text-xs text-gray-400 text-center mt-0.5">A wide panorama split into 3</p>
+                <p className="text-xs text-gray-500 text-center mt-0.5">A wide panorama split into 3</p>
               </div>
 
               {/* 2x3 split */}
@@ -177,7 +177,7 @@ export default function InstagramGridSplitter() {
                   ))}
                 </div>
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center">2×3 — 6 tiles</p>
-                <p className="text-xs text-gray-400 text-center mt-0.5">Two rows, three columns</p>
+                <p className="text-xs text-gray-500 text-center mt-0.5">Two rows, three columns</p>
               </div>
             </div>
           </div>

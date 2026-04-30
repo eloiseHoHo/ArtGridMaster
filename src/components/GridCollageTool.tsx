@@ -336,7 +336,7 @@ export default function GridCollageTool({ initialTemplate }: GridCollageToolProp
                       : "border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-500/40 hover:bg-violet-50/30 dark:hover:bg-violet-900/10"
                   }`}
                 >
-                  <input {...getInputProps()} />
+                  <input {...getInputProps({ "aria-label": "Upload photos" })} />
                   <Upload className="h-8 w-8 mx-auto text-violet-300 dark:text-violet-600 mb-2" />
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Drop photos here or click to upload
@@ -392,7 +392,7 @@ export default function GridCollageTool({ initialTemplate }: GridCollageToolProp
                 {/* Add more */}
                 {images.length < 25 && (
                   <div {...getRootProps()} className="cursor-pointer">
-                    <input {...getInputProps()} />
+                    <input {...getInputProps({ "aria-label": "Add more photos" })} />
                     <div className="w-full py-2 text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 border border-dashed border-gray-200 dark:border-gray-600 rounded-md flex items-center justify-center gap-1 transition-colors">
                       <ImagePlus className="h-3.5 w-3.5" />
                       Add more photos
@@ -528,6 +528,7 @@ export default function GridCollageTool({ initialTemplate }: GridCollageToolProp
                   </span>
                 </div>
                 <input
+                  aria-label="Rows"
                   type="range"
                   min={1}
                   max={5}
@@ -546,6 +547,7 @@ export default function GridCollageTool({ initialTemplate }: GridCollageToolProp
                   </span>
                 </div>
                 <input
+                  aria-label="Columns"
                   type="range"
                   min={1}
                   max={5}
@@ -603,6 +605,7 @@ export default function GridCollageTool({ initialTemplate }: GridCollageToolProp
                 </span>
               </div>
               <input
+                aria-label="Spacing"
                 type="range"
                 min={0}
                 max={30}
@@ -623,6 +626,7 @@ export default function GridCollageTool({ initialTemplate }: GridCollageToolProp
                 </span>
               </div>
               <input
+                aria-label="Rounded corners"
                 type="range"
                 min={0}
                 max={20}

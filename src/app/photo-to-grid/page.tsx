@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Add Grid to Photo — Free Online Grid Drawing Tool, No Signup",
-  description: "Add a drawing grid to any photo in 10 seconds. Free online tool for the grid method — adjustable rows, columns, colors & line styles. Photo stays in your browser, no upload, no signup, no watermark.",
+  title: "Add Grid to Photo | Free Drawing Grid Tool",
+  description: "Add a drawing grid to any photo online. Choose rows, columns, colors, and line styles. Free, no signup, no upload, no watermark.",
   keywords: [
     "add grid to photo online free",
     "grid drawing online",
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://photogrid.space/photo-to-grid" },
   openGraph: {
-    title: "Add a Drawing Grid to Any Photo — Free, In-Browser, No Signup",
-    description: "Free grid drawing tool. Adjustable rows, columns, colors & styles. Photo stays in your browser — no upload, no signup, no watermark.",
+    title: "Add Grid to Photo | Free Drawing Grid Tool",
+    description: "Add a drawing grid to any photo online. Choose rows, columns, colors, and line styles. Free, no signup, no upload, no watermark.",
     url: "https://photogrid.space/photo-to-grid",
   },
 };
